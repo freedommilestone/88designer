@@ -23,7 +23,6 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import BeforeAfterCard from "@/components/before-after-card"
 
 const websiteExamples = [
   {
@@ -1294,175 +1293,6 @@ export default function Component() {
         </div>
       </section>
 
-      {/* Before & After Showcase Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-gray-50 to-white">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
-            <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200 border-0 mb-4">Real Transformations</Badge>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">See the Difference a Modern Website Makes</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Watch how our professional website designs transform local businesses and drive real results. Click to
-              toggle between before and after.
-            </p>
-          </div>
-
-          {/* Before/After Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {caseStudies.map((caseStudy) => (
-              <BeforeAfterCard
-                key={caseStudy.id}
-                businessName={caseStudy.businessName}
-                businessType={caseStudy.businessType}
-                onViewDetails={() => {
-                  // Navigate to showcase page or open modal
-                  window.open("/showcase", "_blank")
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Bottom CTA */}
-          <div className="text-center mt-16">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-8 text-white max-w-4xl mx-auto">
-              <h3 className="text-3xl font-bold mb-4">Ready to Transform Your Business?</h3>
-              <p className="text-xl mb-6 opacity-90">
-                Join thousands of local businesses who've grown their customer base with our free professional websites
-              </p>
-              <Button
-                onClick={() => setShowSqueezePage(true)}
-                size="lg"
-                className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold"
-              >
-                Get Your Free Website Transformation
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Web Designs Section */}
-      <section id="websites" className="py-20 px-4 bg-white">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
-            <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-200 border-0 mb-4">Professional Templates</Badge>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Choose Your Perfect Website Design</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Browse our collection of professionally designed websites, each tailored for specific business types. Find
-              your perfect match and claim it for free.
-            </p>
-          </div>
-
-          {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
-                  selectedCategory === category
-                    ? "bg-gray-900 text-white shadow-lg"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-
-          {/* Templates Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredTemplates.map((template, index) => (
-              <div
-                key={template.id}
-                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-gray-200 transform hover:-translate-y-2"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                {/* Template Preview */}
-                <div className="relative overflow-hidden bg-gray-50">
-                  <Image
-                    src={template.image || "/placeholder.svg"}
-                    alt={template.name}
-                    width={400}
-                    height={300}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  {/* Preview Button */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    <Button size="sm" className="bg-white/90 text-gray-900 hover:bg-white backdrop-blur-sm">
-                      <Eye className="w-4 h-4 mr-2" />
-                      Preview
-                    </Button>
-                  </div>
-
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4">
-                    <Badge className="bg-white/90 text-gray-800 backdrop-blur-sm">{template.category}</Badge>
-                  </div>
-
-                  {/* Claimed Count */}
-                  <div className="absolute top-4 right-4">
-                    <div className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      {template.claimed}+ claimed
-                    </div>
-                  </div>
-                </div>
-
-                {/* Template Info */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{template.name}</h3>
-                  <p className="text-gray-600 mb-4 line-clamp-2">{template.description}</p>
-
-                  {/* Features */}
-                  <div className="grid grid-cols-2 gap-2 mb-6">
-                    {template.features.map((feature) => (
-                      <div key={feature} className="flex items-center text-sm text-gray-600">
-                        <Check className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
-                        <span className="truncate">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-3">
-                    <Button
-                      onClick={() => setShowSqueezePage(true)}
-                      className="flex-1 bg-gray-900 hover:bg-gray-800 text-white"
-                    >
-                      Claim Free
-                    </Button>
-                    <Button variant="outline" size="sm" className="px-4">
-                      <Eye className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Bottom CTA */}
-          <div className="text-center mt-16">
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-8 max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Don't see exactly what you need?</h3>
-              <p className="text-gray-600 mb-6">
-                Our team can customize any template to perfectly match your business needs. Still completely free, still
-                ready in 24 hours.
-              </p>
-              <Button
-                onClick={() => setShowSqueezePage(true)}
-                size="lg"
-                className="bg-gray-900 hover:bg-gray-800 text-white"
-              >
-                Get Custom Design
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Modern Reviews Section */}
       <section
         id="reviews-section"
@@ -1650,6 +1480,128 @@ export default function Component() {
                 className="bg-gray-900 hover:bg-gray-800 text-white transform hover:scale-105 transition-all duration-300"
               >
                 Start Your Success Story
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Web Designs Section */}
+      <section id="websites" className="py-20 px-4 bg-white">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center mb-16">
+            <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-200 border-0 mb-4">Professional Templates</Badge>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Choose Your Perfect Website Design</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Browse our collection of professionally designed websites, each tailored for specific business types. Find
+              your perfect match and claim it for free.
+            </p>
+          </div>
+
+          {/* Category Filter */}
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
+                  selectedCategory === category
+                    ? "bg-gray-900 text-white shadow-lg"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          {/* Templates Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredTemplates.map((template, index) => (
+              <div
+                key={template.id}
+                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-gray-200 transform hover:-translate-y-2"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {/* Template Preview */}
+                <div className="relative overflow-hidden bg-gray-50">
+                  <Image
+                    src={template.image || "/placeholder.svg"}
+                    alt={template.name}
+                    width={400}
+                    height={300}
+                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  {/* Preview Button */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <Button size="sm" className="bg-white/90 text-gray-900 hover:bg-white backdrop-blur-sm">
+                      <Eye className="w-4 h-4 mr-2" />
+                      Preview
+                    </Button>
+                  </div>
+
+                  {/* Category Badge */}
+                  <div className="absolute top-4 left-4">
+                    <Badge className="bg-white/90 text-gray-800 backdrop-blur-sm">{template.category}</Badge>
+                  </div>
+
+                  {/* Claimed Count */}
+                  <div className="absolute top-4 right-4">
+                    <div className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                      {template.claimed}+ claimed
+                    </div>
+                  </div>
+                </div>
+
+                {/* Template Info */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{template.name}</h3>
+                  <p className="text-gray-600 mb-4 line-clamp-2">{template.description}</p>
+
+                  {/* Features */}
+                  <div className="grid grid-cols-2 gap-2 mb-6">
+                    {template.features.map((feature) => (
+                      <div key={feature} className="flex items-center text-sm text-gray-600">
+                        <Check className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
+                        <span className="truncate">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <Button
+                      onClick={() => setShowSqueezePage(true)}
+                      className="flex-1 bg-gray-900 hover:bg-gray-800 text-white"
+                    >
+                      Claim Free
+                    </Button>
+                    <Button variant="outline" size="sm" className="px-4">
+                      <Eye className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="text-center mt-16">
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-8 max-w-4xl mx-auto">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Don't see exactly what you need?</h3>
+              <p className="text-gray-600 mb-6">
+                Our team can customize any template to perfectly match your business needs. Still completely free, still
+                ready in 24 hours.
+              </p>
+              <Button
+                onClick={() => setShowSqueezePage(true)}
+                size="lg"
+                className="bg-gray-900 hover:bg-gray-800 text-white"
+              >
+                Get Custom Design
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </div>
