@@ -1587,215 +1587,161 @@ export default function Component() {
       </section>
 
       {/* Pricing Transparency Section */}
-      <section className="py-20 px-4 bg-gray-50">
-  <div className="container mx-auto max-w-6xl">
-    <div className="text-center mb-16">
-      <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-        How It Works
-      </h2>
-      <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-        We believe in complete transparency. Here's exactly what you pay and what you get - no hidden fees, no surprises.
-      </p>
-    </div>
+      <section className="py-20 px-4 bg-white">
+        <div className="container mx-auto max-w-7xl">
+          <div className="text-center mb-16">
+            <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-200 border-0 mb-4">Transparent Pricing</Badge>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">No Hidden Costs, No Surprises</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              We believe in complete transparency. Here's exactly what you pay and what you get.
+            </p>
+          </div>
 
-    {/* Main Pricing Cards */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-      {/* Website Design Card */}
-      <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-500"></div>
-        
-        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-          <Globe className="w-8 h-8 text-white" />
-        </div>
-        
-        <h3 className="text-2xl font-bold text-gray-900 mb-4">Website Design</h3>
-        <p className="text-gray-600 mb-6 leading-relaxed">
-          Professional custom design, mobile optimization, SEO setup, and development
-        </p>
-        
-        <div className="space-y-3 mb-6">
-          <div className="text-lg text-gray-500 line-through">Usually $2,500</div>
-          <div className="text-5xl font-bold text-green-600">FREE</div>
-          <div className="text-sm text-gray-500">One-time setup</div>
-        </div>
+          {/* Pricing Breakdown */}
+          <div className="max-w-4xl mx-auto mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Website Design */}
+              <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Website Design</h3>
+                <p className="text-gray-600 mb-6">
+                  Custom design, mobile optimization, SEO setup, professional development
+                </p>
+                <div className="space-y-2">
+                  <div className="text-lg font-medium text-gray-500 line-through">$1,500</div>
+                  <div className="text-3xl font-bold text-green-600">FREE</div>
+                </div>
+              </div>
 
-        <div className="space-y-3 text-left">
-          {[
-            "Custom professional design",
-            "Mobile-responsive layout", 
-            "SEO optimization",
-            "Contact forms & features",
-            "Professional development"
-          ].map((feature, index) => (
-            <div key={index} className="flex items-center text-sm text-gray-600">
-              <Check className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
-              <span>{feature}</span>
+              {/* Hosting */}
+              <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Premium Hosting</h3>
+                <p className="text-gray-600 mb-6">Secure hosting, daily backups, updates, 24/7 technical support</p>
+                <div className="space-y-2">
+                  <div className="text-3xl font-bold text-gray-900">$20</div>
+                  <div className="text-gray-500 font-medium">per month</div>
+                </div>
+              </div>
+
+              {/* Updates */}
+              <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
+                <h3 className="text-xl font-bold text-gray-900 mb-3">Website Updates</h3>
+                <p className="text-gray-600 mb-6">
+                  Content updates, new pages, design modifications, feature additions
+                </p>
+                <div className="space-y-2">
+                  <div className="text-3xl font-bold text-gray-900">$10+</div>
+                  <div className="text-gray-500 font-medium">per change</div>
+                </div>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
 
-      {/* Hosting Card */}
-      <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-emerald-500"></div>
-        
-        <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-          <Shield className="w-8 h-8 text-white" />
-        </div>
-        
-        <h3 className="text-2xl font-bold text-gray-900 mb-4">Premium Hosting</h3>
-        <p className="text-gray-600 mb-6 leading-relaxed">
-          Secure hosting, daily backups, updates, and 24/7 technical support
-        </p>
-        
-        <div className="space-y-3 mb-6">
-          <div className="text-5xl font-bold text-gray-900">$20</div>
-          <div className="text-lg text-gray-500">per month</div>
-        </div>
+          {/* Comparison Table */}
+          <div className="max-w-6xl mx-auto">
+            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">How We Compare</h3>
 
-        <div className="space-y-3 text-left">
-          {[
-            "Secure cloud hosting",
-            "Daily automated backups",
-            "SSL certificate included",
-            "24/7 technical support",
-            "Performance monitoring"
-          ].map((feature, index) => (
-            <div key={index} className="flex items-center text-sm text-gray-600">
-              <Check className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
-              <span>{feature}</span>
+            <div className="overflow-x-auto">
+              <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200">
+                {/* Table Header */}
+                <div className="bg-gray-900 text-white">
+                  <div className="grid grid-cols-4 gap-4 p-6">
+                    <div className="text-lg font-medium">Feature</div>
+                    <div className="text-center font-medium">LocalSite</div>
+                    <div className="text-center font-medium">Traditional Agency</div>
+                    <div className="text-center font-medium">DIY Builders</div>
+                  </div>
+                </div>
+
+                {/* Table Body */}
+                <div className="divide-y divide-gray-200">
+                  {[
+                    {
+                      feature: "Initial Investment",
+                      localsite: { value: "FREE", highlight: true },
+                      agency: { value: "$2,000-$10,000" },
+                      diy: { value: "$0-$300" },
+                    },
+                    {
+                      feature: "Monthly Cost",
+                      localsite: { value: "$20", highlight: true },
+                      agency: { value: "$50-$200" },
+                      diy: { value: "$10-$50" },
+                    },
+                    {
+                      feature: "Custom Design",
+                      localsite: { value: "✓", highlight: true },
+                      agency: { value: "✓", highlight: true },
+                      diy: { value: "✗" },
+                    },
+                    {
+                      feature: "Professional Support",
+                      localsite: { value: "✓", highlight: true },
+                      agency: { value: "✓", highlight: true },
+                      diy: { value: "✗" },
+                    },
+                    {
+                      feature: "Time to Launch",
+                      localsite: { value: "48 hours", highlight: true },
+                      agency: { value: "2-8 weeks" },
+                      diy: { value: "1-4 weeks" },
+                    },
+                    {
+                      feature: "Technical Knowledge",
+                      localsite: { value: "None", highlight: true },
+                      agency: { value: "None", highlight: true },
+                      diy: { value: "High" },
+                    },
+                  ].map((row, index) => (
+                    <div
+                      key={index}
+                      className={`grid grid-cols-4 gap-4 p-6 hover:bg-gray-50 transition-colors ${index % 2 === 0 ? "bg-white" : "bg-gray-50/50"}`}
+                    >
+                      <div className="font-medium text-gray-900">{row.feature}</div>
+                      <div className="text-center">
+                        <span className={row.localsite.highlight ? "font-medium text-green-600" : "text-gray-600"}>
+                          {row.localsite.value}
+                        </span>
+                      </div>
+                      <div className="text-center">
+                        <span className={row.agency.highlight ? "font-medium text-green-600" : "text-gray-600"}>
+                          {row.agency.value}
+                        </span>
+                      </div>
+                      <div className="text-center">
+                        <span className={row.diy.highlight ? "font-medium text-green-600" : "text-gray-600"}>
+                          {row.diy.value}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          ))}
-        </div>
-      </div>
 
-      {/* Updates Card */}
-      <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 text-center relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-red-500"></div>
-        
-        <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-          <Zap className="w-8 h-8 text-white" />
-        </div>
-        
-        <h3 className="text-2xl font-bold text-gray-900 mb-4">Website Updates</h3>
-        <p className="text-gray-600 mb-6 leading-relaxed">
-          Content changes, new pages, design modifications, and feature additions
-        </p>
-        
-        <div className="space-y-3 mb-6">
-          <div className="text-5xl font-bold text-gray-900">$15</div>
-          <div className="text-lg text-gray-500">per update</div>
-        </div>
+            {/* What's Included */}
+            <div className="mt-16 bg-gray-50 rounded-2xl p-8 border border-gray-200">
+              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">What's Included in Your $20/Month</h3>
 
-        <div className="space-y-3 text-left">
-          {[
-            "Content updates",
-            "New page creation",
-            "Design modifications",
-            "Feature additions",
-            "Quick turnaround"
-          ].map((feature, index) => (
-            <div key={index} className="flex items-center text-sm text-gray-600">
-              <Check className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
-              <span>{feature}</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  { icon: Shield, title: "Secure Hosting", desc: "Enterprise-grade security and SSL certificates" },
+                  { icon: Clock, title: "Regular Backups", desc: "Daily automated backups of your website" },
+                  { icon: Users, title: "Technical Support", desc: "Email and chat support from our team" },
+                  { icon: Zap, title: "Performance Monitoring", desc: "24/7 uptime monitoring and optimization" },
+                  { icon: Award, title: "Security Updates", desc: "Regular security patches and updates" },
+                  { icon: Globe, title: "SEO Optimization", desc: "Basic SEO setup and ongoing optimization" },
+                ].map((item, index) => (
+                  <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                    <item.icon className="w-8 h-8 text-gray-700 mb-3" />
+                    <h4 className="font-bold text-gray-900 mb-2">{item.title}</h4>
+                    <p className="text-gray-600 text-sm">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-    </div>
-
-    {/* Comparison Section */}
-    <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 mb-16">
-      <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white p-8">
-        <h3 className="text-3xl font-bold text-center mb-4">How We Compare</h3>
-        <p className="text-center text-gray-300 text-lg">
-          See why thousands choose our transparent pricing over expensive alternatives
-        </p>
-      </div>
-
-      <div className="overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="text-left p-6 font-semibold text-gray-900">Feature</th>
-              <th className="text-center p-6 font-semibold text-blue-600">LocalSite</th>
-              <th className="text-center p-6 font-semibold text-gray-600">Traditional Agency</th>
-              <th className="text-center p-6 font-semibold text-gray-600">DIY Builders</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            {[
-              {
-                feature: "Initial Investment",
-                localsite: { value: "FREE", highlight: true },
-                agency: { value: "$2,000-$10,000" },
-                diy: { value: "$0-$300" },
-              },
-              {
-                feature: "Monthly Cost",
-                localsite: { value: "$20", highlight: true },
-                agency: { value: "$50-$200" },
-                diy: { value: "$10-$50" },
-              },
-              {
-                feature: "Custom Design",
-                localsite: { value: "✓", highlight: true },
-                agency: { value: "✓", highlight: true },
-                diy: { value: "✗" },
-              },
-              {
-                feature: "Professional Support",
-                localsite: { value: "✓", highlight: true },
-                agency: { value: "✓", highlight: true },
-                diy: { value: "✗" },
-              },
-              {
-                feature: "Time to Launch",
-                localsite: { value: "48 hours", highlight: true },
-                agency: { value: "2-8 weeks" },
-                diy: { value: "1-4 weeks" },
-              },
-            ].map((row, index) => (
-              <tr key={index} className="hover:bg-gray-50 transition-colors">
-                <td className="p-6 font-medium text-gray-900">{row.feature}</td>
-                <td className="p-6 text-center">
-                  <span className={row.localsite.highlight ? "font-bold text-blue-600 text-lg" : "text-gray-600"}>
-                    {row.localsite.value}
-                  </span>
-                </td>
-                <td className="p-6 text-center">
-                  <span className={row.agency.highlight ? "font-bold text-blue-600 text-lg" : "text-gray-600"}>
-                    {row.agency.value}
-                  </span>
-                </td>
-                <td className="p-6 text-center">
-                  <span className={row.diy.highlight ? "font-bold text-blue-600 text-lg" : "text-gray-600"}>
-                    {row.diy.value}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    {/* Bottom CTA */}
-    <div className="text-center bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl p-12 text-white">
-      <h3 className="text-3xl font-bold mb-4">Ready to Get Started?</h3>
-      <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-        Join thousands of businesses who've chosen transparent pricing and professional results
-      </p>
-      <Button
-        onClick={() => setShowSqueezePage(true)}
-        size="lg"
-        className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-      >
-        Claim Your Free Website
-      </Button>
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* FAQ Section */}
       <section className="py-20 px-4 bg-gradient-to-br from-gray-50 to-white">
@@ -1922,185 +1868,6 @@ export default function Component() {
               <div className="text-center space-y-3 animate-fade-up delay-400 hover-lift p-6 rounded-xl transition-all duration-300 hover:bg-gray-50">
                 <div className="text-4xl md:text-5xl font-light text-gray-900">100%</div>
                 <div className="text-gray-500 font-medium">Satisfaction Rate</div>
-              </div>
-            </div>
-
-            {/* Recently Claimed Websites Carousel */}
-            <div className="mb-16 animate-fade-up delay-300">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Recently Claimed Websites</h3>
-                <p className="text-gray-600">See what other businesses have chosen in the past 24 hours</p>
-              </div>
-              
-              <div className="relative overflow-hidden">
-                <div className="flex space-x-6 animate-scroll-smooth" style={{ width: "200%" }}>
-                  {[
-                    {
-                      business: "Sunrise Bakery",
-                      type: "Restaurant",
-                      location: "Portland, OR",
-                      template: "Local Restaurant",
-                      timeAgo: "2 hours ago",
-                      avatar: "S",
-                      color: "from-orange-400 to-red-500"
-                    },
-                    {
-                      business: "Elite Fitness Studio",
-                      type: "Fitness",
-                      location: "Austin, TX",
-                      template: "Professional Services",
-                      timeAgo: "4 hours ago",
-                      avatar: "E",
-                      color: "from-blue-400 to-cyan-500"
-                    },
-                    {
-                      business: "Harmony Dental Care",
-                      type: "Healthcare",
-                      location: "Denver, CO",
-                      template: "Medical Practice",
-                      timeAgo: "6 hours ago",
-                      avatar: "H",
-                      color: "from-emerald-400 to-teal-500"
-                    },
-                    {
-                      business: "Luxe Hair Lounge",
-                      type: "Beauty",
-                      location: "Miami, FL",
-                      template: "Salon & Spa",
-                      timeAgo: "8 hours ago",
-                      avatar: "L",
-                      color: "from-rose-400 to-pink-500"
-                    },
-                    {
-                      business: "Metro Plumbing Pro",
-                      type: "Service",
-                      location: "Chicago, IL",
-                      template: "Service Business",
-                      timeAgo: "12 hours ago",
-                      avatar: "M",
-                      color: "from-purple-400 to-indigo-500"
-                    },
-                    {
-                      business: "Artisan Coffee Co.",
-                      type: "Restaurant",
-                      location: "Seattle, WA",
-                      template: "Local Restaurant",
-                      timeAgo: "18 hours ago",
-                      avatar: "A",
-                      color: "from-yellow-400 to-orange-500"
-                    }
-                  ].concat([
-                    {
-                      business: "Sunrise Bakery",
-                      type: "Restaurant",
-                      location: "Portland, OR",
-                      template: "Local Restaurant",
-                      timeAgo: "2 hours ago",
-                      avatar: "S",
-                      color: "from-orange-400 to-red-500"
-                    },
-                    {
-                      business: "Elite Fitness Studio",
-                      type: "Fitness",
-                      location: "Austin, TX",
-                      template: "Professional Services",
-                      timeAgo: "4 hours ago",
-                      avatar: "E",
-                      color: "from-blue-400 to-cyan-500"
-                    },
-                    {
-                      business: "Harmony Dental Care",
-                      type: "Healthcare",
-                      location: "Denver, CO",
-                      template: "Medical Practice",
-                      timeAgo: "6 hours ago",
-                      avatar: "H",
-                      color: "from-emerald-400 to-teal-500"
-                    },
-                    {
-                      business: "Luxe Hair Lounge",
-                      type: "Beauty",
-                      location: "Miami, FL",
-                      template: "Salon & Spa",
-                      timeAgo: "8 hours ago",
-                      avatar: "L",
-                      color: "from-rose-400 to-pink-500"
-                    },
-                    {
-                      business: "Metro Plumbing Pro",
-                      type: "Service",
-                      location: "Chicago, IL",
-                      template: "Service Business",
-                      timeAgo: "12 hours ago",
-                      avatar: "M",
-                      color: "from-purple-400 to-indigo-500"
-                    },
-                    {
-                      business: "Artisan Coffee Co.",
-                      type: "Restaurant",
-                      location: "Seattle, WA",
-                      template: "Local Restaurant",
-                      timeAgo: "18 hours ago",
-                      avatar: "A",
-                      color: "from-yellow-400 to-orange-500"
-                    }
-                  ]).map((claim, index) => (
-                    <div
-                      key={index}
-                      className="flex-shrink-0 w-80 bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
-                    >
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center space-x-3">
-                          <div className={`w-12 h-12 bg-gradient-to-br ${claim.color} rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
-                            {claim.avatar}
-                          </div>
-                          <div>
-                            <h4 className="font-bold text-gray-900 text-lg">{claim.business}</h4>
-                            <p className="text-gray-500 text-sm">{claim.location}</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-xs text-gray-400">{claim.timeAgo}</div>
-                          <div className="w-2 h-2 bg-green-400 rounded-full mt-1 ml-auto animate-pulse"></div>
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Business Type:</span>
-                          <span className="text-sm font-medium text-gray-900">{claim.type}</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-gray-600">Template:</span>
-                          <span className="text-sm font-medium text-gray-900">{claim.template}</span>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-4 pt-4 border-t border-gray-100">
-                        <div className="flex items-center justify-between">
-                          <span className="text-xs text-gray-500">Status</span>
-                          <div className="flex items-center space-x-2">
-                            <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
-                            <span className="text-xs font-medium text-green-600">Claimed</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                {/* Gradient overlays for smooth edges */}
-                <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
-                <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
-              </div>
-              
-              <div className="text-center mt-6">
-                <p className="text-sm text-gray-500">
-                  <span className="inline-flex items-center">
-                    <div className="w-2 h-2 bg-orange-400 rounded-full mr-2 animate-pulse"></div>
-                    Only 7 spots remaining this month
-                  </span>
-                </p>
               </div>
             </div>
 
@@ -2293,7 +2060,7 @@ export default function Component() {
             </div>
           </div>
         </div>
-      </footer >
-    </div >
+      </footer>
+    </div>
   )\
 }
