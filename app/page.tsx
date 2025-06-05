@@ -282,71 +282,6 @@ const trustedBusinesses = [
 
 const categories = ["All", "Restaurant", "Service", "Retail", "Professional", "Beauty", "Healthcare"]
 
-// Survey Questions
-const surveyQuestions = [
-  {
-    id: 1,
-    question: "What type of business do you run?",
-    type: "single-choice",
-    options: [
-      { value: "restaurant", label: "Restaurant / Food Service", icon: "🍽️" },
-      { value: "service", label: "Service Business (Plumbing, HVAC, etc.)", icon: "🔧" },
-      { value: "healthcare", label: "Healthcare / Medical", icon: "🏥" },
-      { value: "beauty", label: "Beauty / Wellness", icon: "💄" },
-      { value: "professional", label: "Professional Services", icon: "💼" },
-      { value: "retail", label: "Retail / E-commerce", icon: "🛍️" },
-      { value: "other", label: "Other", icon: "🏢" },
-    ],
-  },
-  {
-    id: 2,
-    question: "How many employees do you have?",
-    type: "single-choice",
-    options: [
-      { value: "solo", label: "Just me", icon: "👤" },
-      { value: "small", label: "2-10 employees", icon: "👥" },
-      { value: "medium", label: "11-50 employees", icon: "👨‍👩‍👧‍👦" },
-      { value: "large", label: "50+ employees", icon: "🏢" },
-    ],
-  },
-  {
-    id: 3,
-    question: "What's your main goal for your website?",
-    type: "single-choice",
-    options: [
-      { value: "leads", label: "Generate more leads", icon: "📈" },
-      { value: "bookings", label: "Online bookings/appointments", icon: "📅" },
-      { value: "sales", label: "Sell products online", icon: "💰" },
-      { value: "credibility", label: "Build credibility & trust", icon: "⭐" },
-      { value: "information", label: "Share business information", icon: "ℹ️" },
-    ],
-  },
-  {
-    id: 4,
-    question: "Which features are most important to you?",
-    type: "multiple-choice",
-    options: [
-      { value: "contact-forms", label: "Contact Forms", icon: "📝" },
-      { value: "online-booking", label: "Online Booking", icon: "📅" },
-      { value: "photo-gallery", label: "Photo Gallery", icon: "📸" },
-      { value: "customer-reviews", label: "Customer Reviews", icon: "⭐" },
-      { value: "social-media", label: "Social Media Integration", icon: "📱" },
-      { value: "location-map", label: "Location & Map", icon: "📍" },
-    ],
-  },
-  {
-    id: 5,
-    question: "Do you currently have a website?",
-    type: "single-choice",
-    options: [
-      { value: "none", label: "No website", icon: "❌" },
-      { value: "outdated", label: "Yes, but it's outdated", icon: "🕰️" },
-      { value: "basic", label: "Basic website", icon: "📄" },
-      { value: "social-only", label: "Just social media pages", icon: "📱" },
-    ],
-  },
-]
-
 export default function Component() {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [currentWebsite, setCurrentWebsite] = useState(0)
@@ -356,26 +291,9 @@ export default function Component() {
   const [isTrustedVisible, setIsTrustedVisible] = useState(false)
   const [selectedReviewFilter, setSelectedReviewFilter] = useState("All")
 
-  // Survey state
-  const [showSurvey, setShowSurvey] = useState(false)
-  const [currentStep, setCurrentStep] = useState(0)
-  const [surveyAnswers, setSurveyAnswers] = useState({})
-  const [showResults, setShowResults] = useState(false)
-
-  // Squeeze page state
-  const [showSqueezePage, setShowSqueezePage] = useState(false)
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    businessName: "",
-    businessType: "",
-  })
-
   // New state variables for the additional sections
   const [selectedBusinessType, setSelectedBusinessType] = useState("restaurant")
-  const [openFaq, setOpenFaq] = useState(null)
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   // Title carousel state - moved inside component
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0)
@@ -391,8 +309,8 @@ export default function Component() {
   ]
 
   // Helper function to get business category
-  const getBusinessCategory = (businessName) => {
-    const categories = {
+  const getBusinessCategory = (businessName: string) => {
+    const categories: { [key: string]: string } = {
       "Riverside Cafe": "Restaurant",
       "Smith & Sons Plumbing": "Service Business",
       "Downtown Dental": "Healthcare",
@@ -417,84 +335,6 @@ export default function Component() {
             (selectedReviewFilter === "Professional" && category.includes("Professional"))
           )
         })
-
-  // Survey functions
-  const handleSurveyAnswer = (questionId, answer) => {
-    const question = surveyQuestions[currentStep]
-    if (question.type === "multiple-choice") {
-      const currentAnswers = surveyAnswers[questionId] || []
-      const newAnswers = currentAnswers.includes(answer)
-        ? currentAnswers.filter((a) => a !== answer)
-        : [...currentAnswers, answer]
-      setSurveyAnswers({ ...surveyAnswers, [questionId]: newAnswers })
-    } else {
-      setSurveyAnswers({ ...surveyAnswers, [questionId]: answer })
-    }
-  }
-
-  const nextStep = () => {
-    if (currentStep < surveyQuestions.length - 1) {
-      setCurrentStep(currentStep + 1)
-    } else {
-      // Show filtered results instead of contact form
-      setShowResults(true)
-    }
-  }
-
-  const prevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1)
-    }
-  }
-
-  const getRecommendedTemplate = () => {
-    const businessType = surveyAnswers[1]
-    const goal = surveyAnswers[3]
-
-    // Simple recommendation logic
-    if (businessType === "restaurant") return templates[0]
-    if (businessType === "service") return templates[1]
-    if (businessType === "healthcare") return templates[5]
-    if (businessType === "beauty") return templates[4]
-    if (businessType === "professional") return templates[3]
-    if (businessType === "retail") return templates[2]
-
-    return templates[0] // Default
-  }
-
-  const resetSurvey = () => {
-    setCurrentStep(0)
-    setSurveyAnswers({})
-    setShowResults(false)
-    setShowSurvey(false)
-  }
-
-  const resetSqueezePage = () => {
-    setShowSqueezePage(false)
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      businessName: "",
-      businessType: "",
-    })
-  }
-
-  const handleFormChange = (field, value) => {
-    setFormData({ ...formData, [field]: value })
-  }
-
-  const handleFormSubmit = () => {
-    // Validate required fields
-    if (!formData.firstName || !formData.email || !formData.businessName) {
-      alert("Please fill in all required fields")
-      return
-    }
-
-    alert("🎉 Thank you! We'll be in touch within 24 hours to set up your free website.")
-    resetSqueezePage()
-  }
 
   useEffect(() => {
     setIsVisible(true)
@@ -547,7 +387,7 @@ export default function Component() {
   // Typing animation effect
   useEffect(() => {
     const currentTitle = heroTitles[currentTitleIndex]
-    let timeoutId
+    let timeoutId: NodeJS.Timeout
 
     if (isTypingRef.current) {
       if (displayedText.length < currentTitle.length) {
@@ -588,39 +428,10 @@ export default function Component() {
     selectedCategory === "All" ? templates : templates.filter((template) => template.category === selectedCategory)
 
   const currentSite = websiteExamples[currentWebsite]
-  const currentQuestion = surveyQuestions[currentStep]
-  const currentAnswer = surveyAnswers[currentQuestion?.id]
-  const canProceed =
-    currentQuestion?.type === "multiple-choice" ? currentAnswer && currentAnswer.length > 0 : currentAnswer
-
-  const getFilteredTemplates = () => {
-    const businessType = surveyAnswers[1]
-    const goal = surveyAnswers[3]
-
-    // Filter templates based on survey answers
-    let filtered = templates
-
-    if (businessType === "restaurant") {
-      filtered = templates.filter((t) => t.category === "Restaurant")
-    } else if (businessType === "service") {
-      filtered = templates.filter((t) => t.category === "Service")
-    } else if (businessType === "healthcare") {
-      filtered = templates.filter((t) => t.category === "Healthcare")
-    } else if (businessType === "beauty") {
-      filtered = templates.filter((t) => t.category === "Beauty")
-    } else if (businessType === "professional") {
-      filtered = templates.filter((t) => t.category === "Professional")
-    } else if (businessType === "retail") {
-      filtered = templates.filter((t) => t.category === "Retail")
-    }
-
-    // If no specific matches, show top 3 templates
-    return filtered.length > 0 ? filtered : templates.slice(0, 3)
-  }
 
   // Helper function to get business features
-  const getBusinessFeatures = (businessType) => {
-    const features = {
+  const getBusinessFeatures = (businessType: string) => {
+    const features: { [key: string]: any } = {
       restaurant: [
         {
           icon: Star,
@@ -762,490 +573,6 @@ export default function Component() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Squeeze Page */}
-      {showSqueezePage && (
-        <div className="fixed inset-0 z-50 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
-          <div className="min-h-screen flex items-center justify-center py-20 px-4 relative overflow-hidden">
-            {/* Background Elements */}
-            <div className="absolute inset-0 overflow-hidden">
-              <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-float-modern-1"></div>
-              <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-pink-400/20 to-red-400/20 rounded-full blur-3xl animate-float-modern-2"></div>
-              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-yellow-400/20 to-orange-400/20 rounded-full blur-3xl animate-float-modern-3"></div>
-            </div>
-
-            <div className="relative bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh]">
-              {/* Header */}
-              <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-8 relative">
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h1 className="text-4xl font-bold mb-2">Claim Your Free Website</h1>
-                    <p className="text-white/90 text-lg">Join 15,000+ businesses who've grown with our free websites</p>
-                  </div>
-                  <button
-                    onClick={resetSqueezePage}
-                    className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110"
-                  >
-                    <X className="w-6 h-6" />
-                  </button>
-                </div>
-
-                {/* Trust Indicators */}
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <Zap className="w-6 h-6" />
-                    </div>
-                    <div className="text-sm font-medium">Ready in 24hrs</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <Shield className="w-6 h-6" />
-                    </div>
-                    <div className="text-sm font-medium">100% Free Forever</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                      <Award className="w-6 h-6" />
-                    </div>
-                    <div className="text-sm font-medium">Professional Design</div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                {/* Left Side - Form */}
-                <div className="p-8">
-                  <div className="mb-6">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-2">Get Started in 2 Minutes</h2>
-                    <p className="text-gray-600">
-                      Fill out the form below and we'll create your professional website for free.
-                    </p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                          First Name <span className="text-red-500">*</span>
-                        </label>
-                        <Input
-                          placeholder="John"
-                          value={formData.firstName}
-                          onChange={(e) => handleFormChange("firstName", e.target.value)}
-                          className="h-12"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                        <Input
-                          placeholder="Doe"
-                          value={formData.lastName}
-                          onChange={(e) => handleFormChange("lastName", e.target.value)}
-                          className="h-12"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Email Address <span className="text-red-500">*</span>
-                      </label>
-                      <Input
-                        placeholder="john@business.com"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => handleFormChange("email", e.target.value)}
-                        className="h-12"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-                      <Input
-                        placeholder="(555) 123-4567"
-                        value={formData.phone}
-                        onChange={(e) => handleFormChange("phone", e.target.value)}
-                        className="h-12"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Business Name <span className="text-red-500">*</span>
-                      </label>
-                      <Input
-                        placeholder="Your Business Name"
-                        value={formData.businessName}
-                        onChange={(e) => handleFormChange("businessName", e.target.value)}
-                        className="h-12"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Business Type</label>
-                      <select
-                        value={formData.businessType}
-                        onChange={(e) => handleFormChange("businessType", e.target.value)}
-                        className="w-full h-12 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                      >
-                        <option value="">Select your business type</option>
-                        <option value="restaurant">Restaurant / Food Service</option>
-                        <option value="service">Service Business</option>
-                        <option value="healthcare">Healthcare / Medical</option>
-                        <option value="beauty">Beauty / Wellness</option>
-                        <option value="professional">Professional Services</option>
-                        <option value="retail">Retail / E-commerce</option>
-                        <option value="other">Other</option>
-                      </select>
-                    </div>
-
-                    <Button
-                      onClick={handleFormSubmit}
-                      className="w-full h-12 bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-lg text-lg font-medium"
-                    >
-                      Claim My Free Website →
-                    </Button>
-
-                    <div className="flex items-center justify-center space-x-6 text-xs text-gray-500 pt-2">
-                      <div className="flex items-center">
-                        <Check className="w-3 h-3 text-green-500 mr-1" />
-                        No credit card required
-                      </div>
-                      <div className="flex items-center">
-                        <Check className="w-3 h-3 text-green-500 mr-1" />
-                        Free forever
-                      </div>
-                      <div className="flex items-center">
-                        <Check className="w-3 h-3 text-green-500 mr-1" />
-                        24/7 support
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Right Side - Benefits & Social Proof */}
-                <div className="bg-gray-50 p-8 border-l border-gray-200">
-                  <div className="mb-8">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">What You'll Get:</h3>
-                    <div className="space-y-4">
-                      {[
-                        "Professional website design tailored to your business",
-                        "Mobile-optimized and SEO-ready",
-                        "Contact forms and business information",
-                        "Free hosting and domain setup",
-                        "24/7 customer support",
-                        "Easy content management",
-                      ].map((benefit, index) => (
-                        <div key={index} className="flex items-start">
-                          <Check className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-                          <span className="text-gray-700">{benefit}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Quick Stats */}
-                  <div className="bg-white rounded-xl p-6 mb-6">
-                    <h4 className="font-bold text-gray-900 mb-4">Join Successful Businesses:</h4>
-                    <div className="grid grid-cols-2 gap-4 text-center">
-                      <div>
-                        <div className="text-2xl font-bold text-indigo-600">15,000+</div>
-                        <div className="text-sm text-gray-600">Websites Created</div>
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-green-600">98%</div>
-                        <div className="text-sm text-gray-600">Satisfaction Rate</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Testimonial */}
-                  <div className="bg-white rounded-xl p-6">
-                    <div className="flex items-center mb-3">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
-                      ))}
-                    </div>
-                    <blockquote className="text-gray-700 mb-3">
-                      "My new website has brought in 40% more customers. The process was so easy and completely free!"
-                    </blockquote>
-                    <div className="flex items-center">
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
-                        S
-                      </div>
-                      <div>
-                        <div className="font-medium text-gray-900">Sarah Johnson</div>
-                        <div className="text-sm text-gray-600">Riverside Cafe</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Survey Modal */}
-      {showSurvey && (
-        <div className="fixed inset-0 z-50 bg-white">
-          <div className="min-h-screen flex items-center justify-center py-20 px-4">
-            <div className="relative bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
-              {!showResults ? (
-                <>
-                  {/* Survey Header */}
-                  <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white p-8 relative overflow-hidden">
-                    {/* Background Pattern */}
-                    <div className="absolute inset-0 opacity-10">
-                      <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16"></div>
-                      <div className="absolute top-0 right-0 w-24 h-24 bg-white rounded-full translate-x-12 -translate-y-12"></div>
-                      <div className="absolute bottom-0 left-1/2 w-40 h-40 bg-white rounded-full translate-y-20"></div>
-                    </div>
-
-                    <div className="relative z-10">
-                      <div className="flex items-center justify-between mb-8">
-                        <div>
-                          <h2 className="text-4xl font-bold mb-2">Find Your Perfect Website</h2>
-                          <p className="text-white/90 text-lg">
-                            Let's match you with the ideal design for your business
-                          </p>
-                        </div>
-                        <button
-                          onClick={resetSurvey}
-                          className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all duration-300 hover:scale-110"
-                        >
-                          <X className="w-6 h-6" />
-                        </button>
-                      </div>
-
-                      {/* Progress Bar */}
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="text-white/80">Progress</span>
-                          <span className="text-white font-medium">
-                            {currentStep + 1} of {surveyQuestions.length}
-                          </span>
-                        </div>
-                        <div className="w-full bg-white/20 rounded-full h-3 overflow-hidden">
-                          <div
-                            className="bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full h-3 transition-all duration-700 ease-out"
-                            style={{ width: `${((currentStep + 1) / surveyQuestions.length) * 100}%` }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Survey Content */}
-                  <div className="p-6">
-                    <div className="mb-8">
-                      <h3 className="text-3xl font-bold text-gray-900 mb-4 leading-tight">
-                        {currentQuestion.question}
-                      </h3>
-                      <p className="text-gray-600 text-lg">
-                        {currentStep === 0 && "This helps us show you templates designed for your industry"}
-                        {currentStep === 1 && "We'll recommend features that work best for your team size"}
-                        {currentStep === 2 && "Your main goal helps us prioritize the right features"}
-                        {currentStep === 3 && "Select features that are important to your business"}
-                        {currentStep === 4 && "This helps us understand your current situation"}
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                      {currentQuestion.options.map((option, index) => (
-                        <button
-                          key={option.value}
-                          onClick={() => handleSurveyAnswer(currentQuestion.id, option.value)}
-                          className={`group relative p-6 rounded-2xl border-2 text-left transition-all duration-300 hover:scale-[1.02] hover:shadow-lg ${
-                            currentQuestion.type === "multiple-choice"
-                              ? (currentAnswer && currentAnswer.includes(option.value))
-                                ? "border-indigo-500 bg-gradient-to-br from-indigo-50 to-purple-50 shadow-lg"
-                                : "border-gray-200 hover:border-indigo-300 bg-white"
-                              : currentAnswer === option.value
-                                ? "border-indigo-500 bg-gradient-to-br from-indigo-50 to-purple-50 shadow-lg"
-                                : "border-gray-200 hover:border-indigo-300 bg-white"
-                          }`}
-                          style={{ animationDelay: `${index * 100}ms` }}
-                        >
-                          <div className="flex items-center space-x-4">
-                            <div className="text-3xl group-hover:scale-110 transition-transform duration-300">
-                              {option.icon}
-                            </div>
-                            <div className="flex-1">
-                              <span className="text-lg font-semibold text-gray-900 block">{option.label}</span>
-                            </div>
-                            <div
-                              className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
-                                (
-                                  currentQuestion.type === "multiple-choice" &&
-                                    currentAnswer &&
-                                    currentAnswer.includes(option.value)
-                                ) || (currentQuestion.type === "single-choice" && currentAnswer === option.value)
-                                  ? "border-indigo-500 bg-indigo-500"
-                                  : "border-gray-300 group-hover:border-indigo-400"
-                              }`}
-                            >
-                              {((currentQuestion.type === "multiple-choice" &&
-                                currentAnswer &&
-                                currentAnswer.includes(option.value)) ||
-                                (currentQuestion.type === "single-choice" && currentAnswer === option.value)) && (
-                                <Check className="w-4 h-4 text-white" />
-                              )}
-                            </div>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Navigation Footer */}
-                  <div className="border-t border-gray-100 p-8 bg-gray-50/50">
-                    <div className="flex items-center justify-between">
-                      <button
-                        onClick={prevStep}
-                        disabled={currentStep === 0}
-                        className="flex items-center space-x-2 px-6 py-3 text-gray-600 hover:text-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:bg-white rounded-xl"
-                      >
-                        <ChevronLeft className="w-5 h-5" />
-                        <span className="font-medium">Previous</span>
-                      </button>
-
-                      <div className="flex space-x-2">
-                        {surveyQuestions.map((_, index) => (
-                          <div
-                            key={index}
-                            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                              index === currentStep
-                                ? "bg-indigo-500 w-8"
-                                : index < currentStep
-                                  ? "bg-green-400"
-                                  : "bg-gray-200"
-                            }`}
-                          />
-                        ))}
-                      </div>
-
-                      <button
-                        onClick={nextStep}
-                        disabled={!canProceed}
-                        className="flex items-center space-x-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-3 rounded-xl hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 font-medium"
-                      >
-                        <span>{currentStep === surveyQuestions.length - 1 ? "Get My Website" : "Next"}</span>
-                        <ChevronRight className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                /* Filtered Results Page */
-                <div>
-                  {/* Results Header */}
-                  <div className="bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 text-white p-6 relative overflow-hidden">
-                    <div className="relative z-10 text-center">
-                      <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Check className="w-8 h-8 text-white" />
-                      </div>
-                      <h2 className="text-3xl font-bold mb-2">Perfect Matches Found! 🎉</h2>
-                      <p className="text-white/90 text-lg">
-                        Based on your answers, here are the best website templates for your business
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="p-6">
-                    {/* Filter Summary */}
-                    <div className="bg-gray-50 rounded-2xl p-4 mb-6">
-                      <h3 className="font-semibold text-gray-900 mb-3">Your Requirements:</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {surveyAnswers[1] && (
-                          <Badge className="bg-blue-100 text-blue-800">
-                            {surveyQuestions[0].options.find((opt) => opt.value === surveyAnswers[1])?.label}
-                          </Badge>
-                        )}
-                        {surveyAnswers[2] && (
-                          <Badge className="bg-green-100 text-green-800">
-                            {surveyQuestions[1].options.find((opt) => opt.value === surveyAnswers[2])?.label}
-                          </Badge>
-                        )}
-                        {surveyAnswers[3] && (
-                          <Badge className="bg-purple-100 text-purple-800">
-                            {surveyQuestions[2].options.find((opt) => opt.value === surveyAnswers[3])?.label}
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Filtered Templates */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                      {getFilteredTemplates().map((template) => (
-                        <div
-                          key={template.id}
-                          className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-lg transition-all duration-300"
-                        >
-                          <div className="flex items-start space-x-4 mb-4">
-                            <Image
-                              src={template.image || "/placeholder.svg"}
-                              alt={template.name}
-                              width={80}
-                              height={60}
-                              className="rounded-lg shadow-sm"
-                            />
-                            <div className="flex-1">
-                              <h3 className="text-lg font-bold text-gray-900 mb-1">{template.name}</h3>
-                              <p className="text-gray-600 text-sm mb-2">{template.description}</p>
-                              <div className="flex items-center space-x-3">
-                                <div className="flex items-center space-x-1">
-                                  <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                                  <span className="text-sm font-semibold text-gray-900">4.9</span>
-                                </div>
-                                <div className="text-green-600 text-sm font-semibold">{template.claimed}+ claimed</div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="grid grid-cols-2 gap-2 mb-4">
-                            {template.features.slice(0, 4).map((feature) => (
-                              <div key={feature} className="flex items-center text-xs text-gray-600">
-                                <Check className="w-3 h-3 text-green-500 mr-1 flex-shrink-0" />
-                                <span className="truncate">{feature}</span>
-                              </div>
-                            ))}
-                          </div>
-
-                          <Button
-                            onClick={() => {
-                              resetSurvey()
-                              setShowSqueezePage(true)
-                            }}
-                            className="w-full bg-gray-900 hover:bg-gray-800 text-white"
-                          >
-                            Select This Design
-                          </Button>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Bottom CTA */}
-                    <div className="text-center">
-                      <Button
-                        onClick={() => {
-                          resetSurvey()
-                          setShowSqueezePage(true)
-                        }}
-                        size="lg"
-                        className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-lg"
-                      >
-                        Claim My Free Website Now →
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Header */}
       <header className="border-b bg-white/95 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -1260,15 +587,15 @@ export default function Component() {
             <a href="#contact" className="text-gray-600 hover:text-gray-900 transition-all duration-300 hover:scale-105">
               Contact
             </a>
-            </nav>
-            <Button
-              onClick={() => setShowSurvey(true)}
-              className="bg-gray-900 hover:bg-gray-800 transition-all duration-300 animate-fade-left hover:scale-105"
-            >
-              Get Started
-            </Button>
-          </div>
-        </header>
+          </nav>
+          <Button
+            onClick={() => alert("Contact us to get started!")}
+            className="bg-gray-900 hover:bg-gray-800 transition-all duration-300 animate-fade-left hover:scale-105"
+          >
+            Get Started
+          </Button>
+        </div>
+      </header>
 
       {/* Hero Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
@@ -1293,7 +620,7 @@ export default function Component() {
               <div className="flex flex-col sm:flex-row gap-4 animate-fade-up delay-300">
                 <Button
                   size="lg"
-                  onClick={() => setShowSqueezePage(true)}
+                  onClick={() => alert("Contact us to get started!")}
                   className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl"
                 >
                   Get My Free Website Built
@@ -1477,9 +804,6 @@ export default function Component() {
         </div>
       </section>
 
-      {/* Rest of the sections remain the same... */}
-      {/* I'll continue with the remaining sections to complete the component */}
-
       {/* Featured Web Designs Section */}
       <section id="websites" className="py-20 px-4 bg-white">
         <div className="container mx-auto max-w-7xl">
@@ -1568,7 +892,7 @@ export default function Component() {
                   {/* Action Buttons */}
                   <div className="flex gap-3">
                     <Button
-                      onClick={() => setShowSqueezePage(true)}
+                      onClick={() => alert("Contact us to get started!")}
                       className="flex-1 bg-gray-900 hover:bg-gray-800 text-white transition-all duration-300 hover:scale-105"
                     >
                       Claim Free
@@ -1632,111 +956,6 @@ export default function Component() {
                   <div className="text-3xl font-bold text-gray-900">$10+</div>
                   <div className="text-gray-500 font-medium">per change</div>
                 </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Comparison Table */}
-          <div className="max-w-6xl mx-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">How We Compare</h3>
-
-            <div className="overflow-x-auto">
-              <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-200">
-                {/* Table Header */}
-                <div className="bg-gray-900 text-white">
-                  <div className="grid grid-cols-4 gap-4 p-6">
-                    <div className="text-lg font-medium">Feature</div>
-                    <div className="text-center font-medium">LocalSite</div>
-                    <div className="text-center font-medium">Traditional Agency</div>
-                    <div className="text-center font-medium">DIY Builders</div>
-                  </div>
-                </div>
-
-                {/* Table Body */}
-                <div className="divide-y divide-gray-200">
-                  {[
-                    {
-                      feature: "Initial Investment",
-                      localsite: { value: "FREE", highlight: true },
-                      agency: { value: "$2,000-$10,000" },
-                      diy: { value: "$0-$300" },
-                    },
-                    {
-                      feature: "Monthly Cost",
-                      localsite: { value: "$20", highlight: true },
-                      agency: { value: "$50-$200" },
-                      diy: { value: "$10-$50" },
-                    },
-                    {
-                      feature: "Custom Design",
-                      localsite: { value: "✓", highlight: true },
-                      agency: { value: "✓", highlight: true },
-                      diy: { value: "✗" },
-                    },
-                    {
-                      feature: "Professional Support",
-                      localsite: { value: "✓", highlight: true },
-                      agency: { value: "✓", highlight: true },
-                      diy: { value: "✗" },
-                    },
-                    {
-                      feature: "Time to Launch",
-                      localsite: { value: "48 hours", highlight: true },
-                      agency: { value: "2-8 weeks" },
-                      diy: { value: "1-4 weeks" },
-                    },
-                    {
-                      feature: "Technical Knowledge",
-                      localsite: { value: "None", highlight: true },
-                      agency: { value: "None", highlight: true },
-                      diy: { value: "High" },
-                    },
-                  ].map((row, index) => (
-                    <div
-                      key={index}
-                      className={`grid grid-cols-4 gap-4 p-6 hover:bg-gray-50 transition-colors ${index % 2 === 0 ? "bg-white" : "bg-gray-50/50"}`}
-                    >
-                      <div className="font-medium text-gray-900">{row.feature}</div>
-                      <div className="text-center">
-                        <span className={row.localsite.highlight ? "font-medium text-green-600" : "text-gray-600"}>
-                          {row.localsite.value}
-                        </span>
-                      </div>
-                      <div className="text-center">
-                        <span className={row.agency.highlight ? "font-medium text-green-600" : "text-gray-600"}>
-                          {row.agency.value}
-                        </span>
-                      </div>
-                      <div className="text-center">
-                        <span className={row.diy.highlight ? "font-medium text-green-600" : "text-gray-600"}>
-                          {row.diy.value}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* What's Included */}
-            <div className="mt-16 bg-gray-50 rounded-2xl p-8 border border-gray-200">
-              <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">What's Included in Your $20/Month</h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[
-                  { icon: Shield, title: "Secure Hosting", desc: "Enterprise-grade security and SSL certificates" },
-                  { icon: Clock, title: "Regular Backups", desc: "Daily automated backups of your website" },
-                  { icon: Users, title: "Technical Support", desc: "Email and chat support from our team" },
-                  { icon: Zap, title: "Performance Monitoring", desc: "24/7 uptime monitoring and optimization" },
-                  { icon: Award, title: "Security Updates", desc: "Regular security patches and updates" },
-                  { icon: Globe, title: "SEO Optimization", desc: "Basic SEO setup and ongoing optimization" },
-                ].map((item, index) => (
-                  <div key={index} className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
-                    <item.icon className="w-8 h-8 text-gray-700 mb-3" />
-                    <h4 className="font-bold text-gray-900 mb-2">{item.title}</h4>
-                    <p className="text-gray-600 text-sm">{item.desc}</p>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
@@ -1874,31 +1093,32 @@ export default function Component() {
             {/* CTA Button */}
             <div className="space-y-6 animate-fade-up delay-500">
               <Button
-                onClick={() => setShowSqueezePage(true)}
+                onClick={() => alert("Contact us to get started!")}
                 size="lg"
                 className="bg-gray-900 hover:bg-gray-800 text-white px-12 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
-        >
-          Check Availability
-        </Button>
+              >
+                Check Availability
+              </Button>
 
-        {/* Trust Indicators */}
-        <div className="flex items-center justify-center space-x-8 text-sm text-gray-500 animate-fade-up delay-600">
-          <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
-            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-            <span>No credit card required</span>
-          </div>
-          <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
-            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-            <span>60-day guarantee</span>
-          </div>
-          <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
-            <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-            <span>Cancel anytime</span>
+              {/* Trust Indicators */}
+              <div className="flex items-center justify-center space-x-8 text-sm text-gray-500 animate-fade-up delay-600">
+                <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
+                  <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                  <span>No credit card required</span>
+                </div>
+                <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
+                  <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                  <span>60-day guarantee</span>
+                </div>
+                <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
+                  <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
+                  <span>Cancel anytime</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
       {/* Modern Footer */}
       <footer className="bg-gray-900 text-white relative overflow-hidden">
@@ -1941,7 +1161,7 @@ export default function Component() {
                   className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001.012.001z" />
+                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 2.567-2.016 0-1.029.96-1.683 1.68-1.683h2.016c.72 0 1.2.48 1.2 1.2 0 .72-.72.72-1.2.72-1.92l-3.84-4.8c-.72-.72-1.2-.72-1.92 0-1.92h2.016c.72 0 1.2.48 1.2 1.2 0 .72-.72.72-1.2.72-1.92l4.8-6z" />
                   </svg>
                 </a>
               </div>
@@ -2062,5 +1282,5 @@ export default function Component() {
         </div>
       </footer>
     </div>
-  )\
+  )
 }
