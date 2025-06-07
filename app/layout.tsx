@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { AuthProvider } from '@/lib/AuthContext'
+import GoogleAnalytics from './components/GoogleAnalytics'
 
 export const metadata: Metadata = {
   title: '88 Web Designs - Free Websites for Small Businesses',
@@ -19,7 +21,12 @@ export default function RootLayout({
         <meta charSet="utf-8" />
         <meta name="theme-color" content="#ffffff" />
       </head>
-      <body className="min-h-screen bg-background antialiased">{children}</body>
+      <body className="min-h-screen bg-background antialiased">
+        <GoogleAnalytics />
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   )
 }

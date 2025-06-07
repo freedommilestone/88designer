@@ -599,9 +599,9 @@ export default function HomePage() {
                   className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl"
                   asChild
                 >
-                  <Link href="/claim-website">
-                    Get My Free Website Built
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                  <Link href="/squeeze">
+                  Get My Free Website Built
+                  <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
                 <Button
@@ -728,18 +728,6 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Progress Indicators */}
-              <div className="flex justify-center mt-6 space-x-2 animate-fade-up delay-400">
-                {websiteExamples.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentWebsite(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      index === currentWebsite ? "bg-gray-900 w-6" : "bg-gray-300 hover:bg-gray-400 hover:scale-110"
-                    }`}
-                  />
-                ))}
-              </div>
 
               {/* Decorative Elements */}
               <div className="absolute -bottom-6 -right-6 w-64 h-64 bg-gray-50 rounded-full -z-10 animate-float-modern-1"></div>
@@ -812,7 +800,7 @@ export default function HomePage() {
                   <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-900 text-white font-semibold text-sm">1</span>
                 </div>
               </div>
-            </div>
+          </div>
 
             {/* Step 2 */}
             <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-500 animate-float-subtle-delay-1 relative overflow-hidden group">
@@ -824,7 +812,7 @@ export default function HomePage() {
                   <svg className="w-10 h-10 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
                   </svg>
-                </div>
+                  </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">2. We Build Your Custom Website</h3>
                 <p className="text-gray-600">
                   Our expert team designs and builds your professional website within 48 hours.
@@ -833,7 +821,7 @@ export default function HomePage() {
                   <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-900 text-white font-semibold text-sm">2</span>
                 </div>
               </div>
-            </div>
+                  </div>
 
             {/* Step 3 */}
             <div className="bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-all duration-500 animate-float-subtle-delay-2 relative overflow-hidden group">
@@ -853,9 +841,9 @@ export default function HomePage() {
                 <div className="mt-6 flex justify-center">
                   <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-gray-900 text-white font-semibold text-sm">3</span>
                 </div>
-              </div>
-            </div>
-          </div>
+                    </div>
+                  </div>
+                </div>
 
           <div className="text-center mt-16">
             <Button
@@ -863,10 +851,10 @@ export default function HomePage() {
               className="bg-gray-900 hover:bg-gray-800 text-white px-12 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               asChild
             >
-              <Link href="/claim-website">Start Your Free Website</Link>
+              <Link href="/squeeze">Start Your Free Website</Link>
             </Button>
-          </div>
-        </div>
+                      </div>
+                  </div>
       </section>
 
       {/* Features & Benefits Section */}
@@ -881,13 +869,13 @@ export default function HomePage() {
 
           {/* Tab Navigation */}
           <div className="flex flex-wrap justify-center gap-2 mb-12">
-            <Button
+                    <Button
               variant={selectedBusinessType === 'restaurant' ? 'default' : 'outline'}
               className={`rounded-full px-6 py-2 ${selectedBusinessType === 'restaurant' ? 'bg-gray-900 text-white' : 'text-gray-700 hover:bg-gray-100'}`}
               onClick={() => setSelectedBusinessType('restaurant')}
-            >
+                    >
               Restaurants
-            </Button>
+                    </Button>
             <Button
               variant={selectedBusinessType === 'service' ? 'default' : 'outline'}
               className={`rounded-full px-6 py-2 ${selectedBusinessType === 'service' ? 'bg-gray-900 text-white' : 'text-gray-700 hover:bg-gray-100'}`}
@@ -901,8 +889,8 @@ export default function HomePage() {
               onClick={() => setSelectedBusinessType('retail')}
             >
               Retail Stores
-            </Button>
-          </div>
+                    </Button>
+                  </div>
 
           {/* Features Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -971,8 +959,8 @@ export default function HomePage() {
                       <Check className="w-4 h-4 text-green-500" />
                     </div>
                     <span className="text-gray-800 font-bold">$0</span>
-                  </div>
                 </div>
+              </div>
 
                 {/* Column 2: Website Hosting & Support */}
                 <div className="space-y-4">
@@ -980,7 +968,7 @@ export default function HomePage() {
                   <div className="flex items-center space-x-3">
                     <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
                       <Check className="w-4 h-4 text-green-500" />
-                    </div>
+                </div>
                     <span className="text-gray-800 font-bold">$20/month</span>
                   </div>
                   <ul className="space-y-2 text-sm text-gray-600 pl-9">
@@ -989,7 +977,7 @@ export default function HomePage() {
                     <li className="flex items-center"><Check className="w-4 h-4 text-orange-500 mr-2" />Technical support</li>
                     <li className="flex items-center"><Check className="w-4 h-4 text-orange-500 mr-2" />Regular backups</li>
                   </ul>
-                </div>
+              </div>
 
                 {/* Column 3: Website Updates & Changes */}
                 <div className="space-y-4">
@@ -1013,14 +1001,14 @@ export default function HomePage() {
              {/* Footer */}
             <div className="bg-gray-50 px-8 py-6 text-center">
                <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white w-full md:w-auto px-12 py-6 text-lg" asChild>
-                <Link href="/claim-website">Claim Your Free Website Now</Link>
+                <Link href="/squeeze">Claim Your Free Website Now</Link>
               </Button>
               <p className="text-sm text-gray-500 mt-4">
                 No credit card required to get started. Only pay when your website is ready to launch.
               </p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
       </section>
 
       {/* What's Included Section */}
@@ -1032,7 +1020,7 @@ export default function HomePage() {
               Everything you need to keep your website secure, fast, and up-to-date.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Secure Hosting */}
             <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
@@ -1047,19 +1035,19 @@ export default function HomePage() {
             <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
               <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-orange-50 mb-4">
                 <Clock className="h-6 w-6 text-orange-500" />
-              </div>
+                  </div>
               <h3 className="font-semibold text-lg mb-2">Regular Backups</h3>
               <p className="text-gray-600 text-sm">Daily automated backups of your website</p>
-            </div>
-            
+                </div>
+
             {/* Technical Support */}
             <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
               <div className="flex items-center justify-center h-12 w-12 rounded-lg bg-orange-50 mb-4">
                 <Users className="h-6 w-6 text-orange-500" />
-              </div>
+                      </div>
               <h3 className="font-semibold text-lg mb-2">Technical Support</h3>
               <p className="text-gray-600 text-sm">Email and chat support from our team</p>
-            </div>
+                      </div>
             
             {/* Performance Monitoring */}
             <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
@@ -1111,11 +1099,11 @@ export default function HomePage() {
                   <span className="relative inline-block pt-5">
                     <div className="absolute top-[-20px] left-1/2 transform -translate-x-1/2 bg-orange-500 text-white text-xs px-3 py-1 font-medium shadow-sm w-28 text-center">Best Value</div>
                     88 Web Designs
-                  </span>
-                </div>
+                        </span>
+                      </div>
                 <div className="p-4 font-semibold text-center w-40">Traditional Agency</div>
                 <div className="p-4 font-semibold text-center w-40">DIY Builders</div>
-              </div>
+                    </div>
               
               {/* Initial Investment */}
               <div className="grid grid-cols-4 border-b border-gray-200 hover:bg-gray-50 transition-all duration-300 hover:shadow-sm">
@@ -1123,7 +1111,7 @@ export default function HomePage() {
                 <div className="p-4 text-center font-bold text-orange-500">FREE</div>
                 <div className="p-4 text-center">$2,000-$10,000</div>
                 <div className="p-4 text-center">$0-$300</div>
-              </div>
+                </div>
               
               {/* Monthly Cost */}
               <div className="grid grid-cols-4 border-b border-gray-200 hover:bg-gray-50 transition-all duration-300 hover:shadow-sm">
@@ -1139,8 +1127,8 @@ export default function HomePage() {
                 <div className="p-4 text-center text-orange-500 text-xl">✓</div>
                 <div className="p-4 text-center text-orange-500 text-xl">✓</div>
                 <div className="p-4 text-center text-red-600 text-xl">✗</div>
-              </div>
-              
+            </div>
+
               {/* Professional Support */}
               <div className="grid grid-cols-4 border-b border-gray-200 hover:bg-gray-50 transition-all duration-300 hover:shadow-sm">
                 <div className="p-4 font-medium bg-gray-50">Professional Support</div>
@@ -1155,7 +1143,7 @@ export default function HomePage() {
                 <div className="p-4 text-center font-bold text-orange-500">48 hours</div>
                 <div className="p-4 text-center">2-8 weeks</div>
                 <div className="p-4 text-center">1-4 weeks</div>
-              </div>
+                  </div>
               
               {/* Technical Knowledge */}
               <div className="grid grid-cols-4 hover:bg-gray-50 transition-all duration-300 hover:shadow-sm">
@@ -1180,7 +1168,7 @@ export default function HomePage() {
               className="bg-gray-900 hover:bg-gray-800 text-white px-10 py-6 text-lg rounded-full transition-all duration-300 hover:scale-105"
               asChild
             >
-              <Link href="/claim-website">Claim Your Free Website</Link>
+              <Link href="/squeeze">Claim Your Free Website</Link>
             </Button>
           </div>
         </div>
@@ -1354,7 +1342,7 @@ export default function HomePage() {
                 ))}
               </div>
             </div>
-            
+
             {/* CTA Button */}
             <div className="space-y-6 animate-fade-up delay-500 pt-8">
               <p className="text-sm text-gray-500 flex items-center justify-center">
@@ -1366,29 +1354,29 @@ export default function HomePage() {
                 size="lg"
                 className="bg-gray-900 hover:bg-gray-800 text-white px-12 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                 asChild
-              >
-                <Link href="/claim-website">Check Availability</Link>
-              </Button>
+        >
+                <Link href="/squeeze">Check Availability</Link>
+        </Button>
 
-              {/* Trust Indicators */}
+        {/* Trust Indicators */}
               <div className="flex items-center justify-center space-x-8 text-sm text-gray-500">
-                <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
+          <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
                   <div className="w-1 h-1 bg-orange-500 rounded-full"></div>
-                  <span>No credit card required</span>
-                </div>
-                <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
+            <span>No credit card required</span>
+          </div>
+          <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
                   <div className="w-1 h-1 bg-orange-500 rounded-full"></div>
-                  <span>60-day guarantee</span>
-                </div>
-                <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
+            <span>60-day guarantee</span>
+          </div>
+          <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
                   <div className="w-1 h-1 bg-orange-500 rounded-full"></div>
-                  <span>Cancel anytime</span>
+            <span>Cancel anytime</span>
                 </div>
-              </div>
-            </div>
           </div>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
       {/* Modern Footer */}
       <footer className="bg-gray-900 text-white relative overflow-hidden">

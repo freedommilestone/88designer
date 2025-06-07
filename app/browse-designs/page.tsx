@@ -76,7 +76,7 @@ export default function BrowseDesignsPage() {
           
           <div className="text-center mt-12">
             <Link 
-              href="/claim-website"
+              href="/squeeze"
               className="inline-flex items-center justify-center px-8 py-4 bg-gray-900 text-white rounded-md font-medium hover:bg-gray-800 transition-colors duration-300"
             >
               Claim Your Free Website
