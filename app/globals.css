@@ -66,6 +66,25 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Mobile optimizations */
+  input, 
+  select, 
+  textarea, 
+  button,
+  .touch-target {
+    @apply min-h-[48px] touch-manipulation;
+  }
+  
+  /* Form fields for mobile */
+  .form-field {
+    @apply space-y-2;
+  }
+  
+  /* Improve tap targets for mobile */
+  .mobile-friendly-link {
+    @apply p-2 -m-2;
+  }
 }
 
 @layer utilities {
@@ -471,5 +490,7 @@
   /* Smooth scroll behavior */
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
   }
 }
