@@ -65,7 +65,7 @@ export function Header() {
                     onClick={() => setIsMenuOpen(false)}
                     asChild
                   >
-                    <Link href="/claim-website">Get Started</Link>
+                    <Link href="/claim-website?from=mobile-menu">Get Started</Link>
                   </Button>
                 </SheetClose>
               </nav>
@@ -78,7 +78,7 @@ export function Header() {
           className="bg-gray-900 hover:bg-gray-800 transition-all duration-300 animate-fade-left hover:scale-105"
           asChild
         >
-          <Link href="/claim-website">Get Started</Link>
+          <Link href="/claim-website?from=header">Get Started</Link>
         </Button>
       </div>
     </header>
