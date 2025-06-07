@@ -358,6 +358,30 @@
     transition: all 0.3s ease;
   }
 
+  /* Subtle floating animations for cards */
+  .animate-float-subtle {
+    animation: floatSubtle 4s ease-in-out infinite;
+  }
+
+  .animate-float-subtle-delay-1 {
+    animation: floatSubtle 4s ease-in-out infinite;
+    animation-delay: 1s;
+  }
+
+  .animate-float-subtle-delay-2 {
+    animation: floatSubtle 4s ease-in-out infinite;
+    animation-delay: 2s;
+  }
+
+  @keyframes floatSubtle {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
   @keyframes fadeUp {
     from {
       opacity: 0;
