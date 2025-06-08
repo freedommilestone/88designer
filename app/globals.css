@@ -212,6 +212,37 @@
     animation: floatModern6 7s ease-in-out infinite;
   }
 
+  /* Subtle readable floating animation */
+  .animate-float-subtle {
+    animation: floatSubtle 6s ease-in-out infinite;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  @keyframes floatSubtle {
+    0% {
+      transform: translateY(0);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+    25% {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+    }
+    50% {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+    75% {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+    }
+    100% {
+      transform: translateY(0);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+  }
+
   @keyframes floatModern1 {
     0%,
     100% {
@@ -251,12 +282,12 @@
   @keyframes floatModern3 {
     0%,
     100% {
-      transform: translateY(0px) translateX(0px) rotate(0deg);
-      opacity: 0.2;
+      transform: translateY(0px) translateX(0px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     }
     50% {
-      transform: translateY(-50px) translateX(0px) rotate(180deg);
-      opacity: 0.5;
+      transform: translateY(-20px) translateX(10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     }
   }
 

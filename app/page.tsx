@@ -17,8 +17,14 @@ import {
   Zap,
   Shield,
   Award,
+  BookOpen,
+  Smartphone,
+  ShoppingCart,
+  Calendar,
+  Tag,
 } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -93,7 +99,7 @@ const templates = [
     name: "Local Restaurant",
     category: "Restaurant",
     description: "Perfect for cafes, bistros and local eateries",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "/placeholder.svg",
     features: ["Online Menu", "Reservation System", "Mobile Optimized", "SEO Optimized"],
     claimed: 1247,
   },
@@ -102,7 +108,7 @@ const templates = [
     name: "Service Business",
     category: "Service",
     description: "Ideal for plumbers, electricians, and contractors",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "/placeholder.svg",
     features: ["Service Listings", "Quote Request", "Testimonials", "Contact Forms"],
     claimed: 892,
   },
@@ -111,7 +117,7 @@ const templates = [
     name: "Retail Store",
     category: "Retail",
     description: "Showcase your products and drive foot traffic",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "/placeholder.svg",
     features: ["Product Gallery", "Store Hours", "Location Map", "Social Media"],
     claimed: 2156,
   },
@@ -120,7 +126,7 @@ const templates = [
     name: "Professional Services",
     category: "Professional",
     description: "For accountants, lawyers, and consultants",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "/placeholder.svg",
     features: ["Service Pages", "Appointment Booking", "Team Profiles", "Client Portal"],
     claimed: 743,
   },
@@ -129,7 +135,7 @@ const templates = [
     name: "Salon & Spa",
     category: "Beauty",
     description: "Elegant design for beauty and wellness businesses",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "/placeholder.svg",
     features: ["Service Menu", "Online Booking", "Staff Profiles", "Gallery"],
     claimed: 1089,
   },
@@ -138,7 +144,7 @@ const templates = [
     name: "Medical Practice",
     category: "Healthcare",
     description: "Clean design for healthcare professionals",
-    image: "/placeholder.svg?height=300&width=400",
+    image: "/placeholder.svg",
     features: ["Appointment Booking", "Service Listings", "Doctor Profiles", "HIPAA Compliant"],
     claimed: 567,
   },
@@ -253,6 +259,91 @@ const caseStudies = [
   },
 ]
 
+// Recently claimed websites data
+const recentlyClaimed = [
+  {
+    businessName: "Sunrise Bakery",
+    location: "Portland, OR",
+    businessType: "Restaurant",
+    template: "Local Restaurant",
+    timeAgo: "2 hours ago",
+    initial: "S",
+    color: "bg-orange-200 text-orange-600",
+  },
+  {
+    businessName: "Elite Fitness Studio",
+    location: "Austin, TX",
+    businessType: "Fitness",
+    template: "Professional Services",
+    timeAgo: "4 hours ago",
+    initial: "E",
+    color: "bg-blue-200 text-blue-600",
+  },
+  {
+    businessName: "Harmony Dental Care",
+    location: "Denver, CO",
+    businessType: "Healthcare",
+    template: "Medical Practice",
+    timeAgo: "6 hours ago",
+    initial: "H",
+    color: "bg-emerald-200 text-emerald-600",
+  },
+  {
+    businessName: "Urban Brew Coffee",
+    location: "Seattle, WA",
+    businessType: "Restaurant",
+    template: "Local Restaurant",
+    timeAgo: "8 hours ago",
+    initial: "U",
+    color: "bg-amber-200 text-amber-600",
+  },
+  {
+    businessName: "Pacific Plumbing",
+    location: "San Diego, CA",
+    businessType: "Service",
+    template: "Service Business",
+    timeAgo: "10 hours ago",
+    initial: "P",
+    color: "bg-sky-200 text-sky-600",
+  },
+  {
+    businessName: "Golden Spa Retreat",
+    location: "Miami, FL",
+    businessType: "Beauty",
+    template: "Salon & Spa",
+    timeAgo: "12 hours ago",
+    initial: "G",
+    color: "bg-purple-200 text-purple-600",
+  },
+  {
+    businessName: "Metro Legal Services",
+    location: "Chicago, IL",
+    businessType: "Professional",
+    template: "Professional Services",
+    timeAgo: "16 hours ago",
+    initial: "M",
+    color: "bg-gray-200 text-gray-600",
+  },
+  {
+    businessName: "Organic Market",
+    location: "Boston, MA",
+    businessType: "Retail",
+    template: "Retail Store",
+    timeAgo: "18 hours ago",
+    initial: "O",
+    color: "bg-green-200 text-green-600",
+  },
+  {
+    businessName: "Tech Solutions",
+    location: "San Francisco, CA",
+    businessType: "Professional",
+    template: "Professional Services",
+    timeAgo: "20 hours ago",
+    initial: "T",
+    color: "bg-indigo-200 text-indigo-600",
+  },
+]
+
 const trustedBusinesses = [
   "RIVERSIDE CAFE",
   "SMITH & SONS PLUMBING",
@@ -293,6 +384,7 @@ export default function Component() {
 
   // New state variables for the additional sections
   const [selectedBusinessType, setSelectedBusinessType] = useState("restaurant")
+  const [activeFeatureTab, setActiveFeatureTab] = useState("restaurants")
   const [openFaq, setOpenFaq] = useState<number | null>(null)
 
   // Title carousel state - moved inside component
@@ -571,6 +663,76 @@ export default function Component() {
     return features[businessType] || features.restaurant
   }
 
+  // Features & Benefits section content
+  const featureContent = {
+    restaurants: [
+      {
+        icon: BookOpen,
+        title: "Online Menu",
+        description: "Beautiful, easy-to-update digital menu that looks great on any device. Update prices and items instantly."
+      },
+      {
+        icon: Smartphone,
+        title: "Mobile-Friendly",
+        description: "Optimized for customers on the go. Your menu and information look perfect on phones and tablets."
+      },
+      {
+        icon: ShoppingCart,
+        title: "Delivery Integration",
+        description: "Connect with popular food delivery platforms to expand your reach and increase orders."
+      },
+      {
+        icon: Calendar,
+        title: "Reservation System",
+        description: "Let customers book tables directly through your website, reducing phone calls and missed bookings."
+      }
+    ],
+    serviceProviders: [
+      {
+        icon: Image,
+        title: "Portfolio Showcase",
+        description: "Highlight your best work with a professional portfolio gallery that builds trust with potential clients."
+      },
+      {
+        icon: Calendar,
+        title: "Appointment Booking",
+        description: "Allow clients to book appointments online 24/7, reducing scheduling conflicts and phone tag."
+      },
+      {
+        icon: Star,
+        title: "Review Integration",
+        description: "Showcase your best customer reviews and testimonials to build credibility with new prospects."
+      },
+      {
+        icon: MapPin,
+        title: "Service Area Maps",
+        description: "Clearly display the areas you serve with interactive maps to attract local customers."
+      }
+    ],
+    retailStores: [
+      {
+        icon: Image,
+        title: "Product Showcases",
+        description: "Display your products with beautiful imagery that entices customers to visit your store."
+      },
+      {
+        icon: MapPin,
+        title: "Store Location",
+        description: "Make it easy for customers to find you with integrated maps and clearly displayed store hours."
+      },
+      {
+        icon: Tag,
+        title: "Special Promotions",
+        description: "Highlight sales, discounts, and special offers to drive more foot traffic to your retail location."
+      },
+      {
+        icon: Smartphone,
+        title: "Mobile Shopping",
+        description: "Create a seamless shopping experience for customers browsing on phones and tablets."
+      }
+    ]
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -580,20 +742,35 @@ export default function Component() {
             <Globe className="h-6 w-6 text-gray-800" />
             <span className="text-xl font-medium text-gray-900">LocalSite</span>
           </div>
-          <nav className="hidden md:flex items-center space-x-8 animate-fade-up">
-            <a href="#websites" className="text-gray-600 hover:text-gray-900 transition-all duration-300 hover:scale-105">
-              Websites
+          <nav className="hidden md:flex items-center space-x-6 animate-fade-up">
+            <a href="#how-it-works" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
+              How It Works
             </a>
-            <a href="#contact" className="text-gray-600 hover:text-gray-900 transition-all duration-300 hover:scale-105">
+            <a href="#pricing" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
+              Pricing
+            </a>
+            <a href="#features" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
+              Features
+            </a>
+            <a href="#faq" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
+              FAQs
+            </a>
+            <Link href="/browse-designs" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
+              Browse Designs
+            </Link>
+            <Link href="/contact" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
               Contact
-            </a>
+            </Link>
           </nav>
-          <Button
-            onClick={() => alert("Contact us to get started!")}
-            className="bg-gray-900 hover:bg-gray-800 transition-all duration-300 animate-fade-left hover:scale-105"
-          >
-            Get Started
-          </Button>
+          <div className="flex justify-center">
+            <Link href="/squeeze">
+              <Button
+                className="bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500"
+              >
+                Get Started
+              </Button>
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -618,22 +795,25 @@ export default function Component() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 animate-fade-up delay-300">
-                <Button
-                  size="lg"
-                  onClick={() => alert("Contact us to get started!")}
-                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl"
-                >
-                  Get My Free Website Built
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-gray-700 border-gray-300 px-8 py-6 text-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-md"
-                >
-                  <Eye className="mr-2 h-5 w-5" />
-                  View Examples
-                </Button>
+                <Link href="/squeeze">
+                  <Button
+                    size="lg"
+                    className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl"
+                  >
+                    Get My Free Website Built
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link href="/browse-designs">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="text-gray-700 border-gray-300 px-8 py-6 text-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-md"
+                  >
+                    <Eye className="mr-2 h-5 w-5" />
+                    View Examples
+                  </Button>
+                </Link>
               </div>
 
               {/* Trust Indicators */}
@@ -804,166 +984,247 @@ export default function Component() {
         </div>
       </section>
 
-      {/* Featured Web Designs Section */}
-      <section id="websites" className="py-20 px-4 bg-white">
-        <div className="container mx-auto max-w-7xl">
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-24 px-4 bg-gradient-to-b from-white to-gray-50">
+        <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-200 border-0 mb-4">Professional Templates</Badge>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Choose Your Perfect Website Design</h2>
+            <h2 className="text-5xl font-bold text-gray-900 mb-4">How It Works</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Browse our collection of professionally designed websites, each tailored for specific business
-            types. Find
-              your perfect match and claim it for free.
+              Getting your professional website is simple. Just follow these 3 easy steps and you'll be
+              online in no time.
             </p>
           </div>
-
-          {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
-                  selectedCategory === category
-                    ? "bg-gray-900 text-white shadow-lg"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-
-          {/* Templates Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredTemplates.map((template, index) => (
-              <div
-                key={template.id}
-                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-gray-200 transform hover:-translate-y-2 hover-lift animate-fade-up"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                {/* Template Preview */}
-                <div className="relative overflow-hidden bg-gray-50">
-                  <Image
-                    src={template.image || "/placeholder.svg"}
-                    alt={template.name}
-                    width={400}
-                    height={300}
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                  {/* Preview Button */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    <Button size="sm" className="bg-white/90 text-gray-900 hover:bg-white backdrop-blur-sm animate-scale">
-                      <Eye className="w-4 h-4 mr-2" />
-                      Preview
-                    </Button>
-                  </div>
-
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4">
-                    <Badge className="bg-white/90 text-gray-800 backdrop-blur-sm">{template.category}</Badge>
-                  </div>
-
-                  {/* Claimed Count */}
-                  <div className="absolute top-4 right-4">
-                    <div className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                      {template.claimed}+ claimed
-                    </div>
-                  </div>
-                </div>
-
-                {/* Template Info */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-gray-800 transition-colors duration-300">{template.name}</h3>
-                  <p className="text-gray-600 mb-4 line-clamp-2 group-hover:text-gray-700 transition-colors duration-300">{template.description}</p>
-
-                  {/* Features */}
-                  <div className="grid grid-cols-2 gap-2 mb-6">
-                    {template.features.map((feature, i) => (
-                      <div key={feature} className="flex items-center text-sm text-gray-600 group-hover:text-gray-700 transition-colors duration-300" style={{ transitionDelay: `${i * 50}ms` }}>
-                        <Check className="w-4 h-4 text-green-500 mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                        <span className="truncate">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex gap-3">
-                    <Button
-                      onClick={() => alert("Contact us to get started!")}
-                      className="flex-1 bg-gray-900 hover:bg-gray-800 text-white transition-all duration-300 hover:scale-105"
-                    >
-                      Claim Free
-                    </Button>
-                    <Button variant="outline" size="sm" className="px-4 transition-all duration-300 hover:bg-gray-50">
-                      <Eye className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            {/* Card 1 */}
+            <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300 hover-lift group">
+              <div className="absolute -top-6 right-8 w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl font-bold">
+                1
               </div>
-            ))}
+              <div className="pt-6 mb-6 text-center">
+                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 text-blue-600 group-hover:scale-110 transition-transform duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Order Your Free Website</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Fill out our simple form with your business information and tell us what you need.
+                </p>
+              </div>
+            </div>
+            
+            {/* Card 2 */}
+            <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300 hover-lift group">
+              <div className="absolute -top-6 right-8 w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xl font-bold">
+                2
+              </div>
+              <div className="pt-6 mb-6 text-center">
+                <div className="w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center mx-auto mb-6 text-purple-600 group-hover:scale-110 transition-transform duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <line x1="21.17" y1="8" x2="12" y2="8"></line>
+                    <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+                    <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">We Build Your Custom Website</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Our expert team designs and builds your professional website within 48 hours.
+                </p>
+              </div>
+            </div>
+            
+            {/* Card 3 */}
+            <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300 hover-lift group">
+              <div className="absolute -top-6 right-8 w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl font-bold">
+                3
+              </div>
+              <div className="pt-6 mb-6 text-center">
+                <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600 group-hover:scale-110 transition-transform duration-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Launch & Ongoing Support</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  We launch your website and provide ongoing support to help your business grow online.
+                </p>
+              </div>
+            </div>
           </div>
-
-          {/* Bottom CTA - REMOVED */}
+          
+          {/* CTA Button */}
+          <div className="text-center mt-16">
+            <Link href="/squeeze">
+              <Button
+                size="lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Start Your Free Website
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Pricing Transparency Section */}
-      <section className="py-20 px-4 bg-white">
-        <div className="container mx-auto max-w-7xl">
-          <div className="text-center mb-16">
-            <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-200 border-0 mb-4">Transparent Pricing</Badge>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">No Hidden Costs, No Surprises</h2>
+      <section id="pricing" className="py-20 px-4 bg-white">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Pricing Transparency</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We believe in complete transparency. Here's exactly what you pay and what you get.
+              No hidden fees or surprise costs – just straightforward pricing
             </p>
           </div>
-
-          {/* Pricing Breakdown */}
-          <div className="max-w-4xl mx-auto mb-16">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Website Design */}
-              <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Website Design</h3>
-                <p className="text-gray-600 mb-6">
-                  Custom design, mobile optimization, SEO setup, professional development
-                </p>
-                <div className="space-y-2">
-                  <div className="text-lg font-medium text-gray-500 line-through">$1,500</div>
-                  <div className="text-3xl font-bold text-green-600">FREE</div>
+          
+          <div className="space-y-6">
+            {/* Website Design Card */}
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Website Design & Development</h3>
+              <div className="flex items-baseline mb-2">
+                <span className="text-gray-400 line-through text-2xl mr-3">$1,500</span>
+                <span className="text-5xl font-bold text-blue-600">$0</span>
+              </div>
+              <p className="text-gray-600 mb-2">Professional, custom-designed website at no upfront cost</p>
+            </div>
+            
+            {/* Website Hosting Card */}
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Website Hosting & Support</h3>
+              <div className="flex items-baseline mb-2">
+                <span className="text-5xl font-bold text-gray-900">$20</span>
+                <span className="text-gray-600 ml-2">/month</span>
+              </div>
+              <p className="text-gray-600 mb-6">Everything you need to keep your website running smoothly</p>
+              
+              <div className="space-y-3">
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mt-1">
+                    <Check className="h-5 w-5 text-green-500" />
+                  </div>
+                  <p className="ml-3 text-gray-600">Secure, reliable website hosting</p>
+                </div>
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mt-1">
+                    <Check className="h-5 w-5 text-green-500" />
+                  </div>
+                  <p className="ml-3 text-gray-600">Regular security updates and monitoring</p>
+                </div>
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mt-1">
+                    <Check className="h-5 w-5 text-green-500" />
+                  </div>
+                  <p className="ml-3 text-gray-600">Technical support via email and chat</p>
+                </div>
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mt-1">
+                    <Check className="h-5 w-5 text-green-500" />
+                  </div>
+                  <p className="ml-3 text-gray-600">Regular backups of website content</p>
+                </div>
+                <div className="flex items-start">
+                  <div className="flex-shrink-0 mt-1">
+                    <Check className="h-5 w-5 text-green-500" />
+                  </div>
+                  <p className="ml-3 text-gray-600">Basic SEO optimization</p>
                 </div>
               </div>
-
-              {/* Hosting */}
-              <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Premium Hosting</h3>
-                <p className="text-gray-600 mb-6">Secure hosting, daily backups, updates, 24/7 technical support</p>
-                <div className="space-y-2">
-                  <div className="text-3xl font-bold text-gray-900">$20</div>
-                  <div className="text-gray-500 font-medium">per month</div>
-                </div>
+            </div>
+            
+            {/* Website Updates Card */}
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Website Updates & Changes</h3>
+              <div className="flex items-baseline mb-2">
+                <span className="text-2xl text-gray-900 font-bold">Starting at</span>
+                <span className="text-2xl font-bold text-gray-900 ml-2">$10</span>
+                <span className="text-gray-600 ml-2">per change</span>
               </div>
-
-              {/* Updates */}
-              <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Website Updates</h3>
-                <p className="text-gray-600 mb-6">
-                  Content updates, new pages, design modifications, feature additions
-                </p>
-                <div className="space-y-2">
-                  <div className="text-3xl font-bold text-gray-900">$10+</div>
-                  <div className="text-gray-500 font-medium">per change</div>
-                </div>
-              </div>
+              <p className="text-gray-600">For content updates, design changes, and new features</p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Features & Benefits Section */}
+      <section id="features" className="py-24 px-4 bg-gradient-to-b from-white to-gray-50">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-bold text-gray-900 mb-4">Features & Benefits</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Our websites are tailored to the specific needs of your business type
+            </p>
+          </div>
+
+          {/* Feature Tabs */}
+          <div className="flex justify-center mb-16 space-x-2">
+            <button
+              className={`px-5 py-3 rounded-full transition-all ${
+                activeFeatureTab === "restaurants"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+              onClick={() => setActiveFeatureTab("restaurants")}
+            >
+              Restaurants
+            </button>
+            <button
+              className={`px-5 py-3 rounded-full transition-all ${
+                activeFeatureTab === "serviceProviders"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+              onClick={() => setActiveFeatureTab("serviceProviders")}
+            >
+              Service Providers
+            </button>
+            <button
+              className={`px-5 py-3 rounded-full transition-all ${
+                activeFeatureTab === "retailStores"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+              onClick={() => setActiveFeatureTab("retailStores")}
+            >
+              Retail Stores
+            </button>
+          </div>
+
+                      {/* Feature Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {featureContent[activeFeatureTab].map((feature, index) => (
+              <div key={index} className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 group">
+                <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-blue-100 transition-colors duration-300">
+                  <feature.icon className="h-8 w-8 text-blue-600" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">{feature.title}</h3>
+                <p className="text-gray-600 text-center">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA Button */}
+          <div className="text-center mt-16">
+            <Link href="/squeeze">
+              <Button
+                size="lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Find Features For Your Business
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-gray-50 to-white">
+      <section id="faq" className="py-20 px-4 bg-gradient-to-br from-gray-50 to-white">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-16">
             <Badge className="bg-white/80 backdrop-blur-sm text-gray-800 border border-gray-200 mb-4">
@@ -1090,18 +1351,86 @@ export default function Component() {
               </div>
             </div>
 
+            {/* Recently Claimed Websites */}
+            <div className="animate-fade-up delay-500">
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Recently Claimed Websites</h3>
+                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                  See what other businesses have chosen in the past 24 hours
+                </p>
+              </div>
+
+              {/* Claimed Websites Carousel */}
+              <div className="relative overflow-hidden mb-16">
+                <div 
+                  className="flex space-x-6 animate-scroll-smooth hover:animation-paused"
+                  style={{
+                    width: `${recentlyClaimed.length * 320}px`,
+                    animation: "scrollSmooth 60s linear infinite"
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.animationPlayState = "paused"
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.animationPlayState = "running"
+                  }}
+                >
+                  {[...recentlyClaimed, ...recentlyClaimed].map((business, index) => (
+                    <div 
+                      key={index}
+                      className="flex-shrink-0 w-[300px] bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300"
+                    >
+                      <div className="p-6 border-b border-gray-100 flex items-center justify-between">
+                        <div className="flex items-center">
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl ${business.color}`}>
+                            {business.initial}
+                          </div>
+                          <div className="ml-3">
+                            <h4 className="font-bold text-gray-900">{business.businessName}</h4>
+                            <p className="text-sm text-gray-500">{business.location}</p>
+                          </div>
+                        </div>
+                        <span className="text-xs bg-gray-100 text-gray-800 py-1 px-2 rounded-full">{business.timeAgo}</span>
+                      </div>
+                      <div className="p-6 space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-500">Business Type:</span>
+                          <span className="text-sm font-medium text-gray-900">{business.businessType}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-500">Template:</span>
+                          <span className="text-sm font-medium text-gray-900">{business.template}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-gray-500">Status:</span>
+                          <span className="flex items-center text-sm font-medium text-green-600">
+                            <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                            Claimed
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {/* Gradient overlays for smooth edges */}
+                <div className="absolute left-0 top-0 w-16 h-full bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
+                <div className="absolute right-0 top-0 w-16 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
+              </div>
+            </div>
+
             {/* CTA Button */}
-            <div className="space-y-6 animate-fade-up delay-500">
-              <Button
-                onClick={() => alert("Contact us to get started!")}
-                size="lg"
-                className="bg-gray-900 hover:bg-gray-800 text-white px-12 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
-              >
-                Check Availability
-              </Button>
+            <div className="space-y-6 animate-fade-up delay-600">
+              <Link href="/squeeze">
+                <Button
+                  size="lg"
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-12 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                >
+                  Check Availability
+                </Button>
+              </Link>
 
               {/* Trust Indicators */}
-              <div className="flex items-center justify-center space-x-8 text-sm text-gray-500 animate-fade-up delay-600">
+              <div className="flex items-center justify-center space-x-8 text-sm text-gray-500 animate-fade-up delay-700">
                 <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
                   <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
                   <span>No credit card required</span>
@@ -1124,8 +1453,8 @@ export default function Component() {
       <footer className="bg-gray-900 text-white relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-10 left-10 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-10 left-10 w-64 h-64 bg-gradient-to-br from-orange-500/10 to-gray-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-gray-500/10 to-orange-500/10 rounded-full blur-3xl"></div>
         </div>
 
         <div className="container mx-auto px-4 py-16 relative z-10">
@@ -1145,7 +1474,7 @@ export default function Component() {
                   className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.37 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
                   </svg>
                 </a>
                 <a
@@ -1177,9 +1506,9 @@ export default function Component() {
                   </a>
                 </li>
                 <li>
-                  <a href="#websites" className="text-gray-300 hover:text-white transition-colors">
+                  <Link href="/browse-designs" className="text-gray-300 hover:text-white transition-colors">
                     Website Templates
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <a href="#" className="text-gray-300 hover:text-white transition-colors">
@@ -1245,7 +1574,7 @@ export default function Component() {
                   placeholder="Enter your email"
                   className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-white"
                 />
-                <Button className="w-full bg-white text-gray-900 hover:bg-gray-100">Subscribe</Button>
+                <Button className="w-full bg-orange-500 text-white hover:bg-orange-600">Subscribe</Button>
               </div>
               <div className="flex items-center space-x-2 text-sm text-gray-400">
                 <Check className="w-4 h-4" />
