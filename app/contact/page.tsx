@@ -66,7 +66,7 @@ export default function ContactPage() {
             </Link>
           </nav>
           <div className="flex justify-center">
-            <Link href="/squeeze">
+            <Link href="/claim">
               <Button
                 className="bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500"
               >
@@ -248,7 +248,7 @@ export default function ContactPage() {
           <p className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
             Join the hundreds of local businesses who have upgraded their online presence with our services.
           </p>
-          <Link href="/squeeze">
+          <Link href="/claim">
             <Button size="lg" className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-6 text-lg shadow-lg hover:shadow-xl transition-all duration-300">
               Start Your Free Website
             </Button>

@@ -1,47 +1,98 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
-import { Globe } from "lucide-react"
+import { Globe, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const navLinks = [
+    { href: "/#how-it-works", text: "How It Works" },
+    { href: "/#pricing", text: "Pricing" },
+    { href: "/#features", text: "Features" },
+    { href: "/#faq", text: "FAQs" },
+    { href: "/browse-designs", text: "Browse Designs" },
+    { href: "/contact", text: "Contact" },
+  ]
+
   return (
-    <header className="border-b bg-white/95 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center space-x-2 animate-fade-right">
-          <Globe className="h-6 w-6 text-gray-800" />
-          <span className="text-xl font-medium text-gray-900">LocalSite</span>
-        </Link>
-        <nav className="hidden md:flex items-center space-x-6 animate-fade-up">
-          <a href="/#how-it-works" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
-            How It Works
-          </a>
-          <a href="/#pricing" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
-            Pricing
-          </a>
-          <a href="/#features" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
-            Features
-          </a>
-          <a href="/#faq" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
-            FAQs
-          </a>
-          <Link href="/browse-designs" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
-            Browse Designs
+    <>
+      <header className="border-b bg-white/95 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link href="/" className="flex items-center space-x-2 animate-fade-right">
+            <Globe className="h-6 w-6 text-gray-800" />
+            <span className="text-xl font-medium text-gray-900">LocalSite</span>
           </Link>
-          <Link href="/contact" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
-            Contact
-          </Link>
-        </nav>
-        <div className="flex justify-center">
-          <Link href="/claim">
-            <Button
-              className="bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500"
-            >
-              Get Started
+          
+          <nav className="hidden md:flex items-center space-x-6">
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href} className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
+                {link.text}
+              </a>
+            ))}
+          </nav>
+
+          <div className="flex items-center space-x-4">
+            <div className="hidden md:block">
+              <Link href="/claim">
+                <Button className="bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500">
+                  Get Started
+                </Button>
+              </Link>
+            </div>
+            <div className="md:hidden">
+              <Button onClick={() => setIsMenuOpen(true)} variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`fixed inset-0 z-50 bg-white/95 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+          isMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="container mx-auto px-4 py-4 flex flex-col">
+          <div className="flex justify-between items-center mb-12">
+            <Link href="/" className="flex items-center space-x-2">
+              <Globe className="h-6 w-6 text-gray-800" />
+              <span className="text-xl font-medium text-gray-900">LocalSite</span>
+            </Link>
+            <Button onClick={() => setIsMenuOpen(false)} variant="ghost" size="icon">
+              <X className="h-6 w-6" />
             </Button>
-          </Link>
+          </div>
+          
+          <nav className="flex flex-col items-center space-y-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-2xl text-gray-800 hover:text-orange-500 transition-all duration-300"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {link.text}
+              </a>
+            ))}
+          </nav>
+          
+          <div className="mt-12 text-center">
+            <Link href="/claim">
+              <Button
+                className="w-full bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500 py-6 text-lg"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Get Started
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
-    </header>
+    </>
   )
 } 
