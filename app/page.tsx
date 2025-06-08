@@ -22,13 +22,24 @@ import {
   ShoppingCart,
   Calendar,
   Tag,
+  ClipboardEdit,
+  Laptop,
+  Rocket,
+  Images,
+  Store,
+  Target,
+  ShieldCheck,
+  Handshake,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { LucideIcon, LucideProps } from "lucide-react"
+import { ForwardRefExoticComponent, RefAttributes } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import MainLayout from "@/components/layout/MainLayout"
 
 const websiteExamples = [
   {
@@ -373,6 +384,18 @@ const trustedBusinesses = [
 
 const categories = ["All", "Restaurant", "Service", "Retail", "Professional", "Beauty", "Healthcare"]
 
+interface Feature {
+  icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>
+  title: string
+  description: string
+}
+
+type FeatureTab = "restaurants" | "serviceProviders" | "retailStores"
+
+type FeatureContent = {
+  [key in FeatureTab]: Feature[]
+}
+
 export default function Component() {
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [currentWebsite, setCurrentWebsite] = useState(0)
@@ -664,7 +687,7 @@ export default function Component() {
   }
 
   // Features & Benefits section content
-  const featureContent = {
+  const featureContent: FeatureContent = {
     restaurants: [
       {
         icon: BookOpen,
@@ -689,7 +712,7 @@ export default function Component() {
     ],
     serviceProviders: [
       {
-        icon: Image,
+        icon: Images,
         title: "Portfolio Showcase",
         description: "Highlight your best work with a professional portfolio gallery that builds trust with potential clients."
       },
@@ -711,7 +734,7 @@ export default function Component() {
     ],
     retailStores: [
       {
-        icon: Image,
+        icon: Store,
         title: "Product Showcases",
         description: "Display your products with beautiful imagery that entices customers to visit your store."
       },
@@ -734,46 +757,7 @@ export default function Component() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b bg-white/95 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2 animate-fade-right">
-            <Globe className="h-6 w-6 text-gray-800" />
-            <span className="text-xl font-medium text-gray-900">LocalSite</span>
-          </div>
-          <nav className="hidden md:flex items-center space-x-6 animate-fade-up">
-            <a href="#how-it-works" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
-              How It Works
-            </a>
-            <a href="#pricing" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
-              Pricing
-            </a>
-            <a href="#features" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
-              Features
-            </a>
-            <a href="#faq" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
-              FAQs
-            </a>
-            <Link href="/browse-designs" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
-              Browse Designs
-            </Link>
-            <Link href="/contact" className="text-gray-600 hover:text-orange-500 transition-all duration-300 hover:scale-105">
-              Contact
-            </Link>
-          </nav>
-          <div className="flex justify-center">
-            <Link href="/squeeze">
-              <Button
-                className="bg-orange-500 text-white hover:bg-orange-600 focus:ring-orange-500"
-              >
-                Get Started
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-
+    <MainLayout>
       {/* Hero Section */}
       <section className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto max-w-7xl">
@@ -782,64 +766,56 @@ export default function Component() {
             <div
               className={`space-y-8 transform transition-all duration-1000 ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"}`}
             >
-              <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-200 border-0 animate-fade-up">
+              <Badge className="bg-orange-50 text-orange-800 hover:bg-orange-100 border-0 animate-fade-up">
                 Premium Web Design Without the Premium Price Tag
               </Badge>
               <div className="animate-fade-up delay-200">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 leading-tight mb-6">
-                  We Design Your Website Free - You Just Cover the Hosting
+                <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight mb-4">
+                  Free Premium Website Design
                 </h1>
-                <p className="text-xl text-gray-600 leading-relaxed">
-                  Premium Designed Websites For Local Businesses - No Design Fees, Just $20/month For Hosting & Support.
+                <p className="text-2xl font-bold text-gray-900 mb-2">
+                  Just $20/Month Hosting
                 </p>
+                <p className="text-2xl font-bold text-gray-900 mb-8">
+                  Launch in 48 Hours
+                </p>
+                <div className="text-lg text-gray-600 leading-relaxed max-w-xl space-y-3">
+                  <p>Why Pay Thousands When You Can Get Professional Design for FREE?</p>
+                  <p><span className="text-green-500 font-medium">✓</span> Custom Website Design - $0 <span className="text-sm text-gray-500">(Usually $2,000-$5,000)</span></p>
+                  <p><span className="text-green-500 font-medium">✓</span> Professional Setup & Launch - $0 <span className="text-sm text-gray-500">(Usually $500-$1,000)</span></p>
+                  <p><span className="text-green-500 font-medium">✓</span> Premium Hosting & Security - Just $20/month</p>
+                  <p><span className="text-green-500 font-medium">✓</span> Ongoing Support & Updates - Included</p>
+                </div>
+              </div>
+
+              {/* Money Back Guarantee */}
+              <div className="flex items-center group animate-fade-up delay-300 mb-4">
+                <ShieldCheck className="h-5 w-5 text-gray-900 mr-2 group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-gray-600 group-hover:text-gray-900 transition-colors duration-300">60 Days Money Back Guarantee</span>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 animate-fade-up delay-300">
                 <Link href="/squeeze">
-                  <Button
-                    size="lg"
-                    className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl"
-                  >
-                    Get My Free Website Built
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
+                <Button
+                  size="lg"
+                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl"
+                >
+                    Get Started
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
                 </Link>
                 <Link href="/browse-designs">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="text-gray-700 border-gray-300 px-8 py-6 text-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-md"
-                  >
-                    <Eye className="mr-2 h-5 w-5" />
-                    View Examples
-                  </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="text-gray-700 border-gray-300 px-8 py-6 text-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-md"
+                >
+                  <Eye className="mr-2 h-5 w-5" />
+                  View Examples
+                </Button>
                 </Link>
               </div>
 
-              {/* Trust Indicators */}
-              <div className="flex items-center space-x-6 pt-6 animate-fade-up delay-400">
-                <div className="flex items-center group">
-                  <Check className="h-5 w-5 text-gray-900 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                  <span className="text-gray-600 group-hover:text-gray-900 transition-colors duration-300">1-on-1 Dedicated Design Process</span>
-                </div>
-                <div className="flex items-center group">
-                  <Check className="h-5 w-5 text-gray-900 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                  <span className="text-gray-600 group-hover:text-gray-900 transition-colors duration-300">48hrs Delivery Time</span>
-                </div>
-                <div className="flex items-center group">
-                  <Check className="h-5 w-5 text-gray-900 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                  <span className="text-gray-600 group-hover:text-gray-900 transition-colors duration-300">100% Money-Back Guarantee</span>
-                </div>
-              </div>
-
-              {/* Business Type Indicator */}
-              <div className="pt-4 animate-fade-up delay-500">
-                <p className="text-sm text-gray-500 mb-2">Currently showing:</p>
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-gray-900 rounded-full animate-pulse-subtle"></div>
-                  <span className="text-sm font-medium text-gray-900">{currentSite.type}</span>
-                </div>
-              </div>
             </div>
 
             {/* Right Side - Rotating Website Preview */}
@@ -942,43 +918,6 @@ export default function Component() {
                   />
                 ))}
               </div>
-
-              {/* Decorative Elements */}
-              <div className="absolute -bottom-6 -right-6 w-64 h-64 bg-gray-50 rounded-full -z-10 animate-float-modern-1"></div>
-              <div className="absolute -top-6 -left-6 w-32 h-32 bg-gray-50 rounded-full -z-10 animate-float-modern-2"></div>
-            </div>
-          </div>
-
-          {/* Social Proof */}
-          <div id="trusted-section" className="mt-16 text-center overflow-hidden">
-            <p className="text-gray-500 mb-6">Trusted by local businesses across the country</p>
-            <div className="relative">
-              <div
-                className={`flex space-x-12 ${isTrustedVisible ? "animate-scroll-smooth" : ""} hover:animation-paused`}
-                style={{
-                  width: `${trustedBusinesses.length * 250}px`,
-                  animation: isTrustedVisible ? "scrollSmooth 40s linear infinite" : "none",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.animationPlayState = "paused"
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.animationPlayState = "running"
-                }}
-              >
-                {[...trustedBusinesses, ...trustedBusinesses].map((business, index) => (
-                  <div
-                    key={index}
-                    className="text-gray-400 font-medium text-lg whitespace-nowrap opacity-60 hover:opacity-100 transition-opacity duration-300 cursor-pointer px-4"
-                    style={{ minWidth: "220px" }}
-                  >
-                    {business}
-                  </div>
-                ))}
-              </div>
-              {/* Gradient overlays for smooth edges */}
-              <div className="absolute left-0 top-0 w-32 h-full bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
-              <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
             </div>
           </div>
         </div>
@@ -988,89 +927,72 @@ export default function Component() {
       <section id="how-it-works" className="py-24 px-4 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-gray-900 mb-4">How It Works</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Getting your professional website is simple. Just follow these 3 easy steps and you'll be
-              online in no time.
-            </p>
-          </div>
+            <Badge className="bg-white/80 backdrop-blur-sm text-gray-800 border border-gray-200 mb-4">
+              How It Works
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Get Your Free Website in 3 Simple Steps</h2>
+                  </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {/* Card 1 */}
+            {/* Step 1 */}
             <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300 hover-lift group">
-              <div className="absolute -top-6 right-8 w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl font-bold">
-                1
+              <div className="pt-6 mb-6">
+                <div className="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6 text-orange-500 group-hover:scale-110 transition-transform duration-300">
+                  <ClipboardEdit className="h-8 w-8" />
               </div>
-              <div className="pt-6 mb-6 text-center">
-                <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 text-blue-600 group-hover:scale-110 transition-transform duration-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10 9 9 9 8 9"></polyline>
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Order Your Free Website</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Tell Us About Your Business</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Fill out our simple form with your business information and tell us what you need.
+                  Fill out our quick form with your business details, goals, and what you need. No technical knowledge required.
                 </p>
+                <p className="text-orange-500 font-medium mt-4">(5 minutes)</p>
+            </div>
+          </div>
+            
+            {/* Step 2 */}
+            <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300 hover-lift group">
+              <div className="pt-6 mb-6">
+                <div className="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6 text-orange-500 group-hover:scale-110 transition-transform duration-300">
+                  <Laptop className="h-8 w-8" />
+        </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">We Design & Build Your Site</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Our team creates your custom website with professional design, mobile optimization, and everything you need to look credible online.
+                </p>
+                <p className="text-orange-500 font-medium mt-4">(48 hours)</p>
               </div>
             </div>
             
-            {/* Card 2 */}
+            {/* Step 3 */}
             <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300 hover-lift group">
-              <div className="absolute -top-6 right-8 w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-xl font-bold">
-                2
-              </div>
-              <div className="pt-6 mb-6 text-center">
-                <div className="w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center mx-auto mb-6 text-purple-600 group-hover:scale-110 transition-transform duration-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <circle cx="12" cy="12" r="4"></circle>
-                    <line x1="21.17" y1="8" x2="12" y2="8"></line>
-                    <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
-                    <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
-                  </svg>
+              <div className="pt-6 mb-6">
+                <div className="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6 text-orange-500 group-hover:scale-110 transition-transform duration-300">
+                  <Rocket className="h-8 w-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">We Build Your Custom Website</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Launch & Grow Your Business</h3>
                 <p className="text-gray-600 leading-relaxed">
-                  Our expert team designs and builds your professional website within 48 hours.
+                  We handle hosting, security, backups, and support so you can focus on what you do best - running your business.
                 </p>
-              </div>
-            </div>
-            
-            {/* Card 3 */}
-            <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300 hover-lift group">
-              <div className="absolute -top-6 right-8 w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl font-bold">
-                3
-              </div>
-              <div className="pt-6 mb-6 text-center">
-                <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6 text-green-600 group-hover:scale-110 transition-transform duration-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Launch & Ongoing Support</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  We launch your website and provide ongoing support to help your business grow online.
-                </p>
+                <p className="text-orange-500 font-medium mt-4">(Ongoing)</p>
               </div>
             </div>
           </div>
-          
+
+          {/* Results Message */}
+          <div className="text-center mt-12 mb-8">
+            <p className="text-xl text-gray-700 font-medium">Ready to get started? Most businesses see results within the first week.</p>
+          </div>
+
           {/* CTA Button */}
-          <div className="text-center mt-16">
+          <div className="text-center mt-8">
             <Link href="/squeeze">
               <Button
                 size="lg"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Start Your Free Website
-              </Button>
+                    </Button>
             </Link>
-          </div>
+                  </div>
         </div>
       </section>
 
@@ -1078,22 +1000,22 @@ export default function Component() {
       <section id="pricing" className="py-20 px-4 bg-white">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Pricing Transparency</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Pricing Transparency</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               No hidden fees or surprise costs – just straightforward pricing
             </p>
-          </div>
-          
+                  </div>
+
           <div className="space-y-6">
             {/* Website Design Card */}
             <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Website Design & Development</h3>
               <div className="flex items-baseline mb-2">
                 <span className="text-gray-400 line-through text-2xl mr-3">$1,500</span>
-                <span className="text-5xl font-bold text-blue-600">$0</span>
-              </div>
+                <span className="text-5xl font-bold text-orange-500">$0</span>
+                    </div>
               <p className="text-gray-600 mb-2">Professional, custom-designed website at no upfront cost</p>
-            </div>
+                  </div>
             
             {/* Website Hosting Card */}
             <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
@@ -1101,43 +1023,43 @@ export default function Component() {
               <div className="flex items-baseline mb-2">
                 <span className="text-5xl font-bold text-gray-900">$20</span>
                 <span className="text-gray-600 ml-2">/month</span>
-              </div>
+                </div>
               <p className="text-gray-600 mb-6">Everything you need to keep your website running smoothly</p>
               
               <div className="space-y-3">
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
-                    <Check className="h-5 w-5 text-green-500" />
-                  </div>
+                    <Check className="h-5 w-5 text-green-600" />
+                      </div>
                   <p className="ml-3 text-gray-600">Secure, reliable website hosting</p>
-                </div>
+                  </div>
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
-                    <Check className="h-5 w-5 text-green-500" />
+                    <Check className="h-5 w-5 text-green-600" />
                   </div>
                   <p className="ml-3 text-gray-600">Regular security updates and monitoring</p>
                 </div>
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
-                    <Check className="h-5 w-5 text-green-500" />
-                  </div>
+                    <Check className="h-5 w-5 text-green-600" />
+              </div>
                   <p className="ml-3 text-gray-600">Technical support via email and chat</p>
                 </div>
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
-                    <Check className="h-5 w-5 text-green-500" />
+                    <Check className="h-5 w-5 text-green-600" />
                   </div>
                   <p className="ml-3 text-gray-600">Regular backups of website content</p>
                 </div>
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
-                    <Check className="h-5 w-5 text-green-500" />
+                    <Check className="h-5 w-5 text-green-600" />
                   </div>
                   <p className="ml-3 text-gray-600">Basic SEO optimization</p>
                 </div>
               </div>
-            </div>
-            
+          </div>
+
             {/* Website Updates Card */}
             <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Website Updates & Changes</h3>
@@ -1153,11 +1075,11 @@ export default function Component() {
       </section>
 
       {/* Features & Benefits Section */}
-      <section id="features" className="py-24 px-4 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-24 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-gray-900 mb-4">Features & Benefits</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Features & Benefits</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Our websites are tailored to the specific needs of your business type
             </p>
           </div>
@@ -1167,7 +1089,7 @@ export default function Component() {
             <button
               className={`px-5 py-3 rounded-full transition-all ${
                 activeFeatureTab === "restaurants"
-                  ? "bg-blue-600 text-white"
+                  ? "bg-orange-500 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
               onClick={() => setActiveFeatureTab("restaurants")}
@@ -1177,7 +1099,7 @@ export default function Component() {
             <button
               className={`px-5 py-3 rounded-full transition-all ${
                 activeFeatureTab === "serviceProviders"
-                  ? "bg-blue-600 text-white"
+                  ? "bg-orange-500 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
               onClick={() => setActiveFeatureTab("serviceProviders")}
@@ -1187,36 +1109,36 @@ export default function Component() {
             <button
               className={`px-5 py-3 rounded-full transition-all ${
                 activeFeatureTab === "retailStores"
-                  ? "bg-blue-600 text-white"
+                  ? "bg-orange-500 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
               onClick={() => setActiveFeatureTab("retailStores")}
             >
               Retail Stores
             </button>
-          </div>
+              </div>
 
-                      {/* Feature Cards */}
+          {/* Feature Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {featureContent[activeFeatureTab].map((feature, index) => (
+            {featureContent[activeFeatureTab as FeatureTab].map((feature: Feature, index: number) => (
               <div key={index} className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 group">
-                <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-blue-100 transition-colors duration-300">
-                  <feature.icon className="h-8 w-8 text-blue-600" />
+                <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-orange-100 transition-colors duration-300">
+                  <feature.icon className="h-8 w-8 text-orange-500" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">{feature.title}</h3>
                 <p className="text-gray-600 text-center">{feature.description}</p>
               </div>
             ))}
-          </div>
+              </div>
 
           {/* CTA Button */}
           <div className="text-center mt-16">
             <Link href="/squeeze">
               <Button
                 size="lg"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                Find Features For Your Business
+                Get My Free Custom Website
               </Button>
             </Link>
           </div>
@@ -1224,14 +1146,14 @@ export default function Component() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-20 px-4 bg-gradient-to-br from-gray-50 to-white">
+      <section id="faq" className="py-24 px-4 bg-white">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-16">
-            <Badge className="bg-white/80 backdrop-blur-sm text-gray-800 border border-gray-200 mb-4">
+            <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-200 border border-gray-200/80 mb-4 px-3 py-1 text-sm font-medium">
               Common Questions
             </Badge>
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-            <p className="text-xl text-gray-600">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Get answers to the most common questions about our free website service.
             </p>
           </div>
@@ -1274,32 +1196,88 @@ export default function Component() {
                   "Yes! Every website includes basic SEO optimization (title tags, meta descriptions, site structure). Your monthly hosting fee includes ongoing SEO monitoring and basic optimization. For advanced SEO services, we offer additional packages starting at $50/month.",
               },
             ].map((faq, index) => (
-              <div key={index} className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-                <button
+              <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div
+                  className="p-6 cursor-pointer flex justify-between items-center transition-colors duration-200 hover:bg-gray-50"
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full px-6 py-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
                 >
-                  <h3 className="text-lg font-bold text-gray-900 pr-4">{faq.question}</h3>
-                  <div
-                    className={`transform transition-transform duration-300 ${openFaq === index ? "rotate-180" : ""}`}
-                  >
-                    <ChevronRight className="w-5 h-5 text-gray-500" />
+                  <h3 className="text-lg font-medium text-gray-800">{faq.question}</h3>
+                  <ChevronRight
+                    className={`h-5 w-5 text-gray-500 transform transition-transform duration-300 ${
+                      openFaq === index ? "rotate-90" : ""
+                    }`}
+                  />
+                </div>
+                <div
+                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                    openFaq === index ? "max-h-96" : "max-h-0"
+                  }`}
+                >
+                  <p className="px-6 pb-6 text-gray-600">{faq.answer}</p>
                   </div>
-                </button>
-                {openFaq === index && (
-                  <div className="px-6 pb-6">
-                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
-                  </div>
-                )}
               </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <p className="text-gray-600 mb-6">Still have questions?</p>
-            <Button variant="outline" className="text-gray-700 border-gray-300 hover:bg-gray-50">
+          <div className="text-center mt-16">
+            <p className="text-gray-600 mb-4">Still have questions?</p>
+            <Button
+              variant="outline"
+              className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 px-6 py-3"
+            >
               Contact Our Team
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="pt-24 pb-12 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <Badge className="bg-white/80 backdrop-blur-sm text-gray-800 border border-gray-200 mb-4">
+              Why Choose Us?
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Partner With The Local Business Experts</h2>
+          </div>
+
+          {/* Main Benefits Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            {/* Card 1 */}
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 group">
+              <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center mb-6 group-hover:bg-orange-100 transition-colors duration-300">
+                <Target className="h-8 w-8 text-orange-500" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Laser-Focused on Local Business Success</h3>
+              <p className="text-gray-600">We understand what local businesses need online - credibility, mobile-friendly design, and easy customer contact.</p>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 group">
+              <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center mb-6 group-hover:bg-orange-100 transition-colors duration-300">
+                <ShieldCheck className="h-8 w-8 text-orange-500" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Risk-Free Business Model</h3>
+              <p className="text-gray-600">No upfront costs means no financial risk. We only succeed when your website helps your business grow.</p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 group">
+              <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center mb-6 group-hover:bg-orange-100 transition-colors duration-300">
+                <Zap className="h-8 w-8 text-orange-500" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Quick Launch, Professional Results</h3>
+              <p className="text-gray-600">While agencies take weeks and charge thousands, we deliver professional websites in days, not weeks.</p>
+            </div>
+
+            {/* Card 4 */}
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 group">
+              <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center mb-6 group-hover:bg-orange-100 transition-colors duration-300">
+                <Handshake className="h-8 w-8 text-orange-500" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Ongoing Partnership</h3>
+              <p className="text-gray-600">We're not just building a website - we're partnering with your business for long-term online success.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1308,8 +1286,8 @@ export default function Component() {
       <section className="py-32 px-4 bg-white relative overflow-hidden">
         {/* Subtle Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gray-50 rounded-full opacity-40 blur-3xl animate-float-modern-1"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gray-100 rounded-full opacity-30 blur-3xl animate-float-modern-2"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gray-50 rounded-full opacity-40 blur-3xl animate-float-modern-1 hidden md:block"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gray-100 rounded-full opacity-30 blur-3xl animate-float-modern-2 hidden md:block"></div>
         </div>
 
         <div className="container mx-auto max-w-5xl relative z-10">
@@ -1420,13 +1398,13 @@ export default function Component() {
 
             {/* CTA Button */}
             <div className="space-y-6 animate-fade-up delay-600">
-              <Link href="/squeeze">
-                <Button
-                  size="lg"
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-12 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
-                >
-                  Check Availability
-                </Button>
+              <Link href="/claim">
+              <Button
+                size="lg"
+                className="bg-gray-900 hover:bg-gray-800 text-white px-12 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Check Availability
+              </Button>
               </Link>
 
               {/* Trust Indicators */}
@@ -1448,168 +1426,6 @@ export default function Component() {
           </div>
         </div>
       </section>
-
-      {/* Modern Footer */}
-      <footer className="bg-gray-900 text-white relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-10 left-10 w-64 h-64 bg-gradient-to-br from-orange-500/10 to-gray-500/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-gray-500/10 to-orange-500/10 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="container mx-auto px-4 py-16 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-            {/* Company Info */}
-            <div className="space-y-6">
-              <div className="flex items-center space-x-2">
-                <Globe className="h-8 w-8 text-white" />
-                <span className="text-2xl font-bold">LocalSite</span>
-              </div>
-              <p className="text-gray-300 leading-relaxed">
-                Empowering local businesses with professional, free websites that drive growth and connect communities.
-              </p>
-              <div className="flex space-x-4">
-                <a
-                  href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.37 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
-                  </svg>
-                </a>
-                <a
-                  href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z" />
-                  </svg>
-                </a>
-                <a
-                  href="#"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-gray-700 transition-colors"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 2.567-2.016 0-1.029.96-1.683 1.68-1.683h2.016c.72 0 1.2.48 1.2 1.2 0 .72-.72.72-1.2.72-1.92l-3.84-4.8c-.72-.72-1.2-.72-1.92 0-1.92h2.016c.72 0 1.2.48 1.2 1.2 0 .72-.72.72-1.2.72-1.92l4.8-6z" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-
-            {/* Quick Links */}
-            <div className="space-y-6">
-              <h3 className="text-lg font-semibold">Quick Links</h3>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <Link href="/browse-designs" className="text-gray-300 hover:text-white transition-colors">
-                    Website Templates
-                  </Link>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                    Success Stories
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                    Pricing
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Business Types */}
-            <div className="space-y-6">
-              <h3 className="text-lg font-semibold">Business Types</h3>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                    Restaurants
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                    Service Businesses
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                    Healthcare
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                    Beauty & Wellness
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                    Professional Services
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                    Retail Stores
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Newsletter */}
-            <div className="space-y-6">
-              <h3 className="text-lg font-semibold">Stay Updated</h3>
-              <p className="text-gray-300">Get tips and insights for growing your local business.</p>
-              <div className="space-y-3">
-                <Input
-                  placeholder="Enter your email"
-                  className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-white"
-                />
-                <Button className="w-full bg-orange-500 text-white hover:bg-orange-600">Subscribe</Button>
-              </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-400">
-                <Check className="w-4 h-4" />
-                <span>No spam, unsubscribe anytime</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Section */}
-          <div className="border-t border-gray-800 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6 text-sm text-gray-400">
-                <p>&copy; 2024 LocalSite. All rights reserved.</p>
-                <div className="flex space-x-6">
-                  <a href="#" className="hover:text-white transition-colors">
-                    Privacy Policy
-                  </a>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Terms of Service
-                  </a>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Cookie Policy
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-center space-x-4 text-sm text-gray-400">
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span>All systems operational</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </MainLayout>
   )
 }

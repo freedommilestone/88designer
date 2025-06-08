@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Check, Eye, Globe, Check as CheckIcon } from "lucide-react"
+import { Check, Check as CheckIcon, Eye } from "lucide-react"
 import Image from "next/image"
 import Link from 'next/link'
 
@@ -125,24 +125,9 @@ export default function BrowseDesignsPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                    {/* Preview Button */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                      <Button size="sm" className="bg-white/90 text-gray-900 hover:bg-white backdrop-blur-sm animate-scale">
-                        <Eye className="w-4 h-4 mr-2" />
-                        Preview
-                      </Button>
-                    </div>
-
                     {/* Category Badge */}
                     <div className="absolute top-4 left-4">
                       <Badge className="bg-white/90 text-gray-800 backdrop-blur-sm">{template.category}</Badge>
-                    </div>
-
-                    {/* Claimed Count */}
-                    <div className="absolute top-4 right-4">
-                      <div className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                        {template.claimed}+ claimed
-                      </div>
                     </div>
                   </div>
 
@@ -165,14 +150,11 @@ export default function BrowseDesignsPage() {
                     <div className="flex gap-3">
                       <Link href="/claim">
                         <Button
-                          className="flex-1 bg-orange-500 hover:bg-orange-600 text-white transition-all duration-300 hover:scale-105"
+                          className="flex-1 bg-black hover:bg-gray-800 text-white transition-all duration-300 hover:scale-105"
                         >
-                          Claim Free
+                          <Eye className="w-4 h-4 mr-2" /> Preview
                         </Button>
                       </Link>
-                      <Button variant="outline" size="sm" className="px-4 transition-all duration-300 hover:bg-gray-50">
-                        <Eye className="w-4 h-4" />
-                      </Button>
                     </div>
                   </div>
                 </div>
