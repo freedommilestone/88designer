@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, FormEvent, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { ShieldCheck } from 'lucide-react';
 
 function ClaimFormComponent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
@@ -26,8 +27,24 @@ function ClaimFormComponent() {
       timestamp: new Date().toISOString(),
     };
 
-    // Replace with your n8n webhook URL
-    const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL || 'https://your-n8n-webhook-url.com/placeholder';
+    // Check if we're in development mode
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    
+    // In development, log payload and simulate success
+    if (isDevelopment) {
+      console.log('Form data (development mode):', payload);
+      console.log('In production, this would be sent to the webhook URL');
+      
+      // Simulate a small delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Redirect to success page in development mode
+      router.push('/claim/success');
+      return;
+    }
+    
+    // Production mode - use the actual webhook URL
+    const webhookUrl = "https://firecrave.app.n8n.cloud/webhook/claim-form";
 
     try {
       const response = await fetch(webhookUrl, {
@@ -39,15 +56,24 @@ function ClaimFormComponent() {
       });
 
       if (response.ok) {
-        setSubmitMessage('Thank you! Your information has been submitted successfully.');
-        (event.target as HTMLFormElement).reset();
+        // Redirect to success page
+        router.push('/claim/success');
       } else {
-        const errorData = await response.json();
-        setSubmitMessage(`An error occurred: ${errorData.message || 'Please try again.'}`);
+        try {
+          const errorData = await response.json();
+          setSubmitMessage(`An error occurred: ${errorData.message || 'Please try again.'}`);
+        } catch (e) {
+          // If we can't parse JSON, just show a generic error
+          setSubmitMessage('An error occurred. Please try again.');
+        }
       }
     } catch (error) {
       console.error('Form submission error:', error);
-      setSubmitMessage('An unexpected error occurred. Please check the console and try again.');
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        setSubmitMessage('There was a network error. Please check your connection and try again.');
+      } else {
+        setSubmitMessage('An unexpected error occurred. Please check the console and try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
