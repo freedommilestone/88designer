@@ -43,9 +43,18 @@ function ClaimFormComponent() {
       return;
     }
     
-    // Production mode - use the actual webhook URL
-    // Note: If this URL is not working, please verify the correct webhook URL in n8n
-    const webhookUrl = "https://firecrave.app.n8n.cloud/webhook-test/f9f1ff93-1ddf-4c75-bf64-1db0984ab50c";
+    // Production mode - use the actual webhook URL from environment variables
+    // This allows changing the URL without code changes
+    const webhookUrl = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL || "https://firecrave.app.n8n.cloud/webhook-test/f9f1ff93-1ddf-4c75-bf64-1db0984ab50c";
+    
+    // If webhook URL is still the placeholder, show an error message
+    if (webhookUrl.includes('your-n8n-webhook-url.com/placeholder')) {
+      console.error('Webhook URL is not configured properly in environment variables');
+      // Show user error
+      setSubmitMessage('Configuration error. Please contact support.');
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       const response = await fetch(webhookUrl, {
