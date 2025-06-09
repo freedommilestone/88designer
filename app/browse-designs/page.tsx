@@ -204,8 +204,8 @@ export default function BrowseDesignsPage() {
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
-                </div>
-                <button 
+            </div>
+                <button
                   onClick={() => setIsFilterOpen(!isFilterOpen)}
                   className="md:hidden flex items-center justify-center h-9 w-9 rounded-md border border-gray-300 bg-white"
                 >
@@ -213,8 +213,8 @@ export default function BrowseDesignsPage() {
                 </button>
               </div>
             </div>
-          </div>
-        </div>
+                    </div>
+                  </div>
 
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row gap-6">
@@ -228,8 +228,8 @@ export default function BrowseDesignsPage() {
                 <button onClick={() => setIsFilterOpen(false)}>
                   <X className="h-5 w-5" />
                 </button>
-              </div>
-              
+                    </div>
+
               <div className="mb-4">
                 <h2 className="text-sm font-medium text-gray-900 mb-2">Industry</h2>
                 <div className="space-y-1">
@@ -250,8 +250,8 @@ export default function BrowseDesignsPage() {
                       </label>
                     </div>
                   ))}
-                </div>
-              </div>
+            </div>
+          </div>
             </div>
 
             {/* Templates Grid */}
@@ -269,7 +269,7 @@ export default function BrowseDesignsPage() {
                     return (
                       <div key={template.id} className="group">
                         {/* Template Preview */}
-                        <Link href={`/claim?template=${template.id}`} className="block">
+                        <Link href={`/browse-designs/${template.id}`} className="block">
                           <div className="relative aspect-[3/4] mb-3 bg-white rounded-md overflow-hidden border border-gray-200">
                             <Image
                               src={activeStyle.image}

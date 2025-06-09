@@ -70,8 +70,8 @@ function ClaimFormComponent() {
         router.push('/claim/success');
       } else {
         try {
-          const errorData = await response.json();
-          setSubmitMessage(`An error occurred: ${errorData.message || 'Please try again.'}`);
+        const errorData = await response.json();
+        setSubmitMessage(`An error occurred: ${errorData.message || 'Please try again.'}`);
         } catch (e) {
           // If we can't parse JSON, just show a generic error
           setSubmitMessage('An error occurred. Please try again.');
@@ -93,7 +93,7 @@ function ClaimFormComponent() {
           router.push('/claim/success');
         }, 1000);
       } else {
-        setSubmitMessage('An unexpected error occurred. Please check the console and try again.');
+      setSubmitMessage('An unexpected error occurred. Please check the console and try again.');
       }
     } finally {
       setIsSubmitting(false);

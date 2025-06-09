@@ -1,0 +1,20 @@
+'use client';
+
+import { useState, FormEvent, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { ShieldCheck } from 'lucide-react';
+
+function ClaimFormComponent() {
+  const searchParams = useSearchParams();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
+
+  const previewSiteId = searchParams.get('preview_site_id');
+  const utmCampaign = searchParams.get('utm_campaign');
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setIsSubmitting(true);
+
+    const formData = new FormData(event.currentTarget);
+    const data = Object.fromEntries(formData.entries());
