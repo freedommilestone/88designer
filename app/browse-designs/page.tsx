@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Check, Check as CheckIcon, Eye } from "lucide-react"
+import { useState, useEffect } from "react"
+import { ChevronRight, Search, Filter, X } from "lucide-react"
 import Image from "next/image"
 import Link from 'next/link'
 
@@ -10,207 +10,330 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import MainLayout from "@/components/layout/MainLayout"
 
-const templates = [
+// Define types
+interface Style {
+  id: string;
+  name: string;
+  image: string;
+  color: string;
+}
+
+interface Template {
+  id: string;
+  name: string;
+  category: string;
+  price: string;
+  styles: Style[];
+  isNew?: boolean;
+  isFeatured?: boolean;
+}
+
+// Sample templates - these would typically come from an API
+const templates: Template[] = [
   {
-    id: 1,
-    name: "Local Restaurant",
+    id: "maya",
+    name: "Maya",
+    category: "Fashion",
+    price: "Free",
+    styles: [
+      { id: "default", name: "Default", image: "/placeholder.svg", color: "#000000" }
+    ]
+  },
+  {
+    id: "prestige",
+    name: "Prestige",
+    category: "Luxury",
+    price: "Free",
+    styles: [
+      { id: "default", name: "Default", image: "/placeholder.svg", color: "#000000" }
+    ]
+  },
+  {
+    id: "impulse",
+    name: "Impulse",
+    category: "Fitness",
+    price: "Free",
+    styles: [
+      { id: "default", name: "Default", image: "/placeholder.svg", color: "#000000" }
+    ]
+  },
+  {
+    id: "flow",
+    name: "Flow",
+    category: "Art",
+    price: "Free",
+    styles: [
+      { id: "default", name: "Default", image: "/placeholder.svg", color: "#000000" }
+    ]
+  },
+  {
+    id: "spark",
+    name: "Spark",
+    category: "Creative",
+    price: "Free",
+    styles: [
+      { id: "default", name: "Default", image: "/placeholder.svg", color: "#000000" }
+    ]
+  },
+  {
+    id: "brooklyn",
+    name: "Brooklyn",
     category: "Restaurant",
-    description: "Perfect for cafes, bistros and local eateries",
-    image: "/placeholder.svg",
-    features: ["Online Menu", "Reservation System", "Mobile Optimized", "SEO Optimized"],
-    claimed: 1247,
+    price: "Free",
+    styles: [
+      { id: "default", name: "Default", image: "/placeholder.svg", color: "#000000" }
+    ]
   },
   {
-    id: 2,
-    name: "Service Business",
-    category: "Service",
-    description: "Ideal for plumbers, electricians, and contractors",
-    image: "/placeholder.svg",
-    features: ["Service Listings", "Quote Request", "Testimonials", "Contact Forms"],
-    claimed: 892,
+    id: "retro",
+    name: "Retro",
+    category: "Vintage",
+    price: "Free",
+    styles: [
+      { id: "default", name: "Default", image: "/placeholder.svg", color: "#000000" }
+    ]
   },
   {
-    id: 3,
-    name: "Retail Store",
-    category: "Retail",
-    description: "Showcase your products and drive foot traffic",
-    image: "/placeholder.svg",
-    features: ["Product Gallery", "Store Hours", "Location Map", "Social Media"],
-    claimed: 2156,
+    id: "nova",
+    name: "Nova",
+    category: "Technology",
+    price: "Free",
+    styles: [
+      { id: "default", name: "Default", image: "/placeholder.svg", color: "#000000" }
+    ]
   },
   {
-    id: 4,
-    name: "Professional Services",
-    category: "Professional",
-    description: "For accountants, lawyers, and consultants",
-    image: "/placeholder.svg",
-    features: ["Service Pages", "Appointment Booking", "Team Profiles", "Client Portal"],
-    claimed: 743,
+    id: "horizon",
+    name: "Horizon",
+    category: "Outdoors",
+    price: "Free",
+    styles: [
+      { id: "default", name: "Default", image: "/placeholder.svg", color: "#000000" }
+    ]
   },
   {
-    id: 5,
-    name: "Salon & Spa",
-    category: "Beauty",
-    description: "Elegant design for beauty and wellness businesses",
-    image: "/placeholder.svg",
-    features: ["Service Menu", "Online Booking", "Staff Profiles", "Gallery"],
-    claimed: 1089,
+    id: "palo-alto",
+    name: "Palo Alto",
+    category: "Technology",
+    price: "Free",
+    styles: [
+      { id: "default", name: "Default", image: "/placeholder.svg", color: "#000000" }
+    ]
   },
   {
-    id: 6,
-    name: "Medical Practice",
-    category: "Healthcare",
-    description: "Clean design for healthcare professionals",
-    image: "/placeholder.svg",
-    features: ["Appointment Booking", "Service Listings", "Doctor Profiles", "HIPAA Compliant"],
-    claimed: 567,
+    id: "minimal",
+    name: "Minimal",
+    category: "Simple",
+    price: "Free",
+    styles: [
+      { id: "default", name: "Default", image: "/placeholder.svg", color: "#000000" }
+    ]
   },
+  {
+    id: "venture",
+    name: "Venture",
+    category: "Business",
+    price: "Free",
+    styles: [
+      { id: "default", name: "Default", image: "/placeholder.svg", color: "#000000" }
+    ]
+  }
 ];
 
-const categories = ["All", "Restaurant", "Service", "Retail", "Professional", "Beauty", "Healthcare"];
+const categories = ["All", "Fashion", "Luxury", "Fitness", "Art", "Creative", "Restaurant", "Vintage", "Technology", "Outdoors", "Business", "Simple"];
 
 export default function BrowseDesignsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeStyles, setActiveStyles] = useState<Record<string, string>>({});
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-  const filteredTemplates =
-    selectedCategory === "All" ? templates : templates.filter((template) => template.category === selectedCategory);
+  // Initialize active styles for each template
+  useEffect(() => {
+    const styles: Record<string, string> = {};
+    templates.forEach(template => {
+      styles[template.id] = template.styles[0].id;
+    });
+    setActiveStyles(styles);
+  }, []);
+
+  const handleStyleChange = (templateId: string, styleId: string, e: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    setActiveStyles(prev => ({
+      ...prev,
+      [templateId]: styleId
+    }));
+  };
+
+  // Apply category filter
+  const filteredTemplates = templates.filter(template => {
+    // Category filter
+    if (selectedCategory !== "All" && template.category !== selectedCategory) return false;
+    
+    // Search query
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      return (
+        template.name.toLowerCase().includes(query) ||
+        template.category.toLowerCase().includes(query)
+      );
+    }
+    
+    return true;
+  });
 
   return (
     <MainLayout>
-      <main>
-        {/* Featured Web Designs Section */}
-        <section id="websites" className="py-20 px-4 bg-white">
-          <div className="container mx-auto max-w-7xl">
-            <div className="text-center mb-16">
-              <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-200 border-0 mb-4">Professional Templates</Badge>
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">Choose Your Perfect Website Design</h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Browse our collection of professionally designed websites, each tailored for specific business types. Find your perfect match and claim it for free.
-              </p>
-            </div>
-
-            {/* Category Filter */}
-            <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 ${
-                    selectedCategory === category
-                      ? "bg-orange-500 text-white shadow-lg"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                  }`}
+      <main className="bg-gray-50 min-h-screen">
+        {/* Header with Search */}
+        <div className="bg-white py-6">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <h1 className="text-xl font-bold text-gray-900">Browse all themes</h1>
+              
+              {/* Search Bar and Filter Toggle */}
+              <div className="flex items-center gap-2 max-w-xs w-full">
+                <div className="relative flex-1">
+                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                    <Search className="h-4 w-4 text-gray-400" />
+                  </div>
+                  <Input
+                    type="text"
+                    placeholder="Search themes..."
+                    className="pl-9 pr-4 h-9 rounded-md border-gray-300 w-full"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+                <button 
+                  onClick={() => setIsFilterOpen(!isFilterOpen)}
+                  className="md:hidden flex items-center justify-center h-9 w-9 rounded-md border border-gray-300 bg-white"
                 >
-                  {category}
+                  <Filter className="h-4 w-4 text-gray-500" />
                 </button>
-              ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex flex-col md:flex-row gap-6">
+            {/* Mobile Filter Overlay */}
+            <div className={`fixed inset-0 bg-black/30 z-40 md:hidden ${isFilterOpen ? 'block' : 'hidden'}`} onClick={() => setIsFilterOpen(false)}></div>
+            
+            {/* Filters Sidebar */}
+            <div className={`${isFilterOpen ? 'fixed right-0 top-0 h-full z-50 w-64 shadow-xl' : 'hidden'} md:sticky md:top-32 md:block md:w-52 flex-shrink-0 bg-white p-4 overflow-auto transition-all duration-300`}>
+              <div className="flex items-center justify-between mb-6 md:hidden">
+                <h2 className="font-medium">Filters</h2>
+                <button onClick={() => setIsFilterOpen(false)}>
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              
+              <div className="mb-4">
+                <h2 className="text-sm font-medium text-gray-900 mb-2">Industry</h2>
+                <div className="space-y-1">
+                  {categories.slice(1).map(category => (
+                    <div key={category} className="flex items-center">
+                      <input
+                        id={`category-${category}`}
+                        type="checkbox"
+                        checked={selectedCategory === category}
+                        onChange={() => {
+                          setSelectedCategory(selectedCategory === category ? "All" : category);
+                          if (window.innerWidth < 768) setIsFilterOpen(false);
+                        }}
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 rounded"
+                      />
+                      <label htmlFor={`category-${category}`} className="ml-2 text-sm text-gray-700">
+                        {category} <span className="text-gray-400">(3)</span>
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Templates Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredTemplates.map((template, index) => (
-                <div
-                  key={template.id}
-                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:border-gray-200 transform hover:-translate-y-2 hover-lift animate-fade-up"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  {/* Template Preview */}
-                  <div className="relative overflow-hidden bg-gray-50">
-                    <Image
-                      src={template.image || "/placeholder.svg"}
-                      alt={template.name}
-                      width={400}
-                      height={300}
-                      className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                    {/* Category Badge */}
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-white/90 text-gray-800 backdrop-blur-sm">{template.category}</Badge>
-                    </div>
-                  </div>
-
-                  {/* Template Info */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-gray-800 transition-colors duration-300">{template.name}</h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2 group-hover:text-gray-700 transition-colors duration-300">{template.description}</p>
-
-                    {/* Features */}
-                    <div className="grid grid-cols-2 gap-2 mb-6">
-                      {template.features.map((feature, i) => (
-                        <div key={feature} className="flex items-center text-sm text-gray-600 group-hover:text-gray-700 transition-colors duration-300" style={{ transitionDelay: `${i * 50}ms` }}>
-                          <CheckIcon className="w-4 h-4 text-green-500 mr-2 flex-shrink-0 group-hover:scale-110 transition-transform duration-300" />
-                          <span className="truncate">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex gap-3">
-                      <Link href="/claim">
-                        <Button
-                          className="flex-1 bg-black hover:bg-gray-800 text-white transition-all duration-300 hover:scale-105"
-                        >
-                          <Eye className="w-4 h-4 mr-2" /> Preview
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
+            <div className="flex-1">
+              {filteredTemplates.length === 0 ? (
+                <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8 text-center">
+                  <p className="text-gray-500 mb-4">No themes match your search</p>
+                  <Button variant="outline" onClick={() => setSelectedCategory("All")}>Clear filter</Button>
                 </div>
-              ))}
+              ) : (
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+                  {filteredTemplates.map((template) => {
+                    const activeStyle = template.styles[0];
+                    
+                    return (
+                      <div key={template.id} className="group">
+                        {/* Template Preview */}
+                        <Link href={`/claim?template=${template.id}`} className="block">
+                          <div className="relative aspect-[3/4] mb-3 bg-white rounded-md overflow-hidden border border-gray-200">
+                            <Image
+                              src={activeStyle.image}
+                              alt={`${template.name} template`}
+                              fill
+                              className="object-cover"
+                            />
+                          </div>
+                        </Link>
+
+                        {/* Template Info */}
+                        <div className="mb-1">
+                          <div className="flex items-center justify-between">
+                            <h3 className="text-sm font-medium text-gray-900">
+                              {template.name}
+                            </h3>
+                            <div className="text-sm font-medium text-gray-900">
+                              {template.price}
+                            </div>
+                          </div>
+                          <p className="text-xs text-gray-500">{template.category}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+              
+              {/* Pagination */}
+              <div className="flex justify-center mt-10 pb-8">
+                <nav className="inline-flex">
+                  <ul className="flex items-center gap-2">
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(page => (
+                      <li key={page}>
+                        <a 
+                          href="#" 
+                          className={`inline-flex items-center justify-center w-8 h-8 text-sm ${
+                            page === 1 ? 'bg-gray-900 text-white' : 'text-gray-500 hover:text-gray-700'
+                          } rounded-md`}
+                        >
+                          {page}
+                        </a>
+                      </li>
+                    ))}
+                    <li>
+                      <a href="#" className="inline-flex items-center justify-center px-3 h-8 text-sm text-gray-500 hover:text-gray-700">
+                        Next »
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
 
-        {/* Pricing Transparency Section */}
-        <section className="py-20 px-4 bg-gray-50">
-          <div className="container mx-auto max-w-7xl">
-            <div className="text-center mb-16">
-              <Badge className="bg-white text-gray-800 hover:bg-gray-200 border-gray-200 border mb-4">Transparent Pricing</Badge>
-              <h2 className="text-4xl font-bold text-gray-900 mb-4">No Hidden Costs, No Surprises</h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                We believe in complete transparency. Here's exactly what you pay and what you get.
-              </p>
-            </div>
-
-            {/* Pricing Breakdown */}
-            <div className="max-w-4xl mx-auto mb-16">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* Website Design */}
-                <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Website Design</h3>
-                  <p className="text-gray-600 mb-6">
-                    Custom design, mobile optimization, SEO setup, professional development
-                  </p>
-                  <div className="space-y-2">
-                    <div className="text-lg font-medium text-gray-500 line-through">$1,500</div>
-                    <div className="text-3xl font-bold text-green-600">FREE</div>
-                  </div>
-                </div>
-
-                {/* Hosting */}
-                <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Premium Hosting</h3>
-                  <p className="text-gray-600 mb-6">Secure hosting, daily backups, updates, 24/7 technical support</p>
-                  <div className="space-y-2">
-                    <div className="text-3xl font-bold text-gray-900">$20</div>
-                    <div className="text-gray-500 font-medium">per month</div>
-                  </div>
-                </div>
-
-                {/* Updates */}
-                <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Website Updates</h3>
-                  <p className="text-gray-600 mb-6">
-                    Content updates, new pages, design modifications, feature additions
-                  </p>
-                  <div className="space-y-2">
-                    <div className="text-3xl font-bold text-gray-900">$10+</div>
-                    <div className="text-gray-500 font-medium">per change</div>
-                  </div>
-                </div>
-              </div>
+        {/* Footer CTA */}
+        <section className="bg-gray-900 text-white py-12">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-2xl font-bold mb-3">Build fast and sell more with templates</h2>
+            <div className="mt-6">
+              <Button className="bg-green-500 hover:bg-green-600 text-white border-0">
+                Get started for free
+              </Button>
             </div>
           </div>
         </section>
