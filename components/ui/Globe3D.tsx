@@ -57,7 +57,7 @@ export default function Globe3D() {
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent"></div>
         
         <div className="absolute top-2 md:top-4 left-6 z-10">
-          <h3 className="text-3xl font-bold text-white clean-text">Global Web Solutions</h3>
+          <h3 className="text-3xl font-bold text-violet-400 clean-text">Global Web Solutions</h3>
           <p className="text-white/70 text-base clean-text">Premium Website Design & Hosting</p>
         </div>
         <div className="absolute bottom-4 right-6 bg-black/30 backdrop-blur-md rounded-lg p-3 z-10">
