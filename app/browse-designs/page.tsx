@@ -220,7 +220,7 @@ export default function BrowseDesignsPage() {
           <div className="flex flex-col md:flex-row gap-6">
             {/* Mobile Filter Overlay */}
             <div className={`fixed inset-0 bg-black/30 z-40 md:hidden ${isFilterOpen ? 'block' : 'hidden'}`} onClick={() => setIsFilterOpen(false)}></div>
-            
+
             {/* Filters Sidebar */}
             <div className={`${isFilterOpen ? 'fixed right-0 top-0 h-full z-50 w-64 shadow-xl' : 'hidden'} md:sticky md:top-32 md:block md:w-52 flex-shrink-0 bg-white p-4 overflow-auto transition-all duration-300`}>
               <div className="flex items-center justify-between mb-6 md:hidden">
@@ -248,8 +248,8 @@ export default function BrowseDesignsPage() {
                       <label htmlFor={`category-${category}`} className="ml-2 text-sm text-gray-700">
                         {category} <span className="text-gray-400">(3)</span>
                       </label>
-                    </div>
-                  ))}
+                </div>
+              ))}
             </div>
           </div>
             </div>
@@ -288,11 +288,11 @@ export default function BrowseDesignsPage() {
                             </h3>
                             <div className="text-sm font-medium text-gray-900">
                               {template.price}
-                            </div>
-                          </div>
+                  </div>
+                </div>
                           <p className="text-xs text-gray-500">{template.category}</p>
                         </div>
-                      </div>
+                  </div>
                     );
                   })}
                 </div>

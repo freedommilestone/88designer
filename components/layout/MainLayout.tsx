@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Header from "./Header"
 import Footer from "./Footer"
 
@@ -8,10 +9,20 @@ interface MainLayoutProps {
 }
 
 export default function MainLayout({ children }: MainLayoutProps) {
+  const [isHomePage, setIsHomePage] = useState(false)
+  
+  // Check if we're on the homepage
+  useEffect(() => {
+    setIsHomePage(window.location.pathname === '/' || window.location.pathname === '')
+  }, [])
+  
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-900">
       <Header />
-      {children}
+      {/* Add padding to content on non-homepage to account for fixed header */}
+      <div className={isHomePage ? "" : "pt-16"}>
+        {children}
+      </div>
       <Footer />
     </div>
   )

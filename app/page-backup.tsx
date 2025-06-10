@@ -40,7 +40,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import MainLayout from "@/components/layout/MainLayout"
-import Globe3D from "@/components/ui/Globe3D"
 
 const websiteExamples = [
   {
@@ -399,6 +398,7 @@ type FeatureContent = {
 
 export default function Component() {
   const [selectedCategory, setSelectedCategory] = useState("All")
+  const [currentWebsite, setCurrentWebsite] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
   const [currentReview, setCurrentReview] = useState(0)
   const [isReviewsVisible, setIsReviewsVisible] = useState(false)
@@ -452,8 +452,12 @@ export default function Component() {
         })
 
   useEffect(() => {
-    // Show content on page load
     setIsVisible(true)
+    const interval = setInterval(() => {
+      setCurrentWebsite((prev) => (prev + 1) % websiteExamples.length)
+    }, 4000) // Change every 4 seconds
+
+    return () => clearInterval(interval)
   }, [])
 
   // Reviews animation
@@ -537,6 +541,8 @@ export default function Component() {
 
   const filteredTemplates =
     selectedCategory === "All" ? templates : templates.filter((template) => template.category === selectedCategory)
+
+  const currentSite = websiteExamples[currentWebsite]
 
   // Helper function to get business features
   const getBusinessFeatures = (businessType: string) => {
@@ -753,45 +759,48 @@ export default function Component() {
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="pt-40 pb-48 px-4 bg-gradient-to-b from-gray-900 to-gray-800 min-h-screen flex items-center">
+      <section className="py-20 px-4 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
             <div
               className={`space-y-8 transform transition-all duration-1000 ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"}`}
             >
+              <Badge className="bg-orange-50 text-orange-800 hover:bg-orange-100 border-0 animate-fade-up">
+                Premium Web Design Without the Premium Price Tag
+              </Badge>
               <div className="animate-fade-up delay-200">
-                <h1 className="text-5xl md:text-6xl font-bold text-orange-500 leading-tight mb-4">
+                <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight mb-4">
                   Free Premium Website Design
                 </h1>
-                <p className="text-2xl font-bold text-white mb-2">
+                <p className="text-2xl font-bold text-gray-900 mb-2">
                   Just $20/Month Hosting
                 </p>
-                <p className="text-2xl font-bold text-white mb-8">
+                <p className="text-2xl font-bold text-gray-900 mb-8">
                   Launch in 48 Hours
                 </p>
-                <div className="text-lg text-gray-300 leading-relaxed max-w-xl space-y-3">
+                <div className="text-lg text-gray-600 leading-relaxed max-w-xl space-y-3">
                   <p>Why Pay Thousands When You Can Get Professional Design for FREE?</p>
-                  <p><span className="text-green-400 font-medium">✓</span> Custom Website Design - $0 <span className="text-sm text-gray-400">(Usually $2,000-$5,000)</span></p>
-                  <p><span className="text-green-400 font-medium">✓</span> Professional Setup & Launch - $0 <span className="text-sm text-gray-400">(Usually $500-$1,000)</span></p>
-                  <p><span className="text-green-400 font-medium">✓</span> Premium Hosting & Security - Just $20/month</p>
-                  <p><span className="text-green-400 font-medium">✓</span> Ongoing Support & Updates - Included</p>
+                  <p><span className="text-green-500 font-medium">✓</span> Custom Website Design - $0 <span className="text-sm text-gray-500">(Usually $2,000-$5,000)</span></p>
+                  <p><span className="text-green-500 font-medium">✓</span> Professional Setup & Launch - $0 <span className="text-sm text-gray-500">(Usually $500-$1,000)</span></p>
+                  <p><span className="text-green-500 font-medium">✓</span> Premium Hosting & Security - Just $20/month</p>
+                  <p><span className="text-green-500 font-medium">✓</span> Ongoing Support & Updates - Included</p>
                 </div>
               </div>
 
               {/* Money Back Guarantee */}
               <div className="flex items-center group animate-fade-up delay-300 mb-4">
-                <ShieldCheck className="h-5 w-5 text-white mr-2 group-hover:scale-110 transition-transform duration-300" />
-                <span className="text-gray-300 group-hover:text-white transition-colors duration-300">60 Days Money Back Guarantee</span>
+                <ShieldCheck className="h-5 w-5 text-gray-900 mr-2 group-hover:scale-110 transition-transform duration-300" />
+                <span className="text-gray-600 group-hover:text-gray-900 transition-colors duration-300">60 Days Money Back Guarantee</span>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 animate-fade-up delay-300">
                 <Link href="/squeeze">
                 <Button
                   size="lg"
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-6 text-xl font-medium transform hover:scale-105 transition-all duration-300 hover:shadow-xl"
+                  className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-6 text-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl"
                 >
-                    Get Started Today
+                    Get Started
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 </Link>
@@ -799,28 +808,123 @@ export default function Component() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="text-white border-white border-2 px-8 py-6 text-lg bg-transparent hover:bg-white hover:text-gray-900 transition-all duration-300 hover:shadow-md"
+                  className="text-gray-700 border-gray-300 px-8 py-6 text-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-md"
                 >
                   <Eye className="mr-2 h-5 w-5" />
-                  View Projects
+                  View Examples
                 </Button>
                 </Link>
               </div>
 
             </div>
 
-            {/* Right Side - 3D Globe */}
+            {/* Right Side - Rotating Website Preview */}
             <div
               className={`relative transform transition-all duration-1000 delay-300 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}
             >
-              <Globe3D />
+              {/* Main Website Preview */}
+              <div className="bg-white rounded-lg shadow-2xl overflow-hidden border border-gray-100 transition-all duration-500 hover:shadow-xl hover-lift">
+                {/* Browser Header */}
+                <div className="bg-gray-50 px-4 py-3 flex items-center space-x-2 border-b border-gray-100">
+                  <div className="flex space-x-1.5">
+                    <div className="w-2.5 h-2.5 bg-gray-300 rounded-full"></div>
+                    <div className="w-2.5 h-2.5 bg-gray-300 rounded-full"></div>
+                    <div className="w-2.5 h-2.5 bg-gray-300 rounded-full"></div>
+                  </div>
+                  <div className="flex-1 bg-white rounded-md px-3 py-1.5 text-xs text-gray-500 border border-gray-200">
+                    {currentSite.business.toLowerCase().replace(/\s+/g, "")}.com
+                  </div>
+                </div>
+
+                {/* Website Content - Animated */}
+                <div key={currentSite.id} className="p-0 animate-scale" style={{ animationDuration: "0.8s" }}>
+                  {/* Website Header */}
+                  <div className="bg-gray-900 text-white px-6 py-4 flex items-center justify-between">
+                    <div className="font-medium">{currentSite.business}</div>
+                    <div className="flex space-x-4 text-sm">
+                      <span>Home</span>
+                      <span>Services</span>
+                      <span>About</span>
+                      <span>Contact</span>
+                    </div>
+                  </div>
+
+                  {/* Hero Section */}
+                  <div className={`relative h-48 bg-gradient-to-br ${currentSite.bgColor}`}>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center px-6">
+                        <h2 className="text-2xl font-semibold text-gray-800 mb-2">{currentSite.tagline}</h2>
+                        <p className="text-gray-600 mb-4">{currentSite.description}</p>
+                        <button
+                          className={`${currentSite.accentColor} text-white px-6 py-2 rounded text-sm hover:opacity-90 transition-opacity`}
+                        >
+                          {currentSite.cta}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content Sections */}
+                  <div className="grid grid-cols-3 gap-0">
+                    <div className="bg-white p-4 text-center border-r border-gray-100">
+                      <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <Star className="h-5 w-5 text-gray-600" />
+                      </div>
+                      <h3 className="text-sm font-medium text-gray-900 mb-1">Quality Service</h3>
+                      <p className="text-xs text-gray-500">Trusted by locals</p>
+                    </div>
+                    <div className="bg-white p-4 text-center border-r border-gray-100">
+                      <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <Clock className="h-5 w-5 text-gray-600" />
+                      </div>
+                      <h3 className="text-sm font-medium text-gray-900 mb-1">Fast Response</h3>
+                      <p className="text-xs text-gray-500">Quick turnaround</p>
+                    </div>
+                    <div className="bg-white p-4 text-center">
+                      <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <Users className="h-5 w-5 text-gray-600" />
+                      </div>
+                      <h3 className="text-sm font-medium text-gray-900 mb-1">Expert Team</h3>
+                      <p className="text-xs text-gray-500">Professional staff</p>
+                    </div>
+                  </div>
+
+                  {/* Contact Section */}
+                  <div className="bg-gray-50 p-4 flex items-center justify-between border-t border-gray-100">
+                    <div className="flex items-center space-x-4">
+                      <div className="flex items-center">
+                        <MapPin className="h-4 w-4 text-gray-500 mr-1" />
+                        <span className="text-xs text-gray-600">{currentSite.address}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Phone className="h-4 w-4 text-gray-500 mr-1" />
+                        <span className="text-xs text-gray-600">{currentSite.phone}</span>
+                      </div>
+                    </div>
+                    <button className="bg-gray-800 text-white text-xs px-3 py-1 rounded">Contact</button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Progress Indicators */}
+              <div className="flex justify-center mt-6 space-x-2 animate-fade-up delay-400">
+                {websiteExamples.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentWebsite(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      index === currentWebsite ? "bg-gray-900 w-6" : "bg-gray-300 hover:bg-gray-400 hover:scale-110"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-24 px-4 bg-gradient-to-b from-white to-gray-50 mt-[-1px]">
+      <section id="how-it-works" className="py-24 px-4 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <Badge className="bg-white/80 backdrop-blur-sm text-gray-800 border border-gray-200 mb-4">
@@ -883,10 +987,10 @@ export default function Component() {
             <Link href="/squeeze">
               <Button
                 size="lg"
-                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-6 text-xl font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                Get Started Today
-              </Button>
+                Start Your Free Website
+                    </Button>
             </Link>
                   </div>
         </div>
@@ -971,7 +1075,7 @@ export default function Component() {
       </section>
 
       {/* Features & Benefits Section */}
-      <section className="py-24 px-4 bg-white">
+      <section className="py-24 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Features & Benefits</h2>
@@ -1032,9 +1136,9 @@ export default function Component() {
             <Link href="/squeeze">
               <Button
                 size="lg"
-                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-6 text-xl font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-6 text-lg font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                Get Started Today
+                Get My Free Custom Website
               </Button>
             </Link>
           </div>
