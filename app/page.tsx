@@ -756,6 +756,15 @@ export default function Component() {
       <section className="pt-40 pb-48 px-4 bg-gradient-to-b from-gray-900 to-gray-800 min-h-screen flex items-center">
         <div className="container mx-auto max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Mobile-only Global Web Solution Card - Only visible on mobile */}
+            <div className="lg:hidden mb-8">
+              <div
+                className={`relative transform transition-all duration-1000 delay-300 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}
+              >
+                <Globe3D />
+              </div>
+            </div>
+
             {/* Left Content */}
             <div
               className={`space-y-8 transform transition-all duration-1000 ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"}`}
@@ -809,9 +818,9 @@ export default function Component() {
 
             </div>
 
-            {/* Right Side - 3D Globe */}
+            {/* Right Side - 3D Globe - Only visible on desktop */}
             <div
-              className={`relative transform transition-all duration-1000 delay-300 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}
+              className={`relative transform transition-all duration-1000 delay-300 hidden lg:block ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}
             >
               <Globe3D />
             </div>

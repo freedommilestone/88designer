@@ -54,8 +54,8 @@ export default function Globe3D() {
           className="absolute inset-0"
         />
         <div className="absolute top-4 left-6 z-10">
-          <h2 className="text-3xl font-bold text-white">Global Web Solutions</h2>
-          <p className="text-white/70 text-base">Premium Website Design & Hosting</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight glow-text">Global Web Solutions</h2>
+          <p className="text-2xl font-bold text-white/90">Premium Website Design & Hosting</p>
         </div>
         <div className="absolute bottom-4 right-6 bg-black/30 backdrop-blur-md rounded-lg p-3 z-10">
           <div className="flex space-x-4 text-sm text-white">
