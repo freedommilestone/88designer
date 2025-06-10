@@ -753,7 +753,7 @@ export default function Component() {
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="pt-40 pb-48 px-4 bg-gradient-to-b from-gray-900 to-gray-800 min-h-screen flex items-center">
+      <section className="pt-40 md:pt-40 pt-24 pb-48 px-4 bg-gradient-to-b from-gray-900 to-gray-800 min-h-screen flex items-center">
         <div className="container mx-auto max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Mobile-only Global Web Solution Card - Only visible on mobile */}
@@ -773,10 +773,10 @@ export default function Component() {
                 <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-4 glow-text">
                   Free Premium Website Design
                 </h1>
-                <p className="text-2xl font-bold text-white mb-2">
+                <p className="text-2xl text-white mb-2">
                   Just $20/Month Hosting
                 </p>
-                <p className="text-2xl font-bold text-white mb-8">
+                <p className="text-2xl text-white mb-8">
                   Launch in 48 Hours
                 </p>
                 <div className="text-lg text-gray-300 leading-relaxed max-w-xl space-y-3">
@@ -804,7 +804,7 @@ export default function Component() {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 </Link>
-                <Link href="/browse-designs">
+                <Link href="/browse-designs" className="hidden sm:block">
                 <Button
                   size="lg"
                   variant="outline"
@@ -892,7 +892,7 @@ export default function Component() {
             <Link href="/squeeze">
               <Button
                 size="lg"
-                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-6 text-xl font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                className="bg-violet-400 hover:bg-violet-500 text-white px-8 py-6 text-xl font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Get Started Today
               </Button>
@@ -917,7 +917,7 @@ export default function Component() {
               <h3 className="text-2xl font-bold text-gray-900 mb-6">Website Design & Development</h3>
               <div className="flex items-baseline mb-2">
                 <span className="text-gray-400 line-through text-2xl mr-3">$1,500</span>
-                <span className="text-5xl font-bold text-orange-500">$0</span>
+                <span className="text-5xl font-bold text-violet-400">$0</span>
                     </div>
               <p className="text-gray-600 mb-2">Professional, custom-designed website at no upfront cost</p>
                   </div>
@@ -992,9 +992,9 @@ export default function Component() {
           {/* Feature Tabs */}
           <div className="flex justify-center mb-16 space-x-2">
             <button
-              className={`px-5 py-3 rounded-full transition-all ${
+              className={`px-3 py-2 md:px-5 md:py-3 rounded-full text-sm whitespace-nowrap transition-all ${
                 activeFeatureTab === "restaurants"
-                  ? "bg-orange-500 text-white"
+                  ? "bg-violet-400 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
               onClick={() => setActiveFeatureTab("restaurants")}
@@ -1002,9 +1002,9 @@ export default function Component() {
               Restaurants
             </button>
             <button
-              className={`px-5 py-3 rounded-full transition-all ${
+              className={`px-3 py-2 md:px-5 md:py-3 rounded-full text-sm whitespace-nowrap transition-all ${
                 activeFeatureTab === "serviceProviders"
-                  ? "bg-orange-500 text-white"
+                  ? "bg-violet-400 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
               onClick={() => setActiveFeatureTab("serviceProviders")}
@@ -1012,36 +1012,64 @@ export default function Component() {
               Service Providers
             </button>
             <button
-              className={`px-5 py-3 rounded-full transition-all ${
+              className={`px-3 py-2 md:px-5 md:py-3 rounded-full text-sm whitespace-nowrap transition-all ${
                 activeFeatureTab === "retailStores"
-                  ? "bg-orange-500 text-white"
+                  ? "bg-violet-400 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
               onClick={() => setActiveFeatureTab("retailStores")}
             >
               Retail Stores
             </button>
-              </div>
+          </div>
 
-          {/* Feature Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Feature Cards - Mobile Carousel */}
+          <div className="block md:hidden relative overflow-hidden mb-16">
+            <div 
+              className="flex space-x-6 overflow-x-auto snap-x snap-mandatory touch-pan-x scrollbar-hide"
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                WebkitOverflowScrolling: 'touch',
+              }}
+            >
+              {featureContent[activeFeatureTab as FeatureTab].map((feature: Feature, index: number) => (
+                <div 
+                  key={index} 
+                  className="flex-shrink-0 w-[280px] snap-center bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 group"
+                >
+                  <div className="w-16 h-16 rounded-full bg-violet-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-violet-100 transition-colors duration-300">
+                    <feature.icon className="h-8 w-8 text-violet-400" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">{feature.title}</h3>
+                  <p className="text-gray-600 text-center">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+            {/* Gradient overlays for smooth edges */}
+            <div className="absolute left-0 top-0 w-16 h-full bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
+            <div className="absolute right-0 top-0 w-16 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
+          </div>
+
+          {/* Feature Cards - Desktop Grid */}
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {featureContent[activeFeatureTab as FeatureTab].map((feature: Feature, index: number) => (
               <div key={index} className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 group">
-                <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-orange-100 transition-colors duration-300">
-                  <feature.icon className="h-8 w-8 text-orange-500" />
+                <div className="w-16 h-16 rounded-full bg-violet-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-violet-100 transition-colors duration-300">
+                  <feature.icon className="h-8 w-8 text-violet-400" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">{feature.title}</h3>
                 <p className="text-gray-600 text-center">{feature.description}</p>
               </div>
             ))}
-              </div>
+          </div>
 
           {/* CTA Button */}
           <div className="text-center mt-16">
             <Link href="/squeeze">
               <Button
                 size="lg"
-                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-6 text-xl font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                className="bg-violet-400 hover:bg-violet-500 text-white px-8 py-6 text-xl font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Get Started Today
               </Button>
@@ -1106,7 +1134,7 @@ export default function Component() {
                   className="p-6 cursor-pointer flex justify-between items-center transition-colors duration-200 hover:bg-gray-50"
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                 >
-                  <h3 className="text-lg font-medium text-gray-800">{faq.question}</h3>
+                  <h3 className="text-base md:text-lg font-medium text-gray-800">{faq.question}</h3>
                   <ChevronRight
                     className={`h-5 w-5 text-gray-500 transform transition-transform duration-300 ${
                       openFaq === index ? "rotate-90" : ""
@@ -1118,7 +1146,7 @@ export default function Component() {
                     openFaq === index ? "max-h-96" : "max-h-0"
                   }`}
                 >
-                  <p className="px-6 pb-6 text-gray-600">{faq.answer}</p>
+                  <p className="px-6 pb-6 text-sm text-gray-600">{faq.answer}</p>
                   </div>
               </div>
             ))}
@@ -1306,7 +1334,7 @@ export default function Component() {
               <Link href="/claim">
               <Button
                 size="lg"
-                className="bg-gray-900 hover:bg-gray-800 text-white px-12 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                className="bg-violet-400 hover:bg-violet-500 text-white px-12 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
               >
                 Check Availability
               </Button>

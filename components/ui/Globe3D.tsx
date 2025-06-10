@@ -53,7 +53,7 @@ export default function Globe3D() {
           height={1200}
           className="absolute inset-0"
         />
-        <div className="absolute top-4 left-6 z-10">
+        <div className="absolute top-2 md:top-4 left-6 z-10">
           <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight glow-text">Global Web Solutions</h2>
           <p className="text-2xl font-bold text-white/90">Premium Website Design & Hosting</p>
         </div>
@@ -82,7 +82,7 @@ export default function Globe3D() {
           </div>
         </div>
         <div className="mt-4 pt-4 border-t border-white/10">
-          <p className="text-white/70 text-sm">Our premium web design services span across industries and locations, providing beautiful, functional websites with reliable hosting and round-the-clock support.</p>
+          <p className="text-lg text-white/70">Our premium web design services span across industries and locations, providing beautiful, functional websites with reliable hosting and round-the-clock support.</p>
         </div>
       </div>
     </div>

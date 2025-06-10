@@ -73,7 +73,7 @@ export default function Header() {
   return (
     <>
       <header className={headerBgClass} style={headerStyle}>
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+        <div className="container mx-auto px-4 py-4 md:py-4 py-2 flex items-center justify-between">
           <Link href="/" className={`flex items-center space-x-2 animate-fade-right`}>
             <Globe className={`h-6 w-6 ${textColorClass}`} />
             <span className={`text-xl font-medium ${textColorClass}`}>LocalSite</span>
@@ -101,7 +101,7 @@ export default function Header() {
             </div>
             <div className="md:hidden">
               <Button onClick={() => setIsMenuOpen(true)} variant="ghost" size="icon" className={textColorClass}>
-                <Menu className="h-6 w-6" />
+                <Menu className="h-8 w-8" />
               </Button>
             </div>
           </div>
