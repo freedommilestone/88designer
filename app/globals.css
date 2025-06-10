@@ -481,11 +481,11 @@
   }
 
   .glow-text {
-    text-shadow: 0 0 10px rgba(179, 179, 255, 0.5), 0 0 15px rgba(179, 179, 255, 0.3);
+    text-shadow: 0 0 3px rgba(179, 179, 255, 0.15), 0 0 5px rgba(179, 179, 255, 0.1);
     color: rgb(179, 179, 255);
   }
 
   .glow-button {
-    box-shadow: 0 0 10px rgba(179, 179, 255, 0.5), 0 0 15px rgba(179, 179, 255, 0.3);
+    box-shadow: 0 0 3px rgba(179, 179, 255, 0.15), 0 0 5px rgba(179, 179, 255, 0.1);
   }
 }
