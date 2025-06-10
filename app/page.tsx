@@ -761,7 +761,7 @@ export default function Component() {
               className={`space-y-8 transform transition-all duration-1000 ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"}`}
             >
               <div className="animate-fade-up delay-200">
-                <h1 className="text-5xl md:text-6xl font-bold text-orange-500 leading-tight mb-4">
+                <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-4 glow-text">
                   Free Premium Website Design
                 </h1>
                 <p className="text-2xl font-bold text-white mb-2">
@@ -789,7 +789,7 @@ export default function Component() {
                 <Link href="/squeeze">
                 <Button
                   size="lg"
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-6 text-xl font-medium transform hover:scale-105 transition-all duration-300 hover:shadow-xl"
+                  className="bg-violet-400 hover:bg-violet-500 text-white px-8 py-6 text-lg font-medium transform hover:scale-105 transition-all duration-300 hover:shadow-xl glow-button"
                 >
                     Get Started Today
                   <ArrowRight className="ml-2 h-5 w-5" />

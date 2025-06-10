@@ -60,15 +60,15 @@ export default function Header() {
     : 'text-gray-900'
 
   const linkColorClass = isHomePage
-    ? scrollPosition < 100 ? 'text-white/80 hover:text-white' : 'text-gray-600 hover:text-orange-500'
-    : 'text-gray-600 hover:text-orange-500'
+    ? scrollPosition < 100 ? 'text-white/80 hover:text-white' : 'text-gray-600 hover:text-violet-400'
+    : 'text-gray-600 hover:text-violet-400'
 
   // Button styles
   const buttonClass = isHomePage
     ? scrollPosition < 100 
-      ? 'bg-orange-500 text-white hover:bg-orange-600'
-      : 'bg-orange-500 text-white hover:bg-orange-600'
-    : 'bg-orange-500 text-white hover:bg-orange-600'
+      ? 'bg-violet-400 text-white hover:bg-violet-500 glow-button'
+      : 'bg-black text-white hover:bg-gray-800'
+    : 'bg-violet-400 text-white hover:bg-violet-500 glow-button'
 
   return (
     <>
@@ -94,7 +94,7 @@ export default function Header() {
           <div className="flex items-center space-x-4">
             <div className="hidden md:block">
               <Link href="/claim">
-                <Button className={`${buttonClass} focus:ring-orange-500 transition-all duration-300 text-xl font-medium`}>
+                <Button className={`${buttonClass} focus:ring-violet-400 transition-all duration-300 text-base font-medium`}>
                   Start Here
                 </Button>
               </Link>
@@ -137,7 +137,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-2xl ${isHomePage && scrollPosition < 100 ? 'text-white hover:text-orange-300' : 'text-gray-800 hover:text-orange-500'} transition-all duration-300`}
+                className={`text-2xl ${isHomePage && scrollPosition < 100 ? 'text-white hover:text-violet-300' : 'text-gray-800 hover:text-violet-400'} transition-all duration-300`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 {link.text}
@@ -148,10 +148,10 @@ export default function Header() {
           <div className="mt-12 text-center">
             <Link href="/claim">
               <Button
-                className={`w-full py-6 text-xl font-medium focus:ring-orange-500 ${
+                className={`w-full py-6 text-xl font-medium focus:ring-violet-400 ${
                   isHomePage && scrollPosition < 100
-                    ? 'bg-orange-500 text-white hover:bg-orange-600'
-                    : 'bg-orange-500 text-white hover:bg-orange-600'
+                    ? 'bg-violet-400 text-white hover:bg-violet-500 glow-button'
+                    : 'bg-black text-white hover:bg-gray-800'
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -163,4 +163,4 @@ export default function Header() {
       </div>
     </>
   )
-} 
+}
