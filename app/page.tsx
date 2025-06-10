@@ -753,8 +753,14 @@ export default function Component() {
   return (
     <MainLayout>
       {/* Hero Section */}
-      <section className="pt-40 md:pt-40 pt-24 pb-48 px-4 bg-gradient-to-b from-gray-900 to-gray-800 min-h-screen flex items-center">
-        <div className="container mx-auto max-w-7xl">
+      <section className="pt-40 md:pt-40 pt-24 pb-48 px-4 bg-gradient-to-b from-gray-900 to-gray-800 min-h-screen flex items-center relative overflow-hidden">
+        {/* Subtle Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-500/5 rounded-full opacity-40 blur-3xl animate-float-modern-1 hidden md:block"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-pink-500/5 rounded-full opacity-30 blur-3xl animate-float-modern-2 hidden md:block"></div>
+        </div>
+        
+        <div className="container mx-auto max-w-7xl relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Mobile-only Global Web Solution Card - Only visible on mobile */}
             <div className="lg:hidden mb-8">
@@ -770,19 +776,19 @@ export default function Component() {
               className={`space-y-8 transform transition-all duration-1000 ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"}`}
             >
               <div className="animate-fade-up delay-200">
-                <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-4 glow-text">
+                <h1 className="text-5xl md:text-6xl font-semibold leading-tight mb-4 text-white clean-text">
                   Free Premium Website Design
                 </h1>
-                <p className="text-2xl text-white mb-2">
+                <p className="text-2xl text-white/90 mb-2 clean-text">
                   Just $20/Month Hosting
                 </p>
-                <p className="text-2xl text-white mb-8">
+                <p className="text-2xl text-white/90 mb-8 clean-text">
                   Launch in 48 Hours
                 </p>
-                <div className="text-lg text-gray-300 leading-relaxed max-w-xl space-y-3">
+                <div className="text-lg text-white/80 leading-relaxed max-w-xl space-y-3 clean-text">
                   <p>Why Pay Thousands When You Can Get Professional Design for FREE?</p>
-                  <p><span className="text-green-400 font-medium">✓</span> Custom Website Design - $0 <span className="text-sm text-gray-400">(Usually $2,000-$5,000)</span></p>
-                  <p><span className="text-green-400 font-medium">✓</span> Professional Setup & Launch - $0 <span className="text-sm text-gray-400">(Usually $500-$1,000)</span></p>
+                  <p><span className="text-green-400 font-medium">✓</span> Custom Website Design - $0 <span className="text-sm text-white/60">(Usually $2,000-$5,000)</span></p>
+                  <p><span className="text-green-400 font-medium">✓</span> Professional Setup & Launch - $0 <span className="text-sm text-white/60">(Usually $500-$1,000)</span></p>
                   <p><span className="text-green-400 font-medium">✓</span> Premium Hosting & Security - Just $20/month</p>
                   <p><span className="text-green-400 font-medium">✓</span> Ongoing Support & Updates - Included</p>
                 </div>
@@ -791,28 +797,25 @@ export default function Component() {
               {/* Money Back Guarantee */}
               <div className="flex items-center group animate-fade-up delay-300 mb-4">
                 <ShieldCheck className="h-5 w-5 text-white mr-2 group-hover:scale-110 transition-transform duration-300" />
-                <span className="text-gray-300 group-hover:text-white transition-colors duration-300">60 Days Money Back Guarantee</span>
+                <span className="text-white/80 group-hover:text-white transition-colors duration-300 clean-text">60 Days Money Back Guarantee</span>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 animate-fade-up delay-300">
                 <Link href="/squeeze">
-                <Button
-                  size="lg"
-                  className="bg-violet-400 hover:bg-violet-500 text-white px-8 py-6 text-lg font-medium transform hover:scale-105 transition-all duration-300 hover:shadow-xl glow-button"
+                <button
+                  className="btn-primary px-8 py-6 text-lg font-medium transform hover:scale-105 transition-all duration-300"
                 >
                     Get Started Today
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+                  <ArrowRight className="ml-2 h-5 w-5 inline" />
+                </button>
                 </Link>
                 <Link href="/browse-designs" className="hidden sm:block">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-white border-white border-2 px-8 py-6 text-lg bg-transparent hover:bg-white hover:text-gray-900 transition-all duration-300 hover:shadow-md"
+                <button
+                  className="btn-secondary border-white border-2 px-8 py-6 text-lg text-white bg-transparent hover:bg-white hover:text-gray-900 transition-all duration-300"
                 >
-                  <Eye className="mr-2 h-5 w-5" />
+                  <Eye className="mr-2 h-5 w-5 inline" />
                   View Projects
-                </Button>
+                </button>
                 </Link>
               </div>
 
@@ -1026,16 +1029,30 @@ export default function Component() {
           {/* Feature Cards - Mobile Carousel */}
           <div className="block md:hidden relative overflow-hidden mb-16">
             <div 
-              className="flex space-x-6 overflow-x-auto snap-x snap-mandatory touch-pan-x scrollbar-hide"
+              className="flex space-x-6 overflow-x-auto snap-x snap-mandatory touch-pan-x scrollbar-hide animate-scroll-smooth"
               style={{
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
                 WebkitOverflowScrolling: 'touch',
+                animation: "scrollSmooth 20s linear infinite",
               }}
             >
               {featureContent[activeFeatureTab as FeatureTab].map((feature: Feature, index: number) => (
                 <div 
                   key={index} 
+                  className="flex-shrink-0 w-[280px] snap-center bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 group"
+                >
+                  <div className="w-16 h-16 rounded-full bg-violet-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-violet-100 transition-colors duration-300">
+                    <feature.icon className="h-8 w-8 text-violet-400" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">{feature.title}</h3>
+                  <p className="text-gray-600 text-center">{feature.description}</p>
+                </div>
+              ))}
+              {/* Duplicate the items to ensure continuous scrolling */}
+              {featureContent[activeFeatureTab as FeatureTab].map((feature: Feature, index: number) => (
+                <div 
+                  key={`duplicate-${index}`} 
                   className="flex-shrink-0 w-[280px] snap-center bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 group"
                 >
                   <div className="w-16 h-16 rounded-full bg-violet-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-violet-100 transition-colors duration-300">
@@ -1219,8 +1236,8 @@ export default function Component() {
       <section className="py-32 px-4 bg-white relative overflow-hidden">
         {/* Subtle Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gray-50 rounded-full opacity-40 blur-3xl animate-float-modern-1 hidden md:block"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gray-100 rounded-full opacity-30 blur-3xl animate-float-modern-2 hidden md:block"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gray-500/5 rounded-full opacity-40 blur-3xl animate-float-modern-1 hidden md:block"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gray-100/5 rounded-full opacity-30 blur-3xl animate-float-modern-2 hidden md:block"></div>
         </div>
 
         <div className="container mx-auto max-w-5xl relative z-10">
