@@ -785,7 +785,7 @@ export default function Component() {
                   <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold block">Free Premium</span>
                   <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold block mt-1 md:mt-2">Website Design</span>
                 </h1>
-                <p className="text-xl sm:text-2xl text-white/90 mb-2 clean-text">
+                <p className="text-xl sm:text-2xl text-white/90 mb-2 md:mb-2 mobile-subtitle-spacing clean-text">
                   Just $20/Month Hosting
                 </p>
                 <p className="text-xl sm:text-2xl text-white/90 mb-8 clean-text">
@@ -793,11 +793,31 @@ export default function Component() {
                 </p>
                 <div className="text-sm md:text-lg text-white/80 leading-relaxed max-w-xl space-y-2 md:space-y-3 clean-text">
                   <p className="text-base md:text-lg font-medium">Why Pay Thousands When You Can Get Professional Design for FREE?</p>
-                  <p className="text-xs md:text-base"><span className="text-green-400 font-medium">✓</span> Custom Website Design - $0 <span className="text-xs md:text-sm text-white/60">(Usually $2,000-$5,000)</span></p>
-                  <p className="text-xs md:text-base"><span className="text-green-400 font-medium">✓</span> Professional Setup & Launch - $0 <span className="text-xs md:text-sm text-white/60">(Usually $500-$1,000)</span></p>
-                  <p className="text-xs md:text-base"><span className="text-green-400 font-medium">✓</span> Premium Hosting & Security - Just $20/month</p>
-                  <p className="text-xs md:text-base"><span className="text-green-400 font-medium">✓</span> Ongoing Support & Updates - Included</p>
-                  <p className="text-xs md:text-base"><span className="text-green-400 font-medium">✓</span> 60 Days Money Back Guarantee</p>
+                  <p className="text-xs md:text-base hero-checklist-item">
+                    <span className="text-green-400 font-medium">✓</span>
+                    <span className="hero-checklist-desktop-text"> Custom Website Design - $0 <span className="text-xs md:text-sm text-white/60">(Usually $2,000-$5,000)</span></span>
+                    <span className="hero-checklist-mobile-text"> Custom Website Design - $0 (Usually +$2,000)</span>
+                  </p>
+                  <p className="text-xs md:text-base hero-checklist-item">
+                    <span className="text-green-400 font-medium">✓</span>
+                    <span className="hero-checklist-desktop-text"> Professional Setup & Launch - $0 <span className="text-xs md:text-sm text-white/60">(Usually $500-$1,000)</span></span>
+                    <span className="hero-checklist-mobile-text"> Professional Setup & Launch - $0 (Usually +$500)</span>
+                  </p>
+                  <p className="text-xs md:text-base hero-checklist-item">
+                    <span className="text-green-400 font-medium">✓</span>
+                    <span className="hero-checklist-desktop-text"> Premium Hosting & Security - Just $20/month</span>
+                    <span className="hero-checklist-mobile-text"> Premium Hosting & Security - Just $20/month</span>
+                  </p>
+                  <p className="text-xs md:text-base hero-checklist-item">
+                    <span className="text-green-400 font-medium">✓</span>
+                    <span className="hero-checklist-desktop-text"> Ongoing Support & Updates - Included</span>
+                    <span className="hero-checklist-mobile-text"> Ongoing Support & Updates - Included</span>
+                  </p>
+                  <p className="text-xs md:text-base hero-checklist-item">
+                    <span className="text-green-400 font-medium">✓</span>
+                    <span className="hero-checklist-desktop-text"> 60 Days Money Back Guarantee</span>
+                    <span className="hero-checklist-mobile-text"> 60 Days Money Back Guarantee</span>
+                  </p>
                 </div>
               </div>
 
