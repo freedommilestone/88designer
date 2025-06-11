@@ -272,6 +272,22 @@
       max-width: 95vw; /* Maximum width relative to viewport */
       margin-left: auto;
       margin-right: auto;
+      padding-left: 10px; /* Decreased left padding */
+      padding-right: 10px; /* Decreased right padding */
+    }
+    
+    /* Target the content within the Global Web Solutions card */
+    .global-web-card > div > div.absolute.top-3 {
+      left: 12px !important; /* Reduce left padding */
+    }
+    
+    .global-web-card > div > div.absolute.bottom-4 {
+      right: 12px !important; /* Reduce right padding */
+    }
+    
+    .global-web-card > div:last-child {
+      padding-left: 12px !important; /* Reduce left padding in bottom section */
+      padding-right: 12px !important; /* Reduce right padding in bottom section */
     }
     
     /* Increased font size for hero headline on mobile */
@@ -748,3 +764,4 @@
     margin-bottom: 0.25rem !important; /* Reduced spacing */
   }
 }
+@media (max-width: 768px) { .global-web-card { padding-left: 8px !important; padding-right: 8px !important; } }

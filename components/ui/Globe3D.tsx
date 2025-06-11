@@ -68,11 +68,11 @@ export default function Globe3D() {
         {/* Top gradient border */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent"></div>
         
-        <div className="absolute top-3 md:top-4 left-5 md:left-6 z-10">
+        <div className="absolute top-3 md:top-4 left-3 md:left-6 z-10">
           <h3 className="text-2xl md:text-3xl font-bold text-violet-300 clean-text">Global Web Solutions</h3>
           <p className="text-white/70 text-sm md:text-base clean-text">Premium Website Design & Hosting</p>
         </div>
-        <div className="absolute bottom-4 right-5 md:right-6 bg-black/30 backdrop-blur-md rounded-lg p-2.5 md:p-3 z-10">
+        <div className="absolute bottom-4 right-3 md:right-6 bg-black/30 backdrop-blur-md rounded-lg p-2.5 md:p-3 z-10">
           <div className="flex space-x-3 md:space-x-4 text-xs md:text-sm text-white">
             <div className="flex items-center">
               <span className="w-2.5 md:w-3 h-2.5 md:h-3 rounded-full bg-pink-500 mr-1.5"></span>
@@ -85,7 +85,7 @@ export default function Globe3D() {
           </div>
         </div>
       </div>
-      <div className="p-5 md:p-6 bg-black/40">
+      <div className="p-3 md:p-6 bg-black/40">
         <div className="flex justify-between text-white/80 text-sm md:text-base">
           <div>
             <p className="font-medium">250+ Websites</p>

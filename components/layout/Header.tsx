@@ -38,7 +38,7 @@ export default function Header() {
     { href: "/#pricing", text: "Pricing" },
     { href: "/#features", text: "Features" },
     { href: "/#faq", text: "FAQs" },
-    { href: "/browse-designs", text: "Browse Designs" },
+    { href: "https://themes.88webdesigns.com/", text: "Themes" },
     { href: "/contact", text: "Contact" },
   ]
 

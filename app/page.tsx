@@ -768,7 +768,7 @@ export default function Component() {
         <div className="container mx-auto max-w-7xl relative z-10 px-2 sm:px-4 overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Mobile-only Global Web Solution Card - Only visible on mobile */}
-            <div className="lg:hidden mb-12 w-full">
+            <div className="lg:hidden mb-12 w-full px-2">
               <div
                 className="relative opacity-100 w-full"
               >
