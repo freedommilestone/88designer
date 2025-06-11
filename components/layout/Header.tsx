@@ -73,7 +73,7 @@ export default function Header() {
   return (
     <>
       <header className={headerBgClass} style={headerStyle}>
-        <div className="container mx-auto px-4 py-4 md:py-4 py-2 flex items-center justify-between">
+        <div className="container mx-auto px-4 py-1 md:py-3 flex items-center justify-between">
           <Link href="/" className={`flex items-center space-x-2 animate-fade-right`}>
             <Globe className={`h-6 w-6 ${textColorClass}`} />
             <span className={`text-xl font-medium ${textColorClass}`}>LocalSite</span>
@@ -94,7 +94,7 @@ export default function Header() {
           <div className="flex items-center space-x-4">
             <div className="hidden md:block">
               <Link href="/claim">
-                <Button className={`${buttonClass} focus:ring-violet-400 transition-all duration-300 text-base font-medium`}>
+                <Button variant="black" size="lg" className="font-medium">
                   Start Here
                 </Button>
               </Link>
@@ -148,11 +148,9 @@ export default function Header() {
           <div className="mt-12 text-center">
             <Link href="/claim">
               <Button
-                className={`w-full py-6 text-xl font-medium focus:ring-violet-400 ${
-                  isHomePage && scrollPosition < 100
-                    ? 'bg-violet-400 text-white hover:bg-violet-500 glow-button'
-                    : 'bg-black text-white hover:bg-gray-800'
-                }`}
+                variant="black"
+                size="xl"
+                className="w-full font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Start Here

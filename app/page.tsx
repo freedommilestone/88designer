@@ -41,6 +41,7 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import MainLayout from "@/components/layout/MainLayout"
 import Globe3D from "@/components/ui/Globe3D"
+import { HeroButton } from "@/components/ui/HeroButton"
 
 const websiteExamples = [
   {
@@ -409,6 +410,8 @@ export default function Component() {
   const [selectedBusinessType, setSelectedBusinessType] = useState("restaurant")
   const [activeFeatureTab, setActiveFeatureTab] = useState("restaurants")
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [carouselPosition, setCarouselPosition] = useState(0)
+  const carouselRef = useRef<HTMLDivElement>(null)
 
   // Title carousel state - moved inside component
   const [currentTitleIndex, setCurrentTitleIndex] = useState(0)
@@ -534,6 +537,14 @@ export default function Component() {
 
     return () => clearInterval(cursorInterval)
   }, [])
+
+  // Reset carousel position when tab changes
+  useEffect(() => {
+    setCarouselPosition(0)
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = 0
+    }
+  }, [activeFeatureTab])
 
   const filteredTemplates =
     selectedCategory === "All" ? templates : templates.filter((template) => template.category === selectedCategory)
@@ -752,20 +763,15 @@ export default function Component() {
 
   return (
     <MainLayout>
-      {/* Hero Section */}
-      <section className="pt-40 md:pt-40 pt-24 pb-48 px-4 bg-gradient-to-b from-gray-900 to-gray-800 min-h-screen flex items-center relative overflow-hidden">
-        {/* Subtle Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-500/5 rounded-full opacity-40 blur-3xl animate-float-modern-1 hidden md:block"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-pink-500/5 rounded-full opacity-30 blur-3xl animate-float-modern-2 hidden md:block"></div>
-        </div>
+             {/* Hero Section */}
+       <section className="pt-16 md:pt-32 pb-20 md:pb-48 px-8 md:px-8 bg-gradient-to-b from-gray-900 to-gray-800 min-h-\[85vh\] md:min-h-screen flex items-center relative overflow-hidden">
         
         <div className="container mx-auto max-w-7xl relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Mobile-only Global Web Solution Card - Only visible on mobile */}
-            <div className="lg:hidden mb-8">
+            <div className="lg:hidden mb-12">
               <div
-                className={`relative transform transition-all duration-1000 delay-300 ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}
+                className="relative opacity-100"
               >
                 <Globe3D />
               </div>
@@ -776,8 +782,8 @@ export default function Component() {
               className={`space-y-8 transform transition-all duration-1000 ${isVisible ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"}`}
             >
               <div className="animate-fade-up delay-200">
-                <h1 className="text-5xl md:text-6xl font-semibold leading-tight mb-4 text-white clean-text">
-                  Free Premium Website Design
+                <h1 className="font-semibold leading-tight mb-6 md:mb-4 text-violet-300 clean-text tracking-tight">
+                  <span className="text-5xl md:text-6xl font-bold block md:inline mb-2 md:mb-0">Free Premium</span><span className="hidden md:inline"> </span><span className="text-5xl md:text-6xl font-bold block md:inline">Website Design</span>
                 </h1>
                 <p className="text-2xl text-white/90 mb-2 clean-text">
                   Just $20/Month Hosting
@@ -785,39 +791,29 @@ export default function Component() {
                 <p className="text-2xl text-white/90 mb-8 clean-text">
                   Launch in 48 Hours
                 </p>
-                <div className="text-lg text-white/80 leading-relaxed max-w-xl space-y-3 clean-text">
-                  <p>Why Pay Thousands When You Can Get Professional Design for FREE?</p>
-                  <p><span className="text-green-400 font-medium">✓</span> Custom Website Design - $0 <span className="text-sm text-white/60">(Usually $2,000-$5,000)</span></p>
-                  <p><span className="text-green-400 font-medium">✓</span> Professional Setup & Launch - $0 <span className="text-sm text-white/60">(Usually $500-$1,000)</span></p>
-                  <p><span className="text-green-400 font-medium">✓</span> Premium Hosting & Security - Just $20/month</p>
-                  <p><span className="text-green-400 font-medium">✓</span> Ongoing Support & Updates - Included</p>
+                <div className="text-sm md:text-lg text-white/80 leading-relaxed max-w-xl space-y-2 md:space-y-3 clean-text">
+                  <p className="text-base md:text-lg font-medium">Why Pay Thousands When You Can Get Professional Design for FREE?</p>
+                  <p className="text-xs md:text-base"><span className="text-green-400 font-medium">✓</span> Custom Website Design - $0 <span className="text-xs md:text-sm text-white/60">(Usually $2,000-$5,000)</span></p>
+                  <p className="text-xs md:text-base"><span className="text-green-400 font-medium">✓</span> Professional Setup & Launch - $0 <span className="text-xs md:text-sm text-white/60">(Usually $500-$1,000)</span></p>
+                  <p className="text-xs md:text-base"><span className="text-green-400 font-medium">✓</span> Premium Hosting & Security - Just $20/month</p>
+                  <p className="text-xs md:text-base"><span className="text-green-400 font-medium">✓</span> Ongoing Support & Updates - Included</p>
+                  <p className="text-xs md:text-base"><span className="text-green-400 font-medium">✓</span> 60 Days Money Back Guarantee</p>
                 </div>
               </div>
 
-              {/* Money Back Guarantee */}
-              <div className="flex items-center group animate-fade-up delay-300 mb-4">
-                <ShieldCheck className="h-5 w-5 text-white mr-2 group-hover:scale-110 transition-transform duration-300" />
-                <span className="text-white/80 group-hover:text-white transition-colors duration-300 clean-text">60 Days Money Back Guarantee</span>
-              </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 animate-fade-up delay-300">
-                <Link href="/squeeze">
-                <button
-                  className="btn-primary px-8 py-6 text-lg font-medium transform hover:scale-105 transition-all duration-300"
-                >
-                    Get Started Today
-                  <ArrowRight className="ml-2 h-5 w-5 inline" />
-                </button>
-                </Link>
-                <Link href="/browse-designs" className="hidden sm:block">
-                <button
-                  className="btn-secondary border-white border-2 px-8 py-6 text-lg text-white bg-transparent hover:bg-white hover:text-gray-900 transition-all duration-300"
-                >
-                  <Eye className="mr-2 h-5 w-5 inline" />
-                  View Projects
-                </button>
-                </Link>
-              </div>
+
+                              <div className="flex flex-col sm:flex-row gap-4 animate-fade-up delay-300">
+                  <Link href="/squeeze">
+                    <Button 
+                      variant="outline"
+                      className="text-base font-medium"
+                    >
+                      Get Started Today
+                      <ArrowRight className="ml-2 h-5 w-5 inline text-violet-400" />
+                    </Button>
+                  </Link>
+                </div>
 
             </div>
 
@@ -832,145 +828,208 @@ export default function Component() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-24 px-4 bg-gradient-to-b from-white to-gray-50 mt-[-1px]">
+      <section id="how-it-works" className="py-16 md:py-24 px-4 bg-gradient-to-b from-white to-gray-50 mt-[-1px] pt-24 md:pt-24">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8 md:mb-16">
             <Badge className="bg-white/80 backdrop-blur-sm text-gray-800 border border-gray-200 mb-4">
               How It Works
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Get Your Free Website in 3 Simple Steps</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Get Your Free Website<br className="block md:hidden" />in 3 Simple Steps</h2>
                   </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          {/* Mobile version with the new layout */}
+          <div className="block md:hidden space-y-4">
             {/* Step 1 */}
-            <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300 hover-lift group">
-              <div className="pt-6 mb-6">
-                <div className="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6 text-orange-500 group-hover:scale-110 transition-transform duration-300">
-                  <ClipboardEdit className="h-8 w-8" />
+            <div className="flex">
+              <div className="flex-shrink-0 mr-4">
+                <div className="w-12 h-12 rounded-full bg-violet-700 flex items-center justify-center text-white font-bold text-lg">
+                  1
+                </div>
+                <div className="h-full w-0.5 bg-violet-300 mx-auto mt-2"></div>
               </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Tell Us About Your Business</h3>
-                <p className="text-gray-600 leading-relaxed">
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-3">
+                <div className="flex items-center mb-2">
+                  <ClipboardEdit className="h-6 w-6 text-black md:text-violet-400 mr-2" />
+                  <h3 className="text-lg font-bold text-gray-900">Tell Us About Your Business</h3>
+                </div>
+                <p className="text-gray-600 text-sm">
                   Fill out our quick form with your business details, goals, and what you need. No technical knowledge required.
                 </p>
-                <p className="text-orange-500 font-medium mt-4">(5 minutes)</p>
+                <p className="text-violet-700 md:text-violet-400 font-medium mt-2 text-sm">(5 minutes)</p>
+              </div>
             </div>
-          </div>
             
             {/* Step 2 */}
-            <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300 hover-lift group">
-              <div className="pt-6 mb-6">
-                <div className="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6 text-orange-500 group-hover:scale-110 transition-transform duration-300">
-                  <Laptop className="h-8 w-8" />
-        </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">We Design & Build Your Site</h3>
-                <p className="text-gray-600 leading-relaxed">
+            <div className="flex">
+              <div className="flex-shrink-0 mr-4">
+                <div className="w-12 h-12 rounded-full bg-violet-700 flex items-center justify-center text-white font-bold text-lg">
+                  2
+                </div>
+                <div className="h-full w-0.5 bg-violet-300 mx-auto mt-2"></div>
+              </div>
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-3">
+                <div className="flex items-center mb-2">
+                  <Laptop className="h-6 w-6 text-black md:text-violet-400 mr-2" />
+                  <h3 className="text-lg font-bold text-gray-900">We Design & Build Your Site</h3>
+                </div>
+                <p className="text-gray-600 text-sm">
                   Our team creates your custom website with professional design, mobile optimization, and everything you need to look credible online.
                 </p>
-                <p className="text-orange-500 font-medium mt-4">(48 hours)</p>
+                <p className="text-violet-700 md:text-violet-400 font-medium mt-2 text-sm">(48 hours)</p>
               </div>
             </div>
             
             {/* Step 3 */}
-            <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-8 transition-all duration-300 hover-lift group">
+            <div className="flex">
+              <div className="flex-shrink-0 mr-4">
+                <div className="w-12 h-12 rounded-full bg-violet-700 flex items-center justify-center text-white font-bold text-lg">
+                  3
+                </div>
+              </div>
+              <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-3">
+                <div className="flex items-center mb-2">
+                  <Rocket className="h-6 w-6 text-black md:text-violet-400 mr-2" />
+                  <h3 className="text-lg font-bold text-gray-900">Launch & Grow Your Business</h3>
+                </div>
+                <p className="text-gray-600 text-sm">
+                  We handle hosting, security, backups, and support so you can focus on what you do best - running your business.
+                </p>
+                <p className="text-violet-700 md:text-violet-400 font-medium mt-2 text-sm">(Ongoing)</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop version (original layout) */}
+          <div className="hidden md:grid grid-cols-3 gap-4 md:p-8 md:gap-12">
+            {/* Step 1 */}
+            <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-8 max-w-[92%] md:max-w-none mx-auto md:mx-0 transition-all duration-300 hover-lift group">
               <div className="pt-6 mb-6">
-                <div className="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mx-auto mb-6 text-orange-500 group-hover:scale-110 transition-transform duration-300">
+                <div className="w-16 h-16 bg-violet-50 rounded-full flex items-center justify-center mx-auto mb-6 text-violet-400 group-hover:scale-110 transition-transform duration-300">
+                  <ClipboardEdit className="h-8 w-8" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">Tell Us About Your Business</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Fill out our quick form with your business details, goals, and what you need. No technical knowledge required.
+                </p>
+                <p className="text-violet-400 font-medium mt-4">(5 minutes)</p>
+              </div>
+            </div>
+            
+            {/* Step 2 */}
+            <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-8 max-w-[92%] md:max-w-none mx-auto md:mx-0 transition-all duration-300 hover-lift group">
+              <div className="pt-6 mb-6">
+                <div className="w-16 h-16 bg-violet-50 rounded-full flex items-center justify-center mx-auto mb-6 text-violet-400 group-hover:scale-110 transition-transform duration-300">
+                  <Laptop className="h-8 w-8" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">We Design & Build Your Site</h3>
+                <p className="text-gray-600 leading-relaxed">
+                  Our team creates your custom website with professional design, mobile optimization, and everything you need to look credible online.
+                </p>
+                <p className="text-violet-400 font-medium mt-4">(48 hours)</p>
+              </div>
+            </div>
+            
+            {/* Step 3 */}
+            <div className="relative bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-8 max-w-[92%] md:max-w-none mx-auto md:mx-0 transition-all duration-300 hover-lift group">
+              <div className="pt-6 mb-6">
+                <div className="w-16 h-16 bg-violet-50 rounded-full flex items-center justify-center mx-auto mb-6 text-violet-400 group-hover:scale-110 transition-transform duration-300">
                   <Rocket className="h-8 w-8" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Launch & Grow Your Business</h3>
                 <p className="text-gray-600 leading-relaxed">
                   We handle hosting, security, backups, and support so you can focus on what you do best - running your business.
                 </p>
-                <p className="text-orange-500 font-medium mt-4">(Ongoing)</p>
+                <p className="text-violet-400 font-medium mt-4">(Ongoing)</p>
               </div>
             </div>
           </div>
 
           {/* Results Message */}
-          <div className="text-center mt-12 mb-8">
+          <div className="text-center mt-12 mb-8 hidden md:block">
             <p className="text-xl text-gray-700 font-medium">Ready to get started? Most businesses see results within the first week.</p>
           </div>
 
           {/* CTA Button */}
-          <div className="text-center mt-8">
+          <div className="text-center mt-8 hidden md:block">
             <Link href="/squeeze">
               <Button
-                size="lg"
-                className="bg-violet-400 hover:bg-violet-500 text-white px-8 py-6 text-xl font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                variant="outline"
+                className="text-base font-medium"
               >
                 Get Started Today
               </Button>
             </Link>
-                  </div>
+          </div>
         </div>
       </section>
 
       {/* Pricing Transparency Section */}
-      <section id="pricing" className="py-20 px-4 bg-white">
+      <section id="pricing" className="py-12 md:py-20 px-4 bg-white pt-28 md:pt-20">
         <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Pricing Transparency</h2>
+          <div className="text-center mb-6 md:mb-12">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Pricing Transparency</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               No hidden fees or surprise costs – just straightforward pricing
             </p>
                   </div>
 
-          <div className="space-y-6">
+          <div className="space-y-2 md:space-y-6">
             {/* Website Design Card */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Website Design & Development</h3>
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-8 max-w-[92%] md:max-w-none mx-auto md:mx-0">
+              <h3 className="text-sm md:text-2xl font-bold text-gray-900 mb-3 md:mb-6">Website Design & Development</h3>
               <div className="flex items-baseline mb-2">
                 <span className="text-gray-400 line-through text-2xl mr-3">$1,500</span>
-                <span className="text-5xl font-bold text-violet-400">$0</span>
+                <span className="text-4xl md:text-5xl font-bold text-violet-700 md:text-violet-400">$0</span>
                     </div>
               <p className="text-gray-600 mb-2">Professional, custom-designed website at no upfront cost</p>
                   </div>
             
             {/* Website Hosting Card */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Website Hosting & Support</h3>
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-8 max-w-[92%] md:max-w-none mx-auto md:mx-0">
+              <h3 className="text-sm md:text-2xl font-bold text-gray-900 mb-3 md:mb-6">Website Hosting & Support</h3>
               <div className="flex items-baseline mb-2">
-                <span className="text-5xl font-bold text-gray-900">$20</span>
+                <span className="text-4xl md:text-5xl font-bold text-gray-900">$20</span>
                 <span className="text-gray-600 ml-2">/month</span>
                 </div>
-              <p className="text-gray-600 mb-6">Everything you need to keep your website running smoothly</p>
+              <p className="text-gray-600 mb-3 md:mb-6">Everything you need to keep your website running smoothly</p>
               
-              <div className="space-y-3">
+              <div className="space-y-0.5 md:space-y-3">
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
-                    <Check className="h-5 w-5 text-green-600" />
+                    <Check className="h-5 w-5 text-violet-400" />
                       </div>
-                  <p className="ml-3 text-gray-600">Secure, reliable website hosting</p>
+                  <p className="ml-2 md:ml-3 text-gray-600 text-xs md:text-base">Secure, reliable website hosting</p>
                   </div>
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
-                    <Check className="h-5 w-5 text-green-600" />
+                    <Check className="h-5 w-5 text-violet-400" />
                   </div>
-                  <p className="ml-3 text-gray-600">Regular security updates and monitoring</p>
+                  <p className="ml-2 md:ml-3 text-gray-600 text-xs md:text-base">Regular security updates and monitoring</p>
                 </div>
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
-                    <Check className="h-5 w-5 text-green-600" />
+                    <Check className="h-5 w-5 text-violet-600" />
               </div>
-                  <p className="ml-3 text-gray-600">Technical support via email and chat</p>
+                  <p className="ml-2 md:ml-3 text-gray-600 text-xs md:text-base">Technical support via email and chat</p>
                 </div>
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
-                    <Check className="h-5 w-5 text-green-600" />
+                    <Check className="h-5 w-5 text-violet-600" />
                   </div>
-                  <p className="ml-3 text-gray-600">Regular backups of website content</p>
+                  <p className="ml-2 md:ml-3 text-gray-600 text-xs md:text-base">Regular backups of website content</p>
                 </div>
                 <div className="flex items-start">
                   <div className="flex-shrink-0 mt-1">
-                    <Check className="h-5 w-5 text-green-600" />
+                    <Check className="h-5 w-5 text-violet-600" />
                   </div>
-                  <p className="ml-3 text-gray-600">Basic SEO optimization</p>
+                  <p className="ml-2 md:ml-3 text-gray-600 text-xs md:text-base">Basic SEO optimization</p>
                 </div>
               </div>
           </div>
 
             {/* Website Updates Card */}
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Website Updates & Changes</h3>
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-8 max-w-[92%] md:max-w-none mx-auto md:mx-0">
+              <h3 className="text-sm md:text-2xl font-bold text-gray-900 mb-3 md:mb-6">Website Updates & Changes</h3>
               <div className="flex items-baseline mb-2">
                 <span className="text-2xl text-gray-900 font-bold">Starting at</span>
                 <span className="text-2xl font-bold text-gray-900 ml-2">$10</span>
@@ -983,42 +1042,42 @@ export default function Component() {
       </section>
 
       {/* Features & Benefits Section */}
-      <section className="py-24 px-4 bg-white">
+      <section className="py-16 md:py-24 px-4 bg-white pt-28 md:pt-24">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Features & Benefits</h2>
+          <div className="text-center mb-8 md:mb-16">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Features & Benefits</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Our websites are tailored to the specific needs of your business type
             </p>
           </div>
 
           {/* Feature Tabs */}
-          <div className="flex justify-center mb-16 space-x-2">
+          <div className="flex justify-center mb-16 space-x-4">
             <button
-              className={`px-3 py-2 md:px-5 md:py-3 rounded-full text-sm whitespace-nowrap transition-all ${
+              className={`px-5 py-3 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
                 activeFeatureTab === "restaurants"
-                  ? "bg-violet-400 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-black text-white"
+                  : "bg-white text-black border border-gray-200 hover:bg-gray-50"
               }`}
               onClick={() => setActiveFeatureTab("restaurants")}
             >
               Restaurants
             </button>
             <button
-              className={`px-3 py-2 md:px-5 md:py-3 rounded-full text-sm whitespace-nowrap transition-all ${
+              className={`px-5 py-3 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
                 activeFeatureTab === "serviceProviders"
-                  ? "bg-violet-400 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-black text-white"
+                  : "bg-white text-black border border-gray-200 hover:bg-gray-50"
               }`}
               onClick={() => setActiveFeatureTab("serviceProviders")}
             >
               Service Providers
             </button>
             <button
-              className={`px-3 py-2 md:px-5 md:py-3 rounded-full text-sm whitespace-nowrap transition-all ${
+              className={`px-5 py-3 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
                 activeFeatureTab === "retailStores"
-                  ? "bg-violet-400 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-black text-white"
+                  : "bg-white text-black border border-gray-200 hover:bg-gray-50"
               }`}
               onClick={() => setActiveFeatureTab("retailStores")}
             >
@@ -1029,12 +1088,20 @@ export default function Component() {
           {/* Feature Cards - Mobile Carousel */}
           <div className="block md:hidden relative overflow-hidden mb-16">
             <div 
-              className="flex space-x-6 overflow-x-auto snap-x snap-mandatory touch-pan-x scrollbar-hide animate-scroll-smooth"
+              ref={carouselRef}
+              className="flex space-x-6 overflow-x-auto snap-x snap-mandatory touch-pan-x scrollbar-hide pb-4"
               style={{
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
                 WebkitOverflowScrolling: 'touch',
-                animation: "scrollSmooth 20s linear infinite",
+              }}
+              onScroll={(e) => {
+                if (carouselRef.current) {
+                  const scrollPos = e.currentTarget.scrollLeft;
+                  const itemWidth = 280 + 24; // card width + gap
+                  const newPosition = Math.round(scrollPos / itemWidth);
+                  setCarouselPosition(newPosition);
+                }
               }}
             >
               {featureContent[activeFeatureTab as FeatureTab].map((feature: Feature, index: number) => (
@@ -1045,64 +1112,62 @@ export default function Component() {
                   <div className="w-16 h-16 rounded-full bg-violet-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-violet-100 transition-colors duration-300">
                     <feature.icon className="h-8 w-8 text-violet-400" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">{feature.title}</h3>
-                  <p className="text-gray-600 text-center">{feature.description}</p>
-                </div>
-              ))}
-              {/* Duplicate the items to ensure continuous scrolling */}
-              {featureContent[activeFeatureTab as FeatureTab].map((feature: Feature, index: number) => (
-                <div 
-                  key={`duplicate-${index}`} 
-                  className="flex-shrink-0 w-[280px] snap-center bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 group"
-                >
-                  <div className="w-16 h-16 rounded-full bg-violet-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-violet-100 transition-colors duration-300">
-                    <feature.icon className="h-8 w-8 text-violet-400" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">{feature.title}</h3>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3 text-center">{feature.title}</h3>
                   <p className="text-gray-600 text-center">{feature.description}</p>
                 </div>
               ))}
             </div>
+            
+            {/* Carousel indicator dots */}
+            <div className="flex justify-center mt-6">
+              {featureContent[activeFeatureTab as FeatureTab].map((_, index) => (
+                <button 
+                  key={index}
+                  className={`h-2 w-2 rounded-full mx-1.5 transition-all ${
+                    index === carouselPosition 
+                      ? "bg-violet-600 w-6" 
+                      : "bg-gray-300 hover:bg-gray-400"
+                  }`}
+                  onClick={() => {
+                    if (carouselRef.current) {
+                      const itemWidth = 280 + 24; // card width + gap
+                      carouselRef.current.scrollLeft = index * itemWidth;
+                      setCarouselPosition(index);
+                    }
+                  }}
+                  aria-label={`Slide ${index + 1}`}
+                />
+              ))}
+            </div>
+            
             {/* Gradient overlays for smooth edges */}
             <div className="absolute left-0 top-0 w-16 h-full bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
             <div className="absolute right-0 top-0 w-16 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
           </div>
 
           {/* Feature Cards - Desktop Grid */}
-          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:p-8">
             {featureContent[activeFeatureTab as FeatureTab].map((feature: Feature, index: number) => (
               <div key={index} className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 group">
                 <div className="w-16 h-16 rounded-full bg-violet-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-violet-100 transition-colors duration-300">
                   <feature.icon className="h-8 w-8 text-violet-400" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">{feature.title}</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-3 text-center">{feature.title}</h3>
                 <p className="text-gray-600 text-center">{feature.description}</p>
               </div>
             ))}
-          </div>
-
-          {/* CTA Button */}
-          <div className="text-center mt-16">
-            <Link href="/squeeze">
-              <Button
-                size="lg"
-                className="bg-violet-400 hover:bg-violet-500 text-white px-8 py-6 text-xl font-medium rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
-              >
-                Get Started Today
-              </Button>
-            </Link>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-24 px-4 bg-white">
+      <section id="faq" className="py-16 md:py-24 px-4 bg-white pt-28 md:pt-24">
         <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-16">
-            <Badge className="bg-gray-100 text-gray-800 hover:bg-gray-200 border border-gray-200/80 mb-4 px-3 py-1 text-sm font-medium">
+          <div className="text-center mb-8 md:mb-16">
+            <Badge className="hidden md:inline-flex bg-gray-100 text-gray-800 hover:bg-gray-200 border border-gray-200/80 mb-4 px-3 py-1 text-sm font-medium">
               Common Questions
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Get answers to the most common questions about our free website service.
             </p>
@@ -1148,7 +1213,7 @@ export default function Component() {
             ].map((faq, index) => (
               <div key={index} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 <div
-                  className="p-6 cursor-pointer flex justify-between items-center transition-colors duration-200 hover:bg-gray-50"
+                  className="py-2 md:py-6 px-3 md:px-6 cursor-pointer flex justify-between items-center transition-colors duration-200 hover:bg-gray-50"
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                 >
                   <h3 className="text-base md:text-lg font-medium text-gray-800">{faq.question}</h3>
@@ -1163,17 +1228,17 @@ export default function Component() {
                     openFaq === index ? "max-h-96" : "max-h-0"
                   }`}
                 >
-                  <p className="px-6 pb-6 text-sm text-gray-600">{faq.answer}</p>
+                  <p className="px-3 md:px-6 pb-2 md:pb-6 text-sm text-gray-600">{faq.answer}</p>
                   </div>
               </div>
             ))}
           </div>
 
           <div className="text-center mt-16">
-            <p className="text-gray-600 mb-4">Still have questions?</p>
+            <p className="hidden md:block text-gray-600 mb-4">Still have questions?</p>
             <Button
               variant="outline"
-              className="border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 px-6 py-3"
+              className="hidden md:inline-flex border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 px-6 py-3"
             >
               Contact Our Team
             </Button>
@@ -1182,111 +1247,106 @@ export default function Component() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="pt-24 pb-12 px-4 bg-gradient-to-b from-gray-50 to-white">
+      <section className="pt-28 md:pt-24 pb-12 px-4 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <Badge className="bg-white/80 backdrop-blur-sm text-gray-800 border border-gray-200 mb-4">
-              Why Choose Us?
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Partner With The Local Business Experts</h2>
+          <div className="text-center mb-8 md:mb-16">
+                         <Badge className="bg-white/80 backdrop-blur-sm text-gray-800 border border-gray-200 mb-4">
+               Why Choose Us
+             </Badge>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Partner With The Local Business Experts</h2>
           </div>
 
           {/* Main Benefits Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-4 md:p-8 mb-16">
             {/* Card 1 */}
-            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 group">
-              <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center mb-6 group-hover:bg-orange-100 transition-colors duration-300">
-                <Target className="h-8 w-8 text-orange-500" />
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-4 md:p-8 group">
+                              <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-violet-50 flex items-center justify-center mb-4 md:mb-6 group-hover:bg-violet-100 transition-colors duration-300">
+                <Target className="h-6 w-6 md:h-8 md:w-8 text-violet-400" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Laser-Focused on Local Business Success</h3>
-              <p className="text-gray-600">We understand what local businesses need online - credibility, mobile-friendly design, and easy customer contact.</p>
+              <h3 className="text-lg md:text-lg font-bold text-gray-900 mb-2 md:mb-3">Laser-Focused on Local Business Success</h3>
+              <p className="text-sm md:text-base text-gray-600">We understand what local businesses need online - credibility, mobile-friendly design, and easy customer contact.</p>
             </div>
 
             {/* Card 2 */}
-            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 group">
-              <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center mb-6 group-hover:bg-orange-100 transition-colors duration-300">
-                <ShieldCheck className="h-8 w-8 text-orange-500" />
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-4 md:p-8 group">
+              <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-violet-50 flex items-center justify-center mb-4 md:mb-6 group-hover:bg-violet-100 transition-colors duration-300">
+                <ShieldCheck className="h-6 w-6 md:h-8 md:w-8 text-violet-400" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Risk-Free Business Model</h3>
-              <p className="text-gray-600">No upfront costs means no financial risk. We only succeed when your website helps your business grow.</p>
+              <h3 className="text-lg md:text-lg font-bold text-gray-900 mb-2 md:mb-3">Risk-Free Business Model</h3>
+              <p className="text-sm md:text-base text-gray-600">No upfront costs means no financial risk. We only succeed when your website helps your business grow.</p>
             </div>
 
             {/* Card 3 */}
-            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 group">
-              <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center mb-6 group-hover:bg-orange-100 transition-colors duration-300">
-                <Zap className="h-8 w-8 text-orange-500" />
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-4 md:p-8 group">
+              <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-violet-50 flex items-center justify-center mb-4 md:mb-6 group-hover:bg-violet-100 transition-colors duration-300">
+                <Zap className="h-6 w-6 md:h-8 md:w-8 text-violet-400" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Quick Launch, Professional Results</h3>
-              <p className="text-gray-600">While agencies take weeks and charge thousands, we deliver professional websites in days, not weeks.</p>
+              <h3 className="text-lg md:text-lg font-bold text-gray-900 mb-2 md:mb-3">Quick Launch, Professional Results</h3>
+              <p className="text-sm md:text-base text-gray-600">While agencies take weeks and charge thousands, we deliver professional websites in days, not weeks.</p>
             </div>
 
             {/* Card 4 */}
-            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 group">
-              <div className="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center mb-6 group-hover:bg-orange-100 transition-colors duration-300">
-                <Handshake className="h-8 w-8 text-orange-500" />
+            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-4 md:p-8 group">
+              <div className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-violet-50 flex items-center justify-center mb-4 md:mb-6 group-hover:bg-violet-100 transition-colors duration-300">
+                <Handshake className="h-6 w-6 md:h-8 md:w-8 text-violet-400" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Ongoing Partnership</h3>
-              <p className="text-gray-600">We're not just building a website - we're partnering with your business for long-term online success.</p>
+              <h3 className="text-lg md:text-lg font-bold text-gray-900 mb-2 md:mb-3">Ongoing Partnership</h3>
+              <p className="text-sm md:text-base text-gray-600">We're not just building a website - we're partnering with your business for long-term online success.</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Final Call-to-Action Section */}
-      <section className="py-32 px-4 bg-white relative overflow-hidden">
-        {/* Subtle Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gray-500/5 rounded-full opacity-40 blur-3xl animate-float-modern-1 hidden md:block"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gray-100/5 rounded-full opacity-30 blur-3xl animate-float-modern-2 hidden md:block"></div>
-        </div>
-
+      <section className="py-28 md:py-32 px-4 bg-white pt-32 md:pt-32 relative overflow-hidden">
+        
         <div className="container mx-auto max-w-5xl relative z-10">
           {/* Main Content */}
           <div className="text-center space-y-12">
             {/* Badge */}
             <div className="inline-flex items-center px-4 py-2 bg-gray-100 rounded-full animate-fade-up">
-              <div className="w-2 h-2 bg-orange-400 rounded-full mr-3 animate-pulse-subtle"></div>
+              <div className="w-2 h-2 bg-violet-400 rounded-full mr-3 animate-pulse-subtle"></div>
               <span className="text-sm font-medium text-gray-700">Limited Monthly Availability</span>
             </div>
 
             {/* Headline */}
-            <div className="space-y-6 animate-fade-up delay-100">
-              <h2 className="text-5xl md:text-6xl lg:text-7xl font-light text-gray-900 leading-tight tracking-tight">
+            <div className="space-y-2 md:space-y-6 animate-fade-up delay-100">
+              <h2 className="text-3xl md:text-6xl lg:text-7xl font-light text-gray-900 leading-tight tracking-tight whitespace-nowrap overflow-hidden text-ellipsis px-1">
                 Only <span className="font-semibold relative group">
                   10 spots
                   <span className="absolute bottom-0 left-0 w-full h-1 bg-gray-900 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></span>
                 </span> available this month
               </h2>
-              <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto font-light leading-relaxed">
+              <p className="text-sm md:text-2xl text-gray-600 max-w-3xl mx-auto font-light leading-relaxed">
                 We limit our free website program to ensure each business receives personalized attention and
                 exceptional quality.
               </p>
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto py-12">
-              <div className="text-center space-y-3 animate-fade-up delay-200 hover-lift p-6 rounded-xl transition-all duration-300 hover:bg-gray-50">
-                <div className="text-4xl md:text-5xl font-light text-gray-900">7</div>
-                <div className="text-gray-500 font-medium">Spots Remaining</div>
+            <div className="flex flex-row md:grid md:grid-cols-3 gap-0 md:gap-4 md:p-8 max-w-full md:max-w-4xl mx-auto py-2 md:py-12">
+              <div className="flex-1 text-center space-y-0 md:space-y-3 animate-fade-up delay-200 hover-lift p-0.5 md:p-6 rounded-xl transition-all duration-300 hover:bg-gray-50">
+                <div className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900">7</div>
+                <div className="text-xs md:text-base text-gray-500 font-medium">Spots Remaining</div>
               </div>
-              <div className="text-center space-y-3 animate-fade-up delay-300 hover-lift p-6 rounded-xl transition-all duration-300 hover:bg-gray-50">
-                <div className="text-4xl md:text-5xl font-light text-gray-900">48h</div>
-                <div className="text-gray-500 font-medium">Delivery Time</div>
+              <div className="flex-1 text-center space-y-0 md:space-y-3 animate-fade-up delay-300 hover-lift p-0.5 md:p-6 rounded-xl transition-all duration-300 hover:bg-gray-50">
+                <div className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900">48h</div>
+                <div className="text-xs md:text-base text-gray-500 font-medium">Delivery Time</div>
               </div>
-              <div className="text-center space-y-3 animate-fade-up delay-400 hover-lift p-6 rounded-xl transition-all duration-300 hover:bg-gray-50">
-                <div className="text-4xl md:text-5xl font-light text-gray-900">100%</div>
-                <div className="text-gray-500 font-medium">Satisfaction Rate</div>
+              <div className="flex-1 text-center space-y-0 md:space-y-3 animate-fade-up delay-400 hover-lift p-0.5 md:p-6 rounded-xl transition-all duration-300 hover:bg-gray-50">
+                <div className="text-3xl md:text-4xl lg:text-5xl font-light text-gray-900">100%</div>
+                <div className="text-xs md:text-base text-gray-500 font-medium">Satisfaction Rate</div>
               </div>
             </div>
 
             {/* Recently Claimed Websites */}
             <div className="animate-fade-up delay-500">
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Recently Claimed Websites</h3>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  See what other businesses have chosen in the past 24 hours
-                </p>
-              </div>
+                             <div className="text-center mb-8">
+                 <h3 className="text-2xl font-bold text-gray-900 mb-4 hidden md:block">Recently Claimed Websites</h3>
+                 <p className="text-lg text-gray-600 max-w-2xl mx-auto hidden md:block">
+                   See what other businesses have chosen in the past 24 hours
+                 </p>
+               </div>
 
               {/* Claimed Websites Carousel */}
               <div className="relative overflow-hidden mb-16">
@@ -1308,17 +1368,11 @@ export default function Component() {
                       key={index}
                       className="flex-shrink-0 w-[300px] bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300"
                     >
-                      <div className="p-6 border-b border-gray-100 flex items-center justify-between">
-                        <div className="flex items-center">
-                          <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl ${business.color}`}>
-                            {business.initial}
-                          </div>
-                          <div className="ml-3">
-                            <h4 className="font-bold text-gray-900">{business.businessName}</h4>
-                            <p className="text-sm text-gray-500">{business.location}</p>
-                          </div>
+                      <div className="p-6 border-b border-gray-100">
+                        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-3">
+                          <h4 className="text-xs md:text-base font-bold text-gray-900 truncate">{business.businessName}</h4>
+                          <p className="text-xs md:text-sm text-gray-500 truncate">{business.location}</p>
                         </div>
-                        <span className="text-xs bg-gray-100 text-gray-800 py-1 px-2 rounded-full">{business.timeAgo}</span>
                       </div>
                       <div className="p-6 space-y-3">
                         <div className="flex justify-between">
@@ -1331,8 +1385,8 @@ export default function Component() {
                         </div>
                         <div className="flex justify-between items-center">
                           <span className="text-sm text-gray-500">Status:</span>
-                          <span className="flex items-center text-sm font-medium text-green-600">
-                            <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                          <span className="flex items-center text-sm font-medium text-violet-600">
+                            <span className="w-2 h-2 bg-violet-400 rounded-full mr-2"></span>
                             Claimed
                           </span>
                         </div>
@@ -1347,31 +1401,15 @@ export default function Component() {
             </div>
 
             {/* CTA Button */}
-            <div className="space-y-6 animate-fade-up delay-600">
+            <div className="space-y-2 md:space-y-6 animate-fade-up delay-600">
               <Link href="/claim">
-              <Button
-                size="lg"
-                className="bg-violet-400 hover:bg-violet-500 text-white px-12 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
-              >
-                Check Availability
-              </Button>
+                             <Button
+                 size="lg"
+                 className="bg-black hover:bg-gray-800 text-white px-12 py-6 text-lg font-medium rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+               >
+                 Check Availability
+               </Button>
               </Link>
-
-              {/* Trust Indicators */}
-              <div className="flex items-center justify-center space-x-8 text-sm text-gray-500 animate-fade-up delay-700">
-                <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
-                  <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                  <span>No credit card required</span>
-                </div>
-                <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
-                  <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                  <span>60-day guarantee</span>
-                </div>
-                <div className="flex items-center space-x-2 hover:text-gray-700 transition-colors duration-300">
-                  <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                  <span>Cancel anytime</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>

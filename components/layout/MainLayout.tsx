@@ -21,7 +21,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       <Header />
       {/* Add padding to content on non-homepage to account for fixed header */}
       <div className={isHomePage ? "" : "pt-16"}>
-        {children}
+      {children}
       </div>
       <Footer />
     </div>

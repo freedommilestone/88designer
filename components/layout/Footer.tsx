@@ -8,14 +8,9 @@ import { Input } from "@/components/ui/input"
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-10 left-10 w-64 h-64 bg-gradient-to-br from-violet-500/10 to-gray-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-gray-500/10 to-violet-500/10 rounded-full blur-3xl"></div>
-      </div>
-
+      
       <div className="container mx-auto px-4 py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
@@ -97,7 +92,7 @@ export default function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div className="space-y-6">
+          <div className="space-y-6 hidden md:block">
             <h3 className="text-lg font-semibold">Stay Updated</h3>
             <p className="text-gray-300">Get tips and insights for growing your local business.</p>
             <div className="space-y-3">
@@ -105,7 +100,7 @@ export default function Footer() {
                 placeholder="Enter your email"
                 className="bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:border-white"
               />
-              <Button className="w-full bg-violet-400 text-white hover:bg-violet-500">Subscribe</Button>
+              <Button variant="black" className="w-full">Subscribe</Button>
             </div>
             <div className="flex items-center space-x-2 text-sm text-gray-400">
               <Check className="w-4 h-4" />
