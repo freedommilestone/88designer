@@ -17,7 +17,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
   }, [])
   
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen bg-gray-900 overflow-x-hidden">
       <Header />
       {/* Add padding to content on non-homepage to account for fixed header */}
       <div className={isHomePage ? "" : "pt-16"}>

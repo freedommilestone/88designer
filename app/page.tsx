@@ -41,7 +41,6 @@ import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
 import MainLayout from "@/components/layout/MainLayout"
 import Globe3D from "@/components/ui/Globe3D"
-import { HeroButton } from "@/components/ui/HeroButton"
 
 const websiteExamples = [
   {
@@ -764,14 +763,14 @@ export default function Component() {
   return (
     <MainLayout>
              {/* Hero Section */}
-       <section className="pt-16 md:pt-32 pb-20 md:pb-48 px-8 md:px-8 bg-gradient-to-b from-gray-900 to-gray-800 min-h-\[85vh\] md:min-h-screen flex items-center relative overflow-hidden">
+       <section className="pt-16 md:pt-32 pb-20 md:pb-48 px-8 md:px-8 bg-gradient-to-b from-gray-900 to-gray-800 min-h-\[85vh\] md:min-h-screen flex items-center relative overflow-hidden overflow-x-hidden">
         
-        <div className="container mx-auto max-w-7xl relative z-10">
+        <div className="container mx-auto max-w-7xl relative z-10 px-2 sm:px-4 overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Mobile-only Global Web Solution Card - Only visible on mobile */}
-            <div className="lg:hidden mb-12">
+            <div className="lg:hidden mb-12 w-full">
               <div
-                className="relative opacity-100"
+                className="relative opacity-100 w-full"
               >
                 <Globe3D />
               </div>
@@ -783,12 +782,13 @@ export default function Component() {
             >
               <div className="animate-fade-up delay-200">
                 <h1 className="font-semibold leading-tight mb-6 md:mb-4 text-violet-300 clean-text tracking-tight">
-                  <span className="text-5xl md:text-6xl font-bold block md:inline mb-2 md:mb-0">Free Premium</span><span className="hidden md:inline"> </span><span className="text-5xl md:text-6xl font-bold block md:inline">Website Design</span>
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold block">Free Premium</span>
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold block mt-1 md:mt-2">Website Design</span>
                 </h1>
-                <p className="text-2xl text-white/90 mb-2 clean-text">
+                <p className="text-xl sm:text-2xl text-white/90 mb-2 clean-text">
                   Just $20/Month Hosting
                 </p>
-                <p className="text-2xl text-white/90 mb-8 clean-text">
+                <p className="text-xl sm:text-2xl text-white/90 mb-8 clean-text">
                   Launch in 48 Hours
                 </p>
                 <div className="text-sm md:text-lg text-white/80 leading-relaxed max-w-xl space-y-2 md:space-y-3 clean-text">
@@ -806,11 +806,11 @@ export default function Component() {
                               <div className="flex flex-col sm:flex-row gap-4 animate-fade-up delay-300">
                   <Link href="/squeeze">
                     <Button 
-                      variant="outline"
-                      className="text-base font-medium"
+                      variant="default"
+                      className="text-base font-medium bg-black hover:bg-gray-800 text-white"
                     >
                       Get Started Today
-                      <ArrowRight className="ml-2 h-5 w-5 inline text-violet-400" />
+                      <ArrowRight className="ml-2 h-5 w-5 inline text-white" />
                     </Button>
                   </Link>
                 </div>
@@ -828,7 +828,7 @@ export default function Component() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-16 md:py-24 px-4 bg-gradient-to-b from-white to-gray-50 mt-[-1px] pt-24 md:pt-24">
+      <section id="how-it-works" className="py-16 md:py-24 px-4 bg-gradient-to-b from-white to-gray-50 mt-[-1px] pt-24 md:pt-24 overflow-x-hidden">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-8 md:mb-16">
             <Badge className="bg-white/80 backdrop-blur-sm text-gray-800 border border-gray-200 mb-4">
@@ -953,8 +953,8 @@ export default function Component() {
           <div className="text-center mt-8 hidden md:block">
             <Link href="/squeeze">
               <Button
-                variant="outline"
-                className="text-base font-medium"
+                variant="default"
+                className="text-base font-medium bg-black hover:bg-gray-800 text-white"
               >
                 Get Started Today
               </Button>
@@ -964,7 +964,7 @@ export default function Component() {
       </section>
 
       {/* Pricing Transparency Section */}
-      <section id="pricing" className="py-12 md:py-20 px-4 bg-white pt-28 md:pt-20">
+      <section id="pricing" className="py-12 md:py-20 px-4 bg-white pt-28 md:pt-20 overflow-x-hidden">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-6 md:mb-12">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Pricing Transparency</h2>
@@ -1042,7 +1042,7 @@ export default function Component() {
       </section>
 
       {/* Features & Benefits Section */}
-      <section className="py-16 md:py-24 px-4 bg-white pt-28 md:pt-24">
+      <section className="py-16 md:py-24 px-4 bg-white pt-28 md:pt-24 overflow-x-hidden">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-8 md:mb-16">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Features & Benefits</h2>
@@ -1089,7 +1089,7 @@ export default function Component() {
           <div className="block md:hidden relative overflow-hidden mb-16">
             <div 
               ref={carouselRef}
-              className="flex space-x-6 overflow-x-auto snap-x snap-mandatory touch-pan-x scrollbar-hide pb-4"
+              className="flex space-x-6 overflow-x-auto snap-x snap-mandatory touch-pan-x scrollbar-hide pb-4 max-w-full"
               style={{
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
@@ -1161,7 +1161,7 @@ export default function Component() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="py-16 md:py-24 px-4 bg-white pt-28 md:pt-24">
+      <section id="faq" className="py-16 md:py-24 px-4 bg-white pt-28 md:pt-24 overflow-x-hidden">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-8 md:mb-16">
             <Badge className="hidden md:inline-flex bg-gray-100 text-gray-800 hover:bg-gray-200 border border-gray-200/80 mb-4 px-3 py-1 text-sm font-medium">
@@ -1173,7 +1173,7 @@ export default function Component() {
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 max-w-full">
             {[
               {
                 question: "What's the catch with a free website?",
@@ -1216,7 +1216,7 @@ export default function Component() {
                   className="py-2 md:py-6 px-3 md:px-6 cursor-pointer flex justify-between items-center transition-colors duration-200 hover:bg-gray-50"
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                 >
-                  <h3 className="text-base md:text-lg font-medium text-gray-800">{faq.question}</h3>
+                  <h3 className="text-base md:text-lg font-medium text-gray-800 pr-2">{faq.question}</h3>
                   <ChevronRight
                     className={`h-5 w-5 text-gray-500 transform transition-transform duration-300 ${
                       openFaq === index ? "rotate-90" : ""
@@ -1247,7 +1247,7 @@ export default function Component() {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="pt-28 md:pt-24 pb-12 px-4 bg-gradient-to-b from-gray-50 to-white">
+      <section className="pt-28 md:pt-24 pb-12 px-4 bg-gradient-to-b from-gray-50 to-white overflow-x-hidden">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-8 md:mb-16">
                          <Badge className="bg-white/80 backdrop-blur-sm text-gray-800 border border-gray-200 mb-4">
@@ -1298,7 +1298,7 @@ export default function Component() {
       </section>
 
       {/* Final Call-to-Action Section */}
-      <section className="py-28 md:py-32 px-4 bg-white pt-32 md:pt-32 relative overflow-hidden">
+      <section className="py-28 md:py-32 px-4 bg-white pt-32 md:pt-32 relative overflow-hidden overflow-x-hidden">
         
         <div className="container mx-auto max-w-5xl relative z-10">
           {/* Main Content */}
@@ -1351,7 +1351,7 @@ export default function Component() {
               {/* Claimed Websites Carousel */}
               <div className="relative overflow-hidden mb-16">
                 <div 
-                  className="flex space-x-6 animate-scroll-smooth hover:animation-paused"
+                  className="flex space-x-6 animate-scroll-smooth hover:animation-paused max-w-full"
                   style={{
                     width: `${recentlyClaimed.length * 320}px`,
                     animation: "scrollSmooth 60s linear infinite"
