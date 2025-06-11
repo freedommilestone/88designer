@@ -782,8 +782,8 @@ export default function Component() {
             >
               <div className="animate-fade-up delay-200">
                 <h1 className="font-semibold leading-tight mb-6 md:mb-4 text-violet-300 clean-text tracking-tight">
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold block">Free Premium</span>
-                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold block mt-1 md:mt-2">Website Design</span>
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold block sm:block md:inline">Free Premium </span>
+                  <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold block mt-1 md:mt-0 sm:block md:inline">Website Design</span>
                 </h1>
                 <p className="text-xl sm:text-2xl text-white/90 mb-2 md:mb-2 mobile-subtitle-spacing clean-text">
                   Just $20/Month Hosting
@@ -1072,9 +1072,9 @@ export default function Component() {
           </div>
 
           {/* Feature Tabs */}
-          <div className="flex justify-center mb-16 space-x-4">
+          <div className="flex justify-center mb-16 space-x-1 md:space-x-4">
             <button
-              className={`px-5 py-3 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+              className={`px-2 md:px-5 py-2 md:py-3 rounded-full text-xs md:text-sm font-medium whitespace-nowrap transition-all ${
                 activeFeatureTab === "restaurants"
                   ? "bg-black text-white"
                   : "bg-white text-black border border-gray-200 hover:bg-gray-50"
@@ -1084,7 +1084,7 @@ export default function Component() {
               Restaurants
             </button>
             <button
-              className={`px-5 py-3 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+              className={`px-2 md:px-5 py-2 md:py-3 rounded-full text-xs md:text-sm font-medium whitespace-nowrap transition-all ${
                 activeFeatureTab === "serviceProviders"
                   ? "bg-black text-white"
                   : "bg-white text-black border border-gray-200 hover:bg-gray-50"
@@ -1094,7 +1094,7 @@ export default function Component() {
               Service Providers
             </button>
             <button
-              className={`px-5 py-3 rounded-full text-sm font-medium whitespace-nowrap transition-all ${
+              className={`px-2 md:px-5 py-2 md:py-3 rounded-full text-xs md:text-sm font-medium whitespace-nowrap transition-all ${
                 activeFeatureTab === "retailStores"
                   ? "bg-black text-white"
                   : "bg-white text-black border border-gray-200 hover:bg-gray-50"
@@ -1107,35 +1107,66 @@ export default function Component() {
 
           {/* Feature Cards - Mobile Carousel */}
           <div className="block md:hidden relative overflow-hidden mb-16">
-            <div 
-              ref={carouselRef}
-              className="flex space-x-6 overflow-x-auto snap-x snap-mandatory touch-pan-x scrollbar-hide pb-4 max-w-full"
-              style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                WebkitOverflowScrolling: 'touch',
-              }}
-              onScroll={(e) => {
-                if (carouselRef.current) {
-                  const scrollPos = e.currentTarget.scrollLeft;
-                  const itemWidth = 280 + 24; // card width + gap
-                  const newPosition = Math.round(scrollPos / itemWidth);
-                  setCarouselPosition(newPosition);
-                }
-              }}
-            >
-              {featureContent[activeFeatureTab as FeatureTab].map((feature: Feature, index: number) => (
-                <div 
-                  key={index} 
-                  className="flex-shrink-0 w-[280px] snap-center bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 group"
-                >
-                  <div className="w-16 h-16 rounded-full bg-violet-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-violet-100 transition-colors duration-300">
-                    <feature.icon className="h-8 w-8 text-violet-400" />
+            <div className="relative">
+              {/* Left Navigation Arrow */}
+              <button 
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 rounded-full shadow-md p-2 focus:outline-none"
+                onClick={() => {
+                  if (carouselRef.current && carouselPosition > 0) {
+                    const newPosition = carouselPosition - 1;
+                    const itemWidth = 280 + 24; // card width + gap
+                    carouselRef.current.scrollLeft = newPosition * itemWidth;
+                    setCarouselPosition(newPosition);
+                  }
+                }}
+                aria-label="Previous slide"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              
+              {/* Right Navigation Arrow */}
+              <button 
+                className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/80 rounded-full shadow-md p-2 focus:outline-none"
+                onClick={() => {
+                  if (carouselRef.current && carouselPosition < featureContent[activeFeatureTab as FeatureTab].length - 1) {
+                    const newPosition = carouselPosition + 1;
+                    const itemWidth = 280 + 24; // card width + gap
+                    carouselRef.current.scrollLeft = newPosition * itemWidth;
+                    setCarouselPosition(newPosition);
+                  }
+                }}
+                aria-label="Next slide"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+              
+              <div 
+                ref={carouselRef}
+                className="flex space-x-6 overflow-x-hidden snap-x snap-mandatory pb-4 max-w-full"
+                style={{
+                  scrollBehavior: 'smooth',
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none',
+                  WebkitOverflowScrolling: 'touch',
+                }}
+              >
+                {featureContent[activeFeatureTab as FeatureTab].map((feature: Feature, index: number) => (
+                  <div 
+                    key={index} 
+                    className="flex-shrink-0 w-[280px] snap-center bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 group"
+                  >
+                    <div className="w-16 h-16 rounded-full bg-violet-50 flex items-center justify-center mb-6 mx-auto group-hover:bg-violet-100 transition-colors duration-300">
+                      <feature.icon className="h-8 w-8 text-violet-400" />
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-3 text-center">{feature.title}</h3>
+                    <p className="text-gray-600 text-center">{feature.description}</p>
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-3 text-center">{feature.title}</h3>
-                  <p className="text-gray-600 text-center">{feature.description}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
             
             {/* Carousel indicator dots */}
@@ -1145,8 +1176,8 @@ export default function Component() {
                   key={index}
                   className={`h-2 w-2 rounded-full mx-1.5 transition-all ${
                     index === carouselPosition 
-                      ? "bg-violet-600 w-6" 
-                      : "bg-gray-300 hover:bg-gray-400"
+                      ? "bg-black w-6" 
+                      : "bg-gray-300 hover:bg-gray-500"
                   }`}
                   onClick={() => {
                     if (carouselRef.current) {
@@ -1161,8 +1192,8 @@ export default function Component() {
             </div>
             
             {/* Gradient overlays for smooth edges */}
-            <div className="absolute left-0 top-0 w-16 h-full bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
-            <div className="absolute right-0 top-0 w-16 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
+            <div className="absolute left-16 top-0 w-8 h-full bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
+            <div className="absolute right-16 top-0 w-8 h-full bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
           </div>
 
           {/* Feature Cards - Desktop Grid */}
@@ -1248,7 +1279,7 @@ export default function Component() {
                     openFaq === index ? "max-h-96" : "max-h-0"
                   }`}
                 >
-                  <p className="px-3 md:px-6 pb-2 md:pb-6 text-sm text-gray-600">{faq.answer}</p>
+                  <p className="px-3 md:px-6 pt-8 md:pt-10 pb-2 md:pb-6 text-sm text-gray-600">{faq.answer}</p>
                   </div>
               </div>
             ))}
